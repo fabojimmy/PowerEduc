@@ -1,0 +1,7 @@
+{
+    "powereduc-atto_html-codemirror": {
+        "requires": [
+            "powereduc-atto_html-codemirror-skin"
+        ]
+    }
+}

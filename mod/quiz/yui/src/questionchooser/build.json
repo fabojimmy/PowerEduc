@@ -1,0 +1,10 @@
+{
+    "name": "powereduc-mod_quiz-questionchooser",
+    "builds": {
+        "powereduc-mod_quiz-questionchooser": {
+            "jsfiles": [
+                "questionchooser.js"
+            ]
+        }
+    }
+}

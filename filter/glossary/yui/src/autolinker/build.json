@@ -1,0 +1,10 @@
+{
+  "name": "powereduc-filter_glossary-autolinker",
+  "builds": {
+    "powereduc-filter_glossary-autolinker": {
+      "jsfiles": [
+        "autolinker.js"
+      ]
+    }
+  }
+}

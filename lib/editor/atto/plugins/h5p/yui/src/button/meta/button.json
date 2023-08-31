@@ -1,0 +1,7 @@
+{
+    "powereduc-atto_h5p-button": {
+        "requires": [
+            "powereduc-editor_atto-plugin"
+        ]
+    }
+}

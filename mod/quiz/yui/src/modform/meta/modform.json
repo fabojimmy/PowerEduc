@@ -1,0 +1,9 @@
+{
+    "powereduc-mod_quiz-modform": {
+        "requires": [
+            "base",
+            "node",
+            "event"
+        ]
+    }
+}

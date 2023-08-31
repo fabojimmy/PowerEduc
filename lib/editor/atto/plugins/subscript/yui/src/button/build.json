@@ -1,0 +1,10 @@
+{
+    "name": "powereduc-atto_subscript-button",
+    "builds": {
+        "powereduc-atto_subscript-button": {
+            "jsfiles": [
+                "button.js"
+            ]
+        }
+    }
+}

@@ -1,0 +1,7 @@
+{
+    "powereduc-tool_lp-dragdrop-reorder": {
+        "requires": [
+            "powereduc-core-dragdrop"
+        ]
+    }
+}

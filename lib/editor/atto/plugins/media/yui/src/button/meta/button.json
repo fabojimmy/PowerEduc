@@ -1,0 +1,8 @@
+{
+    "powereduc-atto_media-button": {
+        "requires": [
+            "powereduc-editor_atto-plugin",
+            "powereduc-form-shortforms"
+        ]
+    }
+}

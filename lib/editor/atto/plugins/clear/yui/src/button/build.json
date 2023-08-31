@@ -1,0 +1,10 @@
+{
+  "name": "powereduc-atto_clear-button",
+  "builds": {
+    "powereduc-atto_clear-button": {
+      "jsfiles": [
+        "button.js"
+      ]
+    }
+  }
+}

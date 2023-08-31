@@ -1,0 +1,10 @@
+{
+    "name": "powereduc-question-preview",
+    "builds": {
+        "powereduc-question-preview": {
+            "jsfiles": [
+                "preview.js"
+            ]
+        }
+    }
+}

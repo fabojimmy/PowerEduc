@@ -1,0 +1,8 @@
+{
+  "powereduc-core-maintenancemodetimer": {
+    "requires": [
+        "base",
+        "node"
+    ]
+  }
+}

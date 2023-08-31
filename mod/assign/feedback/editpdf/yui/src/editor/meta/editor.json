@@ -1,0 +1,21 @@
+{
+  "powereduc-assignfeedback_editpdf-editor": {
+    "requires": [
+        "base",
+        "event",
+        "node",
+        "io",
+        "graphics",
+        "json",
+        "event-move",
+        "event-resize",
+        "transition",
+        "querystring-stringify-simple",
+        "powereduc-core-notification-dialog",
+        "powereduc-core-notification-alert",
+        "powereduc-core-notification-warning",
+        "powereduc-core-notification-exception",
+        "powereduc-core-notification-ajaxexception"
+    ]
+  }
+}

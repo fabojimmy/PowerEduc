@@ -1,0 +1,10 @@
+{
+  "powereduc-availability_group-form": {
+    "requires": [
+        "base",
+        "node",
+        "event",
+        "powereduc-core_availability-form"
+    ]
+  }
+}

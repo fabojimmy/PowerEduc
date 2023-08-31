@@ -1,0 +1,7 @@
+{
+    "powereduc-qbank_editquestion-chooser": {
+        "requires": [
+            "powereduc-core-chooserdialogue"
+        ]
+    }
+}

@@ -1,0 +1,8 @@
+{
+  "powereduc-core-lockscroll": {
+    "requires": [
+        "plugin",
+        "base-build"
+    ]
+  }
+}

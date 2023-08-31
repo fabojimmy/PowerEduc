@@ -1,0 +1,10 @@
+{
+    "name": "powereduc-filter_mathjaxloader-loader",
+    "builds": {
+        "powereduc-filter_mathjaxloader-loader": {
+            "jsfiles": [
+                "loader.js"
+            ]
+        }
+    }
+}

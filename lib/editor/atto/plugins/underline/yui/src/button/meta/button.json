@@ -1,0 +1,7 @@
+{
+    "powereduc-atto_underline-button": {
+        "requires": [
+            "powereduc-editor_atto-plugin"
+        ]
+    }
+}

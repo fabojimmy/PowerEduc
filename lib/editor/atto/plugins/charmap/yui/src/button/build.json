@@ -1,0 +1,10 @@
+{
+  "name": "powereduc-atto_charmap-button",
+  "builds": {
+    "powereduc-atto_charmap-button": {
+      "jsfiles": [
+        "button.js"
+      ]
+    }
+  }
+}

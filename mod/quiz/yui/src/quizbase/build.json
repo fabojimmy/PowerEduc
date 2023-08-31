@@ -1,0 +1,10 @@
+{
+    "name": "powereduc-mod_quiz-quizbase",
+    "builds": {
+        "powereduc-mod_quiz-quizbase": {
+            "jsfiles": [
+                "quizbase.js"
+            ]
+        }
+    }
+}

@@ -1,0 +1,7 @@
+{
+    "powereduc-core-event": {
+        "requires": [
+            "event-custom"
+        ]
+    }
+}

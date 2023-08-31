@@ -1,0 +1,26 @@
+{
+  "powereduc-mod_quiz-util": {
+    "requires": [
+        "node", "powereduc-core-actionmenu"
+    ],
+    "use": [
+        "powereduc-mod_quiz-util-base"
+    ],
+    "submodules": {
+        "powereduc-mod_quiz-util-base": {
+        },
+        "powereduc-mod_quiz-util-slot": {
+            "requires": [
+                "node",
+                "powereduc-mod_quiz-util-base"
+            ]
+        },
+        "powereduc-mod_quiz-util-page": {
+            "requires": [
+                "node",
+                "powereduc-mod_quiz-util-base"
+            ]
+        }
+    }
+  }
+}

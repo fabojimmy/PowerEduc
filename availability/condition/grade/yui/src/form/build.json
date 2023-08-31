@@ -1,0 +1,10 @@
+{
+  "name": "powereduc-availability_grade-form",
+  "builds": {
+    "powereduc-availability_grade-form": {
+      "jsfiles": [
+        "form.js"
+      ]
+    }
+  }
+}

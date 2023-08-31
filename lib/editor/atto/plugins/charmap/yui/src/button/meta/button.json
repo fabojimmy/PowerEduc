@@ -1,0 +1,7 @@
+{
+    "powereduc-atto_charmap-button": {
+        "requires": [
+            "powereduc-editor_atto-plugin"
+        ]
+    }
+}

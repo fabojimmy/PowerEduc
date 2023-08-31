@@ -1,0 +1,10 @@
+{
+  "name": "powereduc-atto_h5p-button",
+  "builds": {
+    "powereduc-atto_h5p-button": {
+      "jsfiles": [
+        "button.js"
+      ]
+    }
+  }
+}

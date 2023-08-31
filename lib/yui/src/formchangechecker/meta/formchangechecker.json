@@ -1,0 +1,9 @@
+{
+  "powereduc-core-formchangechecker": {
+    "requires": [
+      "base",
+      "event-focus",
+      "powereduc-core-event"
+    ]
+  }
+}

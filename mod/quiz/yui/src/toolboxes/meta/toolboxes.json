@@ -1,0 +1,14 @@
+{
+    "powereduc-mod_quiz-toolboxes": {
+        "requires": [
+            "base",
+            "node",
+            "event",
+            "event-key",
+            "io",
+            "powereduc-mod_quiz-quizbase",
+            "powereduc-mod_quiz-util-slot",
+            "powereduc-core-notification-ajaxexception"
+        ]
+    }
+}

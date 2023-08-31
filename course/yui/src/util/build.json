@@ -1,0 +1,20 @@
+{
+  "name": "powereduc-course-util",
+  "builds": {
+    "powereduc-course-util-base": {
+      "jsfiles": [
+        "base.js"
+      ]
+    },
+    "powereduc-course-util-section": {
+      "jsfiles": [
+        "section.js"
+      ]
+    },
+    "powereduc-course-util-cm": {
+      "jsfiles": [
+        "cm.js"
+      ]
+    }
+  }
+}

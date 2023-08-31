@@ -1,0 +1,7 @@
+{
+  "powereduc-core-popuphelp": {
+    "requires": [
+        "powereduc-core-tooltip"
+    ]
+  }
+}

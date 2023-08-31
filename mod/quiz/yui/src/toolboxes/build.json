@@ -1,0 +1,12 @@
+{
+    "name": "powereduc-mod_quiz-toolboxes",
+    "builds": {
+        "powereduc-mod_quiz-toolboxes": {
+            "jsfiles": [
+                "toolbox.js",
+                "resource.js",
+                "section.js"
+            ]
+        }
+    }
+}

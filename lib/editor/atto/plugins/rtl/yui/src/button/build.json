@@ -1,0 +1,10 @@
+{
+  "name": "powereduc-atto_rtl-button",
+  "builds": {
+    "powereduc-atto_rtl-button": {
+      "jsfiles": [
+        "button.js"
+      ]
+    }
+  }
+}

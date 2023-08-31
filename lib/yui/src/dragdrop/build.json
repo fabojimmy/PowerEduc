@@ -1,0 +1,10 @@
+{
+    "name": "powereduc-core-dragdrop",
+    "builds": {
+        "powereduc-core-dragdrop": {
+            "jsfiles": [
+                "dragdrop.js"
+            ]
+        }
+    }
+}

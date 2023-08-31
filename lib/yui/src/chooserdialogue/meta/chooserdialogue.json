@@ -1,0 +1,9 @@
+{
+  "powereduc-core-chooserdialogue": {
+    "requires": [
+        "base",
+        "panel",
+        "powereduc-core-notification"
+    ]
+  }
+}

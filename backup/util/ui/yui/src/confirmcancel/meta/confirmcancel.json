@@ -1,0 +1,9 @@
+{
+    "powereduc-backup-confirmcancel": {
+        "requires": [
+            "node",
+            "node-event-simulate",
+            "powereduc-core-notification-confirm"
+        ]
+    }
+}

@@ -1,0 +1,11 @@
+{
+    "powereduc-atto_html-button": {
+        "requires": [
+            "promise",
+            "powereduc-editor_atto-plugin",
+            "powereduc-atto_html-beautify",
+            "powereduc-atto_html-codemirror",
+            "event-valuechange"
+        ]
+    }
+}

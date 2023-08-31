@@ -1,0 +1,12 @@
+{
+    "name": "powereduc-course-dragdrop",
+    "builds": {
+        "powereduc-course-dragdrop": {
+            "jsfiles": [
+                "dragdrop.js",
+                "section.js",
+                "resource.js"
+            ]
+        }
+    }
+}

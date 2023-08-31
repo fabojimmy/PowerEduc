@@ -1,0 +1,10 @@
+{
+  "name": "powereduc-core-formchangechecker",
+  "builds": {
+    "powereduc-core-formchangechecker": {
+      "jsfiles": [
+        "formchangechecker.js"
+      ]
+    }
+  }
+}

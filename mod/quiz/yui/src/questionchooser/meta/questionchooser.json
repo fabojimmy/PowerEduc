@@ -1,0 +1,9 @@
+{
+    "powereduc-mod_quiz-questionchooser": {
+        "requires": [
+            "powereduc-core-chooserdialogue",
+            "powereduc-mod_quiz-util",
+            "querystring-parse"
+        ]
+    }
+}

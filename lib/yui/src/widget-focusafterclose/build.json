@@ -1,0 +1,10 @@
+{
+    "name": "powereduc-core-widget-focusafterclose",
+    "builds": {
+        "powereduc-core-widget-focusafterclose": {
+            "jsfiles": [
+                "focusafter.js"
+            ]
+        }
+    }
+}

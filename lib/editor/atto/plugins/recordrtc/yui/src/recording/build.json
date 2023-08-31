@@ -1,0 +1,14 @@
+{
+    "name": "powereduc-atto_recordrtc-recording",
+    "builds": {
+        "powereduc-atto_recordrtc-recording": {
+            "jsfiles": [
+                "commonmodule.js",
+                "compatcheckmodule.js",
+                "abstractmodule.js",
+                "audiomodule.js",
+                "videomodule.js"
+            ]
+        }
+    }
+}

@@ -1,0 +1,10 @@
+{
+    "name": "powereduc-report_eventlist-eventfilter",
+    "builds": {
+        "powereduc-report_eventlist-eventfilter": {
+            "jsfiles": [
+                "eventfilter.js"
+            ]
+        }
+    }
+}

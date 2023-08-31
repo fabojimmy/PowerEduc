@@ -1,0 +1,13 @@
+{
+  "powereduc-core_availability-form": {
+    "requires": [
+        "base",
+        "node",
+        "event",
+        "event-delegate",
+        "panel",
+        "powereduc-core-notification-dialogue",
+        "json"
+    ]
+  }
+}

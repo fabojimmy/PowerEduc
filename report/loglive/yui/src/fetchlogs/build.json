@@ -1,0 +1,10 @@
+{
+    "name": "powereduc-report_loglive-fetchlogs",
+    "builds": {
+        "powereduc-report_loglive-fetchlogs": {
+            "jsfiles": [
+                "fetchlogs.js"
+            ]
+        }
+    }
+}

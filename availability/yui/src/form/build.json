@@ -1,0 +1,10 @@
+{
+  "name": "powereduc-core_availability-form",
+  "builds": {
+    "powereduc-core_availability-form": {
+      "jsfiles": [
+        "form.js"
+      ]
+    }
+  }
+}

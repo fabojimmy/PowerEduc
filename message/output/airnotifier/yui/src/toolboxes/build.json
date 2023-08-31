@@ -1,0 +1,10 @@
+{
+  "name": "powereduc-message_airnotifier-toolboxes",
+  "builds": {
+    "powereduc-message_airnotifier-toolboxes": {
+      "jsfiles": [
+        "toolboxes.js"
+      ]
+    }
+  }
+}

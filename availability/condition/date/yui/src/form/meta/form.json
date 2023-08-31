@@ -1,0 +1,11 @@
+{
+  "powereduc-availability_date-form": {
+    "requires": [
+        "base",
+        "node",
+        "event",
+        "io",
+        "powereduc-core_availability-form"
+    ]
+  }
+}

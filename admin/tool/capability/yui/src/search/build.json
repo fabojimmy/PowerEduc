@@ -1,0 +1,10 @@
+{
+    "name": "powereduc-tool_capability-search",
+    "builds": {
+        "powereduc-tool_capability-search": {
+            "jsfiles": [
+                "search.js"
+            ]
+        }
+    }
+}

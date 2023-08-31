@@ -1,0 +1,10 @@
+{
+  "name": "powereduc-core-actionmenu",
+  "builds": {
+    "powereduc-core-actionmenu": {
+      "jsfiles": [
+        "actionmenu.js"
+      ]
+    }
+  }
+}

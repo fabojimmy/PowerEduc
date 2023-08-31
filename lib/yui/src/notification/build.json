@@ -1,0 +1,41 @@
+{
+  "name": "powereduc-core-notification",
+  "builds": {
+    "powereduc-core-notification": {
+      "jsfiles": [
+        "notification.js"
+      ]
+    },
+    "powereduc-core-notification-dialogue": {
+      "jsfiles": [
+        "shared.js",
+        "dialogue.js",
+        "info.js"
+      ]
+    },
+    "powereduc-core-notification-alert": {
+      "jsfiles": [
+        "shared.js",
+        "alert.js"
+      ]
+    },
+    "powereduc-core-notification-confirm": {
+      "jsfiles": [
+        "shared.js",
+        "confirm.js"
+      ]
+    },
+    "powereduc-core-notification-exception": {
+      "jsfiles": [
+        "shared.js",
+        "exception.js"
+      ]
+    },
+    "powereduc-core-notification-ajaxexception": {
+      "jsfiles": [
+        "shared.js",
+        "ajaxexception.js"
+      ]
+    }
+  }
+}

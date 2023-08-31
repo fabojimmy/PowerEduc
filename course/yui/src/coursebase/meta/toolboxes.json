@@ -1,0 +1,8 @@
+{
+    "powereduc-course-coursebase": {
+        "requires": [
+            "base",
+            "node"
+        ]
+    }
+}

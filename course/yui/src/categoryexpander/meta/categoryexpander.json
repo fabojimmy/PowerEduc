@@ -1,0 +1,8 @@
+{
+  "powereduc-course-categoryexpander": {
+    "requires": [
+        "node",
+        "event-key"
+    ]
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "name": "powereduc-core-blocks",
+  "builds": {
+    "powereduc-core-blocks": {
+      "jsfiles": [
+        "shared.js",
+        "blocks.js",
+        "manager.js",
+        "blockregion.js"
+      ]
+    }
+  }
+}

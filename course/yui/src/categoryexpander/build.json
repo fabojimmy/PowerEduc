@@ -1,0 +1,10 @@
+{
+  "name": "powereduc-course-categoryexpander",
+  "builds": {
+    "powereduc-course-categoryexpander": {
+      "jsfiles": [
+        "categoryexpander.js"
+      ]
+    }
+  }
+}

@@ -1,0 +1,7 @@
+{
+    "powereduc-question-chooser": {
+        "requires": [
+            "powereduc-core-chooserdialogue"
+        ]
+    }
+}

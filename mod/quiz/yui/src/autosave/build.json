@@ -1,0 +1,10 @@
+{
+    "name": "powereduc-mod_quiz-autosave",
+    "builds": {
+        "powereduc-mod_quiz-autosave": {
+            "jsfiles": [
+                "autosave.js"
+            ]
+        }
+    }
+}

@@ -1,0 +1,19 @@
+{
+    "powereduc-mod_quiz-dragdrop": {
+        "requires": [
+            "base",
+            "node",
+            "io",
+            "dom",
+            "dd",
+            "dd-scroll",
+            "powereduc-core-dragdrop",
+            "powereduc-core-notification",
+            "powereduc-mod_quiz-quizbase",
+            "powereduc-mod_quiz-util-base",
+            "powereduc-mod_quiz-util-page",
+            "powereduc-mod_quiz-util-slot",
+            "powereduc-course-util"
+        ]
+    }
+}

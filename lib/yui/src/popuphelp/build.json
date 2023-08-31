@@ -1,0 +1,10 @@
+{
+  "name": "powereduc-core-popuphelp",
+  "builds": {
+    "powereduc-core-popuphelp": {
+      "jsfiles": [
+        "popuphelp.js"
+      ]
+    }
+  }
+}

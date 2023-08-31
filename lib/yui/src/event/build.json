@@ -1,0 +1,10 @@
+{
+    "name": "powereduc-core-event",
+    "builds": {
+        "powereduc-core-event": {
+            "jsfiles": [
+                "event.js"
+            ]
+        }
+    }
+}

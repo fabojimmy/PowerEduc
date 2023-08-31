@@ -1,0 +1,13 @@
+{
+    "name": "powereduc-form-dateselector",
+    "builds": {
+        "powereduc-form-dateselector": {
+            "jsfiles": [
+                "shared.js",
+                "dateselector.js",
+                "powereduccalendar.js",
+                "calendar.js"
+            ]
+        }
+    }
+}

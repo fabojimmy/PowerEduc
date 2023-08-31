@@ -1,0 +1,10 @@
+{
+    "name": "powereduc-question-chooser",
+    "builds": {
+        "powereduc-question-chooser": {
+            "jsfiles": [
+                "chooser.js"
+            ]
+        }
+    }
+}

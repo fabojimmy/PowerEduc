@@ -1,0 +1,8 @@
+{
+    "powereduc-tool_capability-search": {
+        "requires": [
+            "base",
+            "node"
+        ]
+    }
+}

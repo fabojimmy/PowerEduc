@@ -1,0 +1,10 @@
+{
+  "name": "powereduc-core-chooserdialogue",
+  "builds": {
+    "powereduc-core-chooserdialogue": {
+      "jsfiles": [
+        "chooserdialogue.js"
+      ]
+    }
+  }
+}

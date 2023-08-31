@@ -1,0 +1,10 @@
+{
+  "name": "powereduc-backup-backupselectall",
+  "builds": {
+    "powereduc-backup-backupselectall": {
+      "jsfiles": [
+        "backupselectall.js"
+      ]
+    }
+  }
+}

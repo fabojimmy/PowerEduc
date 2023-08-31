@@ -1,0 +1,10 @@
+{
+    "name": "powereduc-backup-confirmcancel",
+    "builds": {
+        "powereduc-backup-confirmcancel": {
+            "jsfiles": [
+                "confirmcancel.js"
+            ]
+        }
+    }
+}

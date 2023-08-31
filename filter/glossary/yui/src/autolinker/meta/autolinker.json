@@ -1,0 +1,16 @@
+{
+  "powereduc-filter_glossary-autolinker": {
+    "requires": [
+        "base",
+        "node",
+        "io-base",
+        "json-parse",
+        "event-delegate",
+        "overlay",
+        "powereduc-core-event",
+        "powereduc-core-notification-alert",
+        "powereduc-core-notification-exception",
+        "powereduc-core-notification-ajaxexception"
+    ]
+  }
+}

@@ -1,0 +1,10 @@
+{
+    "name": "powereduc-course-coursebase",
+    "builds": {
+        "powereduc-course-coursebase": {
+            "jsfiles": [
+                "coursebase.js"
+            ]
+        }
+    }
+}

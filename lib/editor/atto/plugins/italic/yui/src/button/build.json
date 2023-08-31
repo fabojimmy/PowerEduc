@@ -1,0 +1,10 @@
+{
+  "name": "powereduc-atto_italic-button",
+  "builds": {
+    "powereduc-atto_italic-button": {
+      "jsfiles": [
+        "button.js"
+      ]
+    }
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "name": "powereduc-atto_accessibilitychecker-button",
+  "builds": {
+    "powereduc-atto_accessibilitychecker-button": {
+      "jsfiles": [
+        "button.js"
+      ]
+    }
+  }
+}

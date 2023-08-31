@@ -1,0 +1,10 @@
+{
+    "name": "powereduc-atto_managefiles-usedfiles",
+    "builds": {
+        "powereduc-atto_managefiles-usedfiles": {
+            "jsfiles": [
+                "usedfiles.js"
+            ]
+        }
+    }
+}

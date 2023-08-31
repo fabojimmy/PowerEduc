@@ -1,0 +1,26 @@
+{
+  "powereduc-course-util": {
+    "requires": [
+        "node"
+    ],
+    "use": [
+        "powereduc-course-util-base"
+    ],
+    "submodules": {
+        "powereduc-course-util-base": {
+        },
+        "powereduc-course-util-section": {
+            "requires": [
+                "node",
+                "powereduc-course-util-base"
+            ]
+        },
+        "powereduc-course-util-cm": {
+            "requires": [
+                "node",
+                "powereduc-course-util-base"
+            ]
+        }
+    }
+  }
+}

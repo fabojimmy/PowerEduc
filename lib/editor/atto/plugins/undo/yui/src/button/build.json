@@ -1,0 +1,10 @@
+{
+  "name": "powereduc-atto_undo-button",
+  "builds": {
+    "powereduc-atto_undo-button": {
+      "jsfiles": [
+        "button.js"
+      ]
+    }
+  }
+}

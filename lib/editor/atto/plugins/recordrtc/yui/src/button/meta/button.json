@@ -1,0 +1,8 @@
+{
+    "powereduc-atto_recordrtc-button": {
+        "requires": [
+            "powereduc-editor_atto-plugin",
+            "powereduc-atto_recordrtc-recording"
+        ]
+    }
+}

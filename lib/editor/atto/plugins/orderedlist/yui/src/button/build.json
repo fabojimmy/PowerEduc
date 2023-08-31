@@ -1,0 +1,10 @@
+{
+  "name": "powereduc-atto_orderedlist-button",
+  "builds": {
+    "powereduc-atto_orderedlist-button": {
+      "jsfiles": [
+        "button.js"
+      ]
+    }
+  }
+}

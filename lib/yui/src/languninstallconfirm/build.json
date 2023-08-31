@@ -1,0 +1,10 @@
+{
+  "name": "powereduc-core-languninstallconfirm",
+  "builds": {
+    "powereduc-core-languninstallconfirm": {
+      "jsfiles": [
+        "languninstallconfirm.js"
+      ]
+    }
+  }
+}

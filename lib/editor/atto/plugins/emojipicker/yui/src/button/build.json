@@ -1,0 +1,10 @@
+{
+  "name": "powereduc-atto_emojipicker-button",
+  "builds": {
+    "powereduc-atto_emojipicker-button": {
+      "jsfiles": [
+        "button.js"
+      ]
+    }
+  }
+}

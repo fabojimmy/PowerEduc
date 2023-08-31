@@ -1,0 +1,10 @@
+{
+  "powereduc-core-languninstallconfirm": {
+    "requires": [
+        "base",
+        "node",
+        "powereduc-core-notification-confirm",
+        "powereduc-core-notification-alert"
+    ]
+  }
+}

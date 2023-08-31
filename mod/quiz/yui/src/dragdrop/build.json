@@ -1,0 +1,12 @@
+{
+    "name": "powereduc-mod_quiz-dragdrop",
+    "builds": {
+        "powereduc-mod_quiz-dragdrop": {
+            "jsfiles": [
+                "dragdrop.js",
+                "section.js",
+                "resource.js"
+            ]
+        }
+    }
+}

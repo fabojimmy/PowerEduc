@@ -1,0 +1,6 @@
+Contact: https://powereduc.org/security/report/
+Acknowledgments: https://powereduc.org/security/
+Preferred-Languages: en
+Canonical: https://powereduc.org/.well-known/security.txt
+Policy: https://powereducdev.io/general/development/process/security
+Expires: 2023-05-29T01:00:00.000Z

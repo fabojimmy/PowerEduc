@@ -1,0 +1,10 @@
+{
+  "name": "powereduc-atto_indent-button",
+  "builds": {
+    "powereduc-atto_indent-button": {
+      "jsfiles": [
+        "button.js"
+      ]
+    }
+  }
+}

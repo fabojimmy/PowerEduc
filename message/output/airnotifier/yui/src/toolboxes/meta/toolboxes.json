@@ -1,0 +1,9 @@
+{
+  "powereduc-message_airnotifier-toolboxes": {
+    "requires": [
+        "base",
+        "node",
+        "io"
+    ]
+  }
+}

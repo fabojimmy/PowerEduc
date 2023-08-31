@@ -1,0 +1,10 @@
+{
+    "name": "powereduc-qbank_editquestion-chooser",
+    "builds": {
+        "powereduc-qbank_editquestion-chooser": {
+            "jsfiles": [
+                "chooser.js"
+            ]
+        }
+    }
+}

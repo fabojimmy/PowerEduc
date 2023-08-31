@@ -1,0 +1,44 @@
+{
+    "powereduc-editor_atto-editor": {
+        "requires": [
+            "node",
+            "transition",
+            "io",
+            "overlay",
+            "escape",
+            "event",
+            "event-simulate",
+            "event-custom",
+            "node-event-html5",
+            "node-event-simulate",
+            "yui-throttle",
+            "powereduc-core-notification-dialogue",
+            "powereduc-core-notification-confirm",
+            "powereduc-editor_atto-rangy",
+            "handlebars",
+            "timers",
+            "querystring-stringify"
+        ]
+    },
+    "powereduc-editor_atto-plugin": {
+        "requires": [
+            "node",
+            "base",
+            "escape",
+            "event",
+            "event-outside",
+            "handlebars",
+            "event-custom",
+            "timers",
+            "powereduc-editor_atto-menu"
+        ]
+    },
+    "powereduc-editor_atto-menu": {
+        "requires": [
+            "powereduc-core-notification-dialogue",
+            "node",
+            "event",
+            "event-custom"
+        ]
+    }
+}

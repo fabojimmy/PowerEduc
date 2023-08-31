@@ -1,0 +1,10 @@
+{
+  "name": "powereduc-core-tooltip",
+  "builds": {
+    "powereduc-core-tooltip": {
+      "jsfiles": [
+        "tooltip.js"
+      ]
+    }
+  }
+}

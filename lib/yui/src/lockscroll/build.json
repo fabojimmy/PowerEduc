@@ -1,0 +1,10 @@
+{
+  "name": "powereduc-core-lockscroll",
+  "builds": {
+    "powereduc-core-lockscroll": {
+      "jsfiles": [
+        "lockscroll.js"
+      ]
+    }
+  }
+}

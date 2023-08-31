@@ -1,0 +1,8 @@
+{
+    "powereduc-atto_accessibilitychecker-button": {
+        "requires": [
+            "color-base",
+            "powereduc-editor_atto-plugin"
+        ]
+    }
+}

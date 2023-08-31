@@ -1,0 +1,7 @@
+{
+    "powereduc-atto_accessibilityhelper-button": {
+        "requires": [
+            "powereduc-editor_atto-plugin"
+        ]
+    }
+}

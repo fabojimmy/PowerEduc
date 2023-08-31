@@ -1,0 +1,10 @@
+{
+  "name": "powereduc-atto_table-button",
+  "builds": {
+    "powereduc-atto_table-button": {
+      "jsfiles": [
+        "button.js"
+      ]
+    }
+  }
+}

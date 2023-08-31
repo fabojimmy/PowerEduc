@@ -1,0 +1,12 @@
+{
+    "powereduc-atto_equation-button": {
+        "requires": [
+            "powereduc-editor_atto-plugin",
+            "powereduc-core-event",
+            "io",
+            "event-valuechange",
+            "tabview",
+            "array-extras"
+        ]
+    }
+}

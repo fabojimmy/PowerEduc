@@ -1,0 +1,7 @@
+{
+    "powereduc-atto_orderedlist-button": {
+        "requires": [
+            "powereduc-editor_atto-plugin"
+        ]
+    }
+}

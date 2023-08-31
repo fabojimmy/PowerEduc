@@ -1,0 +1,7 @@
+{
+    "powereduc-atto_managefiles-button": {
+        "requires": [
+            "powereduc-editor_atto-plugin"
+        ]
+    }
+}

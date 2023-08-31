@@ -1,0 +1,7 @@
+{
+    "powereduc-filter_mathjaxloader-loader": {
+        "requires": [
+            "powereduc-core-event"
+        ]
+    }
+}

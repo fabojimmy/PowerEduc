@@ -1,0 +1,10 @@
+{
+  "name": "powereduc-core-maintenancemodetimer",
+  "builds": {
+    "powereduc-core-maintenancemodetimer": {
+      "jsfiles": [
+        "maintenancemodetimer.js"
+      ]
+    }
+  }
+}

@@ -1,0 +1,10 @@
+{
+    "name": "powereduc-atto_fontcolor-button",
+    "builds": {
+        "powereduc-atto_fontcolor-button": {
+            "jsfiles": [
+                "button.js"
+            ]
+        }
+    }
+}

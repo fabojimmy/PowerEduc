@@ -1,0 +1,10 @@
+{
+    "name": "powereduc-atto_superscript-button",
+    "builds": {
+        "powereduc-atto_superscript-button": {
+            "jsfiles": [
+                "button.js"
+            ]
+        }
+    }
+}

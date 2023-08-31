@@ -1,0 +1,10 @@
+{
+    "name": "powereduc-form-passwordunmask",
+    "builds": {
+        "powereduc-form-passwordunmask": {
+            "jsfiles": [
+                "passwordunmask.js"
+            ]
+        }
+    }
+}

@@ -1,0 +1,10 @@
+{
+  "name": "powereduc-atto_emoticon-button",
+  "builds": {
+    "powereduc-atto_emoticon-button": {
+      "jsfiles": [
+        "button.js"
+      ]
+    }
+  }
+}

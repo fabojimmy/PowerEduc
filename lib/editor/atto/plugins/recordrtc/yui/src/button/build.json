@@ -1,0 +1,10 @@
+{
+  "name": "powereduc-atto_recordrtc-button",
+  "builds": {
+    "powereduc-atto_recordrtc-button": {
+      "jsfiles": [
+        "button.js"
+      ]
+    }
+  }
+}

@@ -1,0 +1,10 @@
+{
+    "name": "powereduc-form-shortforms",
+    "builds": {
+        "powereduc-form-shortforms": {
+            "jsfiles": [
+                "shortforms.js"
+            ]
+        }
+    }
+}

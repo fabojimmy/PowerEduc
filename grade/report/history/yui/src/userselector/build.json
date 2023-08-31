@@ -1,0 +1,10 @@
+{
+    "name": "powereduc-gradereport_history-userselector",
+    "builds": {
+        "powereduc-gradereport_history-userselector": {
+            "jsfiles": [
+                "userselector.js"
+            ]
+        }
+    }
+}

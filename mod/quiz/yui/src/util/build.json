@@ -1,0 +1,21 @@
+{
+  "name": "powereduc-mod_quiz-util",
+  "builds": {
+    "powereduc-mod_quiz-util-base": {
+      "jsfiles": [
+        "base.js"
+      ]
+    },
+    "powereduc-mod_quiz-util-slot": {
+      "jsfiles": [
+        "slot.js"
+      ]
+    }
+    ,
+    "powereduc-mod_quiz-util-page": {
+      "jsfiles": [
+        "page.js"
+      ]
+    }
+  }
+}

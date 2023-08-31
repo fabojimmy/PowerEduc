@@ -1,0 +1,10 @@
+{
+    "powereduc-form-shortforms": {
+        "requires": [
+            "node",
+            "base",
+            "selector-css3",
+            "powereduc-core-event"
+        ]
+    }
+}
