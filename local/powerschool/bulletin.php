@@ -40,7 +40,7 @@ $PAGE->set_title('Entrer les '.$_GET['libelcou'].'');
 $PAGE->set_heading('Bulletin de Notes');
 
 $PAGE->navbar->add('Administration du Site', $CFG->wwwroot.'/admin/search.php');
-$PAGE->navbar->add(get_string('inscription', 'local_powerschool'), $managementurl);
+$PAGE->navbar->add(get_string('bulletin', 'local_powerschool'), $managementurl);
 // $PAGE->requires->js_call_amd('local_powerschool/confirmsupp');
 // $PAGE->requires->js_call_amd('local_powerschool/confirmsupp');
 
@@ -111,17 +111,18 @@ $menu = (object)[
     // 'notes' => new powereduc_url('/local/powerschool/note.php'),
     'bulletin' => new powereduc_url('/local/powerschool/bulletin.php'),
     'configurermini' => new powereduc_url('/local/powerschool/configurationmini.php'),
+    'listeetudiant' => new powereduc_url('/local/powerschool/listeetudiant.php'),
     // 'gerer' => new powereduc_url('/local/powerschool/gerer.php'),
 
     //navbar
     'statistiquenavr'=>get_string('statistique', 'local_powerschool'),
     'reglagenavr'=>get_string('reglages', 'local_powerschool'),
+    'listeetudiantnavr'=>get_string('listeetudiant', 'local_powerschool'),
     'seancenavr'=>get_string('seance', 'local_powerschool'),
     'programmenavr'=>get_string('programme', 'local_powerschool'),
     'inscriptionnavr'=>get_string('inscription', 'local_powerschool'),
     'configurationminini'=>get_string('configurationminini', 'local_powerschool'),
     'bulletinnavr'=>get_string('bulletin', 'local_powerschool'),
-
 ];
 
 echo $OUTPUT->header();

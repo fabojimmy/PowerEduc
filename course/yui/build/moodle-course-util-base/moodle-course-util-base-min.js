@@ -1,0 +1,1 @@
+YUI.add("powereduc-course-util-base",function(e,o){e.namespace("PowerEduc.core_course.util")},"@VERSION@");

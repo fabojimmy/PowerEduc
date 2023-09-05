@@ -92,7 +92,7 @@ $templatecontext = (object)[
 // ];
 
 $menu = (object)[
-    'annee' => new powereduc_url('/local/powerschool/anneescolaire.php'),
+    'programme' => new powereduc_url('/local/powerschool/programmeperso.php'),
     'paiement' => new powereduc_url('/local/powerschool/paiementperso.php'),
     'note' => new powereduc_url('/local/powerschool/bulletinnoteperso.php'),
 
