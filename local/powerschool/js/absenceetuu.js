@@ -63,7 +63,8 @@ $(".cycle").change(function (e) {
         data: {cycle:cycle,specialite:specialite},
         success: function (respone) {
             // alert(respone)
-            $(".salle1").html(respone);
+            sal=JSON.parse(respone);
+            $(".salle1").html(sal.sallejs);
         }
     });
 });
@@ -76,7 +77,7 @@ $(".salle1").change(function (e) {
     // alert(cycle);
     $.ajax({
         type: "post",
-        url: route+"/local/powerschool/classes/sallelefiltrereturetir1.php",
+        url: route+"/local/powerschool/classes/absenceetu.php",
         data: {cycle:cycle,specialite:specialite,salle:salle},
         success: function (respone) {
             // alert(respone)

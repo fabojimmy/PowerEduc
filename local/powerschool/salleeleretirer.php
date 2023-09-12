@@ -87,6 +87,8 @@ $templatecontext = (object)[
     'coursspecialite' => new moodle_url('/local/powerschool/coursspecialite.php'),
     'semestre' => new moodle_url('/local/powerschool/semestre.php'),
     'salleele' => new moodle_url('/local/powerschool/salleele.php'),
+    'groupe' => new moodle_url('/local/powerschool/groupsalle.php'),
+
 ];
 
 // $menu = (object)[

@@ -91,8 +91,8 @@ $filann=$DB->get_records_sql($sqlfilann);
 foreach($filann as $key => $fila)
 {
 $sqlanninsc="SELECT SUM(montant) entrees FROM {inscription} i,{specialite} sp ,{paiement} pa
-             WHERE i.id=pa.idinscription AND i.idspecialite=sp.id AND idfiliere='".$fila->id."'
-             AND idanneescolaire='".$_GET["annee"]."' AND i.idcampus='".$_GET["idca"]."'";
+             WHERE i.id=pa.idinscription AND i.idspecialite=sp.id AND sp.idfiliere='".$fila->id."'
+             AND idanneescolaire='".$_GET["annee"]."' AND i.idcampus='".$_GET["campus"]."'";
 
   $annnesome=$DB->get_records_sql($sqlanninsc);
   foreach($annnesome as $key=>$somne)
@@ -100,6 +100,7 @@ $sqlanninsc="SELECT SUM(montant) entrees FROM {inscription} i,{specialite} sp ,{
     $annnnnee[]=$somne->entrees;
   }
   $filiereanee[]=$fila->libellefiliere;
+//   var_dump($annnnnee);
 }
 // $specialites = array("Informatique", "Génie Civil", "Economie","mmmmmmmm",
 //                     "Informatique", "Génie Civil", "Economie","mmmmmmmm",
@@ -110,7 +111,7 @@ $sqlanninsc="SELECT SUM(montant) entrees FROM {inscription} i,{specialite} sp ,{
 $specialites_json = json_encode($specialites);
 $entrees_json = json_encode($entrees);
 
-// var_dump($specialites_json);die;
+// die;
 $fils=$DB->get_records_sql("SELECT id FROM {filiere}");
 
 $taret=array();
@@ -167,8 +168,8 @@ foreach($etufil as $key => $etu)
     $data = array();
  foreach($speciaaa as $key => $val){
     $sqlsomme="SELECT SUM(montant) as entrees,libellespecialite  FROM {specialite} sp,{cycle} cy,{inscription} i,{filiere} fi,{paiement} pa 
-             WHERE i.id=pa.idinscription AND fi.id=sp.idfiliere AND i.idcycle=cy.id AND sp.id=i.idspecialite AND sp.idfiliere ='".$_GET["filiere"]."' AND 
-             idspecialite ='".$val->id."' AND idanneescolaire='".$_GET["annee"]."'";
+               WHERE i.id=pa.idinscription AND fi.id=sp.idfiliere AND i.idcycle=cy.id AND sp.id=i.idspecialite AND sp.idfiliere ='".$_GET["filiere"]."'
+               AND idspecialite ='".$val->id."' AND idanneescolaire='".$_GET["annee"]."'";
     
     $sppsom=$DB->get_records_sql($sqlsomme);
     
@@ -602,25 +603,25 @@ else{
 
             foreach($sqlanneagefi as $key => $vallle)
             {
-                if(!empty($_GET["gender"]))
-           {
+                            if(!empty($_GET["gender"]))
+                    {
 
-               $sqlcountfilage="SELECT count(i.id) cou
-                       FROM  {inscription} i
-                       INNER JOIN {specialite} s ON i.idspecialite = s.id
-                       INNER JOIN  {filiere} f ON s.idfiliere = f.id
-                       WHERE f.id='".$_GET["filiere"]."' AND YEAR(FROM_UNIXTIME(i.date_naissance))='".$vallle->datena."'
-                       AND gender='".$_GET["gender"]."'";
-           }
-           else{
+                        $sqlcountfilage="SELECT count(i.id) cou
+                                FROM  {inscription} i
+                                INNER JOIN {specialite} s ON i.idspecialite = s.id
+                                INNER JOIN  {filiere} f ON s.idfiliere = f.id
+                                WHERE f.id='".$_GET["filiere"]."' AND YEAR(FROM_UNIXTIME(i.date_naissance))='".$vallle->datena."'
+                                AND gender='".$_GET["gender"]."'";
+                    }
+                    else{
 
-               $sqlcountfilage="SELECT count(i.id) cou
-                       FROM  {inscription} i
-                       INNER JOIN {specialite} s ON i.idspecialite = s.id
-                       INNER JOIN  {filiere} f ON s.idfiliere = f.id
-                       WHERE f.id='".$_GET["filiere"]."' AND YEAR(FROM_UNIXTIME(i.date_naissance))='".$vallle->datena."'
-                       ";
-           }
+                        $sqlcountfilage="SELECT count(i.id) cou
+                                FROM  {inscription} i
+                                INNER JOIN {specialite} s ON i.idspecialite = s.id
+                                INNER JOIN  {filiere} f ON s.idfiliere = f.id
+                                WHERE f.id='".$_GET["filiere"]."' AND YEAR(FROM_UNIXTIME(i.date_naissance))='".$vallle->datena."'
+                                ";
+                    }
                         
                         
                         $tarfilieresomeage[]=$vallle->datena;
@@ -851,14 +852,14 @@ else{
 
   // Statistique pour les notes
       //par filiere
- $filiere=$DB->get_records_sql("SELECT * FROM {filiere} WHERE idcampus=1");
+ $filiere=$DB->get_records_sql("SELECT * FROM {filiere} WHERE idcampus='".$_GET["campus"]."'");
  foreach($filiere as $key=>$valm)
  {
 
       $sqlnotefil="SELECT
       F.libellefiliere AS libellefilie,
       S.libellespecialite AS libellespecial,
-      AVG((LN.note2 * 0.5 + LN.note3 * 0.5)) AS moyenne
+      ROUND(AVG((LN.note2 * 0.5 + LN.note3 * 0.5)),2) AS moyenne_arrondie
         FROM
             {listenote} LN
         JOIN
@@ -874,6 +875,7 @@ else{
         JOIN
             {filiere} F ON S.idfiliere = F.id
         WHERE F.id='".$valm->id."'
+      
   ";
   $notefil=$DB->get_records_sql($sqlnotefil);
 
@@ -883,7 +885,7 @@ else{
 
   //connaissant la filiere et la specialite
 
-  $specialitefiliere=$DB->get_records_sql("SELECT * FROM {filiere} WHERE id=5 AND idcampus=1");
+  $specialitefiliere=$DB->get_records_sql("SELECT * FROM {filiere} WHERE id='".$_GET["filiere"]."' AND idcampus='".$_GET["campus"]."'");
   foreach($specialitefiliere as $key=>$valn)
   {}
   $specialitefilierenote=$DB->get_records_sql("SELECT * FROM {specialite} WHERE idfiliere='".$valn->id."'");
@@ -919,7 +921,7 @@ foreach($specialitefilierenote as $key =>$valspfil)
 //   die;
 
   //connaissant la filiere et le cycle
-  $cyclefiliere=$DB->get_records_sql("SELECT * FROM {cycle} WHERE idcampus=1");
+  $cyclefiliere=$DB->get_records_sql("SELECT * FROM {cycle} WHERE idcampus='".$_GET["campus"]."'");
 
   foreach($cyclefiliere as $key => $valcy)
   {
@@ -943,7 +945,7 @@ foreach($specialitefilierenote as $key =>$valspfil)
           {specialite} S ON CSp.idspecialite = S.id
       JOIN
           {filiere} F ON S.idfiliere = F.id
-      WHERE C.id='".$valcy->id."' AND F.id=5
+      WHERE C.id='".$valcy->id."' AND F.id='".$_GET["filiere"]."'
 ";
 $notecyclefil=$DB->get_records_sql($sqlnotecyclefil);
 // var_dump($notecyclefil);
@@ -977,7 +979,7 @@ foreach($countuser as $key => $count)
             {specialite} S ON CSp.idspecialite = S.id
         JOIN
             {filiere} F ON S.idfiliere = F.id
-        WHERE C.id=2 AND F.id=5 AND S.id=6 AND LN.idetudiant='".$count->id."'
+        WHERE C.id='".$_GET["cycle"]."' AND F.id='".$_GET["filiere"]."' AND S.id='".$_GET["specialite"]."' AND LN.idetudiant='".$count->id."'
         
   ";
   $notecycspelefil=$DB->get_records_sql($sqlnotecyclefilspec);
@@ -985,7 +987,20 @@ foreach($countuser as $key => $count)
 
 }
 // die;
+//verifiertypecampus
+$vericcc=$DB->get_records("campus",array("idtypecampus"=>4,"id"=>$_GET["campus"]));
+
+if($vericcc)
+{
+   
+}else
+{
+ $htmlcyetdet="<div><canvas id='diagrammeCirculairecydetcyetudet'></canvas></div>";
+}
+// var_dump(strtotime("03/01/2007"));die;
+$semestre=$DB->get_records("semestre");
 $templatecontext = (object)[
+    'htmlcyetdet'=>$htmlcyetdet,
     'anneee'=>array_values($annee),
     'roote'=>$CFG->wwwroot,
     'specialite1' => array_values($specialite),
@@ -1045,6 +1060,23 @@ $templatecontext = (object)[
 
     'tarfilieresomeagecysp'=>json_encode($tarfilieresomeagecysp),
     'tarfilierecountagecysp'=>json_encode($tarfilierecountagecysp),
+
+    //$_GET
+    "idca"=>$_GET["campus"],
+    "idsp"=>$_GET["specialite"],
+    "idcy"=>$_GET["cycle"],
+    "idan"=>$_GET["annee"],
+    "idge"=>$_GET["gender"],
+    "idfi"=>$_GET["filiere"],
+    "idsem"=>$_GET["semestre"],
+
+    //lien
+    "listevers"=>new moodle_url('/local/powerschool/listeversements.php'),
+    "listenombre"=>new moodle_url('/local/powerschool/listenombreapp.php'),
+    "listenote"=>new moodle_url('/local/powerschool/listeetudmoyem.php'),
+
+    //semestre
+    'semestre'=>array_values($semestre)
 ];
 
 

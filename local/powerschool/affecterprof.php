@@ -74,25 +74,25 @@ if (!empty($_POST["professeur"])&& !empty($_POST["specialite"])&& !empty($_POST[
         // var_dump($verifisal);die;
 if($verifisal)
   {
-
-    $veriprof=$DB->get_records_sql("SELECT * FROM {coursspecialite} as csp,{courssemestre} cse,{affecterprof} af WHERE af.idcourssemestre=cse.id AND csp.id=cse.idcoursspecialite AND idsemestre='".$_POST["semestre"]."' AND idcourses='".$_POST["cours"]."' AND idspecialite='".$_POST["specialite"]."' AND idcycle='".$_POST["cycle"]."' AND idprof='".$_POST["professeur"]."'");
-
-    if(!$veriprof)
-    {
-
-        $recordtoinsert = new stdClass();
-        $recordtoinsert->idcourssemestre = $value->idcouse;
-        // var_dump($recordtoinsert->idcourssemestre);die;
-        $recordtoinsert->idprof =$_POST["professeur"];
-        //  var_dump($_POST["professeur"],$_POST["specialite"],$_POST["cycle"],$_POST["cours"],$_POST["semestre"],$recordtoinsert->idcourssemestre,$recordtoinsert->idprof,$USER->id);die;
-    
-
-
-        $sql_cours = "SELECT e.id as iden FROM {enrol} e ,{course} c
+      $veriprof=$DB->get_records_sql("SELECT * FROM {coursspecialite} as csp,{courssemestre} cse,{affecterprof} af WHERE af.idcourssemestre=cse.id AND csp.id=cse.idcoursspecialite AND idsemestre='".$_POST["semestre"]."' AND idcourses='".$_POST["cours"]."' AND idspecialite='".$_POST["specialite"]."' AND idcycle='".$_POST["cycle"]."' AND idprof='".$_POST["professeur"]."' AND idsalle='".$_POST["salle"]."'");
+      
+      if(!$veriprof)
+      {
+          
+          $recordtoinsert = new stdClass();
+          $recordtoinsert->idcourssemestre = $value->idcouse;
+          // var_dump($recordtoinsert->idcourssemestre);die;
+          $recordtoinsert->idprof =$_POST["professeur"];
+          //  var_dump($_POST["professeur"],$_POST["specialite"],$_POST["cycle"],$_POST["cours"],$_POST["semestre"],$recordtoinsert->idcourssemestre,$recordtoinsert->idprof,$USER->id);die;
+          
+          
+          
+          $sql_cours = "SELECT e.id as iden FROM {enrol} e ,{course} c
                      WHERE e.enrol='manual' AND e.courseid=c.id  AND courseid='".$_POST["cours"]."'";
 
 
-        $recuperer_cours = $DB->get_records_sql($sql_cours);
+$recuperer_cours = $DB->get_records_sql($sql_cours);
+// die;
 
         
         foreach ($recuperer_cours as $key=>$val){
@@ -144,12 +144,25 @@ if($verifisal)
         //  $DB->insert_record('affecterprof', $recordtoinsert);
     }
           $DB->execute("INSERT INTO mdl_affecterprof VALUES (0,'".$recordtoinsert->idcourssemestre."', '".$recordtoinsert->idprof."', '".$USER->id."','".time()."','".time()."','".$_POST["salle"]."')");
+          $salet=$DB->get_records("salle",array("id"=>$_POST["salle"]));
+                foreach($salet as $valss)
+                {
+                }
+                $grid=$DB->get_records("groups",array("name"=>$valss->numerosalle,"courseid"=>$_POST["cours"]));
+                // if(!$grid)
+                foreach($grid as $mo){}
+                $groupsa=new stdClass();
+                $groupsa->groupid=$mo->id;
+                $groupsa->userid=$recordtoinsert->idprof;
+                $groupsa->timeadded=time();
+                $groupsa->itemid=0;
+                $DB->insert_record("groups_members", $groupsa);
 
     }
     else
     {
 
-        \core\notification::add('Vous ne pouvez pas affecter un cours dans le meme semestre un meme professeur'.$value->libellespecialite.'', \core\output\notification::NOTIFY_ERROR);
+        \core\notification::add('Vous ne pouvez pas affecter un cours dans une meme partie année un meme Enseignant'.$value->libellespecialite.'', \core\output\notification::NOTIFY_ERROR);
         redirect($CFG->wwwroot . '/local/powerschool/affecterprof.php?idca='.$_POST["idcampus"].'');
     }
   }
@@ -252,6 +265,8 @@ $menumini = (object)[
     'confinot' => new moodle_url('/local/powerschool/configurationnote.php'),
     'logo' => new moodle_url('/local/powerschool/logo.php'),
     'message' => new moodle_url('/local/powerschool/message.php'),
+    'materiell' => new moodle_url('/local/powerschool/materiels.php'),
+    'groupe' => new moodle_url('/local/powerschool/groupsalle.php'),
 
     ];
 $campus=$DB->get_records('campus');

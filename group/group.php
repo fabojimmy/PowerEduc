@@ -108,7 +108,28 @@ if ($editform->is_cancelled()) {
     if ($data->id) {
         groups_update_group($data, $editform, $editoroptions);
     } else {
+        // var_dump($_POST["campus"]);die;
         $id = groups_create_group($data, $editform, $editoroptions);
+
+
+        if($_POST["campus"])
+        {
+            if($_POST["idsalle"])
+            {
+                $salet=$DB->get_records("salleele",array("idsalle"=>$_POST["idsalle"],"etudiantpresen"=>1));
+                foreach($salet as $valss)
+                {
+                    $groupsa=new stdClass();
+                    $groupsa->groupid=$id;
+                    $groupsa->userid=$valss->idetudiant;
+                    $groupsa->timeadded=time();
+                    $groupsa->itemid=0;
+                    $DB->insert_record("groups_members", $groupsa);
+                }
+            }
+            $returnurl = $CFG->wwwroot.'/local/powerschool/groupsalle.php?idca='.$_POST["campus"].'';
+            redirect($returnurl,'Vous avez enregistré un groupe dans cette matiere');
+        }
         $returnurl = $CFG->wwwroot.'/group/index.php?id='.$course->id.'&group='.$id;
     }
 
