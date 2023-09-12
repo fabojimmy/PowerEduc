@@ -51,6 +51,14 @@ class group_form extends moodleform {
         $mform->addElement('text','name', get_string('groupname', 'group'),'maxlength="254" size="50"');
         $mform->addRule('name', get_string('required'), 'required', null, 'client');
         $mform->setType('name', PARAM_TEXT);
+        $mform->setDefault('name', $_GET["salle"]);
+        
+        // var_dump($_GET["idca"]);die;        
+        $mform->addElement('hidden','campus');
+        $mform->setDefault('campus', $_GET["idca"]);
+        
+        $mform->addElement('hidden','idsalle');
+        $mform->setDefault('idsalle', $_GET["idsalle"]);
 
         $mform->addElement('text','idnumber', get_string('idnumbergroup'), 'maxlength="100" size="10"');
         $mform->addHelpButton('idnumber', 'idnumbergroup');

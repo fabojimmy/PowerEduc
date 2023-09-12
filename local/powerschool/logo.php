@@ -80,6 +80,8 @@ $menumini = (object)[
     'confinot' => new moodle_url('/local/powerschool/configurationnote.php'),
     'logo' => new moodle_url('/local/powerschool/logo.php'),
     'message' => new moodle_url('/local/powerschool/message.php'),
+    'materiell' => new moodle_url('/local/powerschool/materiels.php'),
+
 
 ];
 echo $OUTPUT->header();

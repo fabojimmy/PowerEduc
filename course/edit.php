@@ -189,7 +189,7 @@ if ($editform->is_cancelled()) {
         }
 
         // The URL to take them to if they chose save and display.
-        if($_POST["idca"]!=null || $_POST["idca"]!=0)
+        if($_POST["idca"])
         {
 
             $courssp = new moodle_url('/local/powerschool/coursspecialite.php', array('idca' => $_POST["idca"]));
