@@ -160,6 +160,7 @@ if ($mform->is_cancelled()) {
             \core\notification::add('Cette configuration a été fait précedemment enregistré regarder dans le tableau,liberez le d\'abord dans ce tableau', \core\output\notification::NOTIFY_ERROR);
 
             redirect($CFG->wwwroot . '/local/powerschool/coursspecialite.php?idca='.$_POST["idcampus"].'');
+       
         }
      
     }

@@ -75,6 +75,7 @@ $recordtoinsert = new stdClass();
        "idcampus"=>$_POST["idcampus"],
        "idsemestre"=>$_POST["idsemestre"],
        "idanneescolaire"=>$_POST["idanneescolaire"],
+       "idprofesseur"=>$USER->id,
     ];
     $verib=$DB->get_records("bulletin",$vetar);
         if(!$verib)

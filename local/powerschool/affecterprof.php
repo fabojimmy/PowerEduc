@@ -73,7 +73,7 @@ if (!empty($_POST["professeur"])&& !empty($_POST["specialite"])&& !empty($_POST[
                     
     $verifisal=$DB->get_records_sql($verifisaletsql);
         // var_dump($verifisal);die;
-     if(!$verifisallf)
+     if(!$verifsallf)
      {
 
          if($verifisal)
