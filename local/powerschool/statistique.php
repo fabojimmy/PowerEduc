@@ -852,6 +852,13 @@ else{
 
   // Statistique pour les notes
       //par filiere
+      $pourcentage=$DB->get_records("configurationnote",array("idcampus"=>$_GET["campus"]));
+      foreach($pourcentage as $key=>$bb)
+      {
+        $bb->cc=$bb->cc/100;
+        $bb->normal=$bb->normal/100;
+      }
+    //   var_dump($bb->cc);
  $filiere=$DB->get_records_sql("SELECT * FROM {filiere} WHERE idcampus='".$_GET["campus"]."'");
  foreach($filiere as $key=>$valm)
  {
@@ -859,7 +866,7 @@ else{
       $sqlnotefil="SELECT
       F.libellefiliere AS libellefilie,
       S.libellespecialite AS libellespecial,
-      ROUND(AVG((LN.note2 * 0.5 + LN.note3 * 0.5)),2) AS moyenne_arrondie
+      ROUND(SUM(((LN.note2 * CSp.credit) * '".$bb->cc."' + ((LN.note3 * CSp.credit) * '".$bb->normal."')))/SUM(CSp.credit),2) AS moyenne_arrondie
         FROM
             {listenote} LN
         JOIN
@@ -879,7 +886,18 @@ else{
   ";
   $notefil=$DB->get_records_sql($sqlnotefil);
 
-//   var_dump($notefil);
+  foreach($notefil as $key =>$bppp)
+  {
+      if($bppp->libellefilie!=null || $bppp->moyenne_arrondie!=0)
+      {
+  
+          $tanotee=[
+              "libelle"=>$bppp->libellefilie,
+              "moyenne"=>$bppp->moyenne_arrondie
+          ];
+        //   var_dump($tanotee);
+      }
+  }
  }
 //   die;
 
@@ -895,9 +913,8 @@ foreach($specialitefilierenote as $key =>$valspfil)
 
 
       $sqlnotespeciafil="SELECT
-      F.libellefiliere AS libellefilie,
       S.libellespecialite AS libellespecial,
-      AVG((LN.note2 * 0.5 + LN.note3 * 0.5)) AS moyenne
+      ROUND(SUM(((LN.note2 * CSp.credit) * '".$bb->cc."' + ((LN.note3 * CSp.credit) * '".$bb->normal."')))/SUM(CSp.credit),2) AS moyenne
         FROM
             {listenote} LN
         JOIN
@@ -916,6 +933,18 @@ foreach($specialitefilierenote as $key =>$valspfil)
   ";
   $notespeciafil=$DB->get_records_sql($sqlnotespeciafil);
 
+  foreach($notespeciafil as $key =>$bppp)
+  {
+      if($bppp->libellespecial!=null || $bppp->moyenne!=0)
+      {
+  
+          $tanoteefilsp=[
+              "libelle"=>$bppp->libellespecial,
+              "moyenne"=>$bppp->moyenne
+          ];
+        //   var_dump($tanoteefilsp);
+      }
+  }
 //   var_dump($notespeciafil);
 }
 //   die;
@@ -926,7 +955,6 @@ foreach($specialitefilierenote as $key =>$valspfil)
   foreach($cyclefiliere as $key => $valcy)
   {
     $sqlnotecyclefil="SELECT
-    F.libellefiliere AS libellefilie,
     C.libellecycle AS libellecycle,
     AVG((LN.note2 * 0.5 + LN.note3 * 0.5)) AS moyenne
       FROM
@@ -949,6 +977,18 @@ foreach($specialitefilierenote as $key =>$valspfil)
 ";
 $notecyclefil=$DB->get_records_sql($sqlnotecyclefil);
 // var_dump($notecyclefil);
+    foreach($notecyclefil as $key =>$bppp)
+    {
+        if($bppp->libellecycle!=null || $bppp->moyenne!=0)
+        {
+
+            $tanoteefilcy=[
+                "libelle"=>$bppp->libellecycle,
+                "moyenne"=>$bppp->moyenne
+            ];
+            // var_dump($tanoteefilcy);
+        }
+    }
   }
 //   die;
 
@@ -984,6 +1024,18 @@ foreach($countuser as $key => $count)
   ";
   $notecycspelefil=$DB->get_records_sql($sqlnotecyclefilspec);
 //   var_dump($notecycspelefil);
+    // foreach($notecycspelefil as $key =>$bppp)
+    // {
+    //     if($bppp->libellecycle!=null || $bppp->moyenne!=0)
+    //     {
+
+    //         $tanoteefilcy=[
+    //             "libelle"=>$bppp->libellecycle,
+    //             "moyenne"=>$bppp->moyenne
+    //         ];
+    //         // var_dump($tanoteefilcy);
+    //     }
+    // }
 
 }
 // die;

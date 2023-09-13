@@ -50,40 +50,23 @@ $sql1="SELECT firstname,lastname,libellespecialite,libellecycle,idetudiant FROM 
 $inscription=$DB->get_records_sql($sql1);
 // var_dump($inscription);
 // die;
+$moyyenne=0;
+$rolecam=$DB->get_records_sql("SELECT * FROM {campus} c,{typecampus} ty WHERE c.idtypecampus=ty.id AND c.id='".$_GET["idca"]."'");
 foreach($inscription as $key => $vvallno)
 {
-    $rolecam=$DB->get_records_sql("SELECT * FROM {campus} c,{typecampus} ty WHERE c.idtypecampus=ty.id AND c.id='".$_GET["idca"]."'");
     foreach($rolecam as $key => $rolev)
     {}
-    if($rolev->libelletype=="universite" || $rolev->libelletype=="college" || $rolev->libelletype=="lycee")
+    if($rolev->libelletype=="universite")
     {
     $sql="SELECT
-        ln.idetudiant,
-        csms.idsemestre,
-        u.firstname,
-        u.lastname,
-        libellespecialite,
-        libellecycle,
-        SUM(ln.note3 * cs.credit) / SUM(cs.credit) as moyenne_semestre
+        ln.note2,
+        ln.note3
     FROM
-        {coursspecialite} cs
-    INNER JOIN
-        {courssemestre} csms ON cs.id = csms.idcoursspecialite
-    INNER JOIN
-        {affecterprof} ap ON csms.id = ap.idcourssemestre
-    INNER JOIN
-        {listenote} ln ON ap.id = ln.idaffecterprof
-    INNER JOIN 
-        {specialite} sp ON cs.idspecialite=sp.id
-    INNER JOIN 
-        {cycle} cy ON cs.idcycle=cy.id
-    INNER JOIN 
-        {user} u ON u.id=ln.idetudiant
+     
+        {listenote} ln 
     WHERE
-        csms.idsemestre='".$_GET["idsem"]."'
-    AND 
-        cs.idanneescolaire='".$_GET["idan"]."'
-    AND 
+     
+     
         ln.idetudiant='".$vvallno->idetudiant."'
     ";
     }
@@ -119,22 +102,25 @@ foreach($inscription as $key => $vvallno)
     ";
     }
     $moyen=$DB->get_records_sql($sql);
-    // var_dump($moyen);
+    var_dump($moyen);
     foreach($moyen as $key =>$vvvv)
-    {}
-   
-    if($rolev->libelletype=="universite")
     {
-        $pourcent=$DB->get_records("configurationnote",array("idcampus"=>$_GET["idca"]));
 
-        foreach($pourcent as $key =>$pou)
-        {}
-        $vvallno->moyenne_semestre=$vvvv->moyenne_semestre*$pou->normal/100;
+        if($rolev->libelletype=="universite")
+        {
+            $pourcent=$DB->get_records("configurationnote",array("idcampus"=>$_GET["idca"]));
+    
+            foreach($pourcent as $key =>$pou)
+            {}
+            $moyyenne=$moyyenne+(($vvvv->note3*$vvvv->credit) * $pou->cc/100+($vvvv->note2*$vvvv->credit) * $pou->normal/100);
+        }
+        $vvallno->moyenne_semestre=$vvvv->credit;
     }
+   
     // var_dump($moyen);
 }
 
-// die;
+die;
 $templatecontext = (object)[
     'etudiant' => array_values($inscription),
     'reglagesedit' => new moodle_url('/local/powerschool/reglagesedit.php'),
