@@ -60,6 +60,7 @@ $string['listeetudiant'] = 'Liste des Apprenants EN';
 $string['logo'] = 'Logo EN';
 $string['absenceetu'] = 'Gérer les absences des Apprenants EN';
 $string['materiel'] = 'Materiel EN';
+$string['groupsalle'] = 'Groupe de salle EN';
 
 
 

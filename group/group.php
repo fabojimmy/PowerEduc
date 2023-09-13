@@ -119,12 +119,13 @@ if ($editform->is_cancelled()) {
                 $salet=$DB->get_records("salleele",array("idsalle"=>$_POST["idsalle"],"etudiantpresen"=>1));
                 foreach($salet as $valss)
                 {
-                    $groupsa=new stdClass();
-                    $groupsa->groupid=$id;
-                    $groupsa->userid=$valss->idetudiant;
-                    $groupsa->timeadded=time();
-                    $groupsa->itemid=0;
-                    $DB->insert_record("groups_members", $groupsa);
+                    // $groupsa=new stdClass();
+                    // $groupsa->groupid=$id;
+                    // $groupsa->userid=$valss->idetudiant;
+                    // $groupsa->timeadded=time();
+                    // $groupsa->itemid=0;
+                    // $DB->insert_record("groups_members", $groupsa);
+                    groups_add_member($id,$valss->idetudiant);
                 }
             }
             $returnurl = $CFG->wwwroot.'/local/powerschool/groupsalle.php?idca='.$_POST["campus"].'';

@@ -41,6 +41,7 @@
 function groups_add_member($grouporid, $userorid, $component=null, $itemid=0) {
     global $DB;
 
+    // alert("ndd");die;
     if (is_object($userorid)) {
         $userid = $userorid->id;
         $user   = $userorid;
