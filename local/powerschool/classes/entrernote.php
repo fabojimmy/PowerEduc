@@ -51,9 +51,23 @@ if($_GET["notetest"]=="test"&&$_GET["idbu"]&&$_GET["id"])
                             $noteetu->idaffecterprof=$_GET['id'];
                             $noteetu->idbulletin=$_GET['idbu'];
                             $noteetu->idetudiant=$valllle->userid;
+
+                            $vericam=$DB->get_records_sql("SELECT * FROM {campus} c,{typecampus} t WHERE c.idtypecampus=t.id AND c.id='".$_GET["idca"]."'");
+
+                            foreach($vericam as $key)
+                            {}
                             if($_POST["normalcc"]=="cc")
                             {
-                                $noteetu->note2=$valllle->grade;
+                                if($key->libelletype=="universite")
+                                {
+
+                                    $noteetu->note2=$valllle->grade;
+                                }else
+                                {
+                                    \core\notification::add('Vos ne pouvez pas remplir les données dans la case controle continu', \core\output\notification::NOTIFY_ERROR);
+            
+                                    redirect($CFG->wwwroot . '/local/powerschool/entrernote.php?idbu='.$_GET["idbu"].'&idsa='.$_GET["idsa"].'&idcour='.$_GET["idcour"].'&idsp='.$_GET["idsp"].'&idcy='.$_GET["idcy"].'&idsem='.$_GET["idsem"].'&idca='.$_GET["idca"].'&idan='.$_GET["idan"].'&libelcou='.$_GET["libelcou"].'');                        
+                                }
                             }
                             else
                             {
@@ -87,7 +101,20 @@ if($_GET["notetest"]=="test"&&$_GET["idbu"]&&$_GET["id"])
                                 $noteetu->idetudiant=$lesan->userid;
                                 if($_POST["normalcc"]=="cc")
                                 {
-                                    $noteetu->note2=($lesan->grade*$bonte->grade)/100;
+                                    $vericam=$DB->get_records_sql("SELECT * FROM {campus} c,{typecampus} t WHERE c.idtypecampus=t.id AND c.id='".$_GET["idca"]."'");
+
+                                    foreach($vericam as $key)
+                                    {}
+                                    if($key->libelletype=="universite")
+                                    {
+
+                                        $noteetu->note2=($lesan->grade*$bonte->grade)/100;
+                                    }else
+                                    {
+                                        \core\notification::add('Vos ne pouvez pas remplir les données dans la case controle continu', \core\output\notification::NOTIFY_ERROR);
+                
+                                        redirect($CFG->wwwroot . '/local/powerschool/entrernote.php?idbu='.$_GET["idbu"].'&idsa='.$_GET["idsa"].'&idcour='.$_GET["idcour"].'&idsp='.$_GET["idsp"].'&idcy='.$_GET["idcy"].'&idsem='.$_GET["idsem"].'&idca='.$_GET["idca"].'&idan='.$_GET["idan"].'&libelcou='.$_GET["libelcou"].'');                        
+                                    }
                                 }
                                 else
                                 {
@@ -146,32 +173,45 @@ if($_GET["notetest"]=="test"&&$_GET["idbu"]&&$_GET["id"])
                     
                 }
                 //cc
-    foreach ($notescc as $userId => $note) {
-                // var_dump($note,$userId);
-                // Enregistrer la note dans la base de données ou effectuer toute autre opération nécessaire
-                // Utilisez $userId comme identifiant de l'étudiant et $note comme note soumise
-                // $data = $userId . ": " . $note . "\n";
-                // var_dump($data,"idaff=".$_GET['id']); 
-    
-                //select la ligne correspondant dans la liste de note
-                    if(!empty($note)){
-                        $ligneliste=$DB->get_records("listenote",array("idaffecterprof"=>$_GET['id'],"idetudiant"=>$userId));
-                        foreach ($ligneliste as $key => $value) {
-                            # code...
-                        }
-                        // var_dump($value->id);die;
-                        $noteetu=new stdClass();
-                        $noteetu->id=$value->id;
-                        $noteetu->idaffecterprof=$_GET['id'];
-                        $noteetu->idbulletin=$_GET['idbu'];
-                        $noteetu->idetudiant=$userId;
-                        $noteetu->note2=$note;
-                        $DB->update_record("listenote", $noteetu);
-                        
-                        $itest1++;
+$vericam=$DB->get_records_sql("SELECT * FROM {campus} c,{typecampus} t WHERE c.idtypecampus=t.id AND c.id='".$_GET["idca"]."'");
+
+                    foreach($vericam as $key)
+                    {}
+                    if($key->libelletype=="universite")
+                    {
+                        foreach ($notescc as $userId => $note) {
+                            // var_dump($note,$userId);
+                            // Enregistrer la note dans la base de données ou effectuer toute autre opération nécessaire
+                            // Utilisez $userId comme identifiant de l'étudiant et $note comme note soumise
+                            // $data = $userId . ": " . $note . "\n";
+                            // var_dump($data,"idaff=".$_GET['id']); 
+                
+                            //select la ligne correspondant dans la liste de note
+                                if(!empty($note)){
+                                    $ligneliste=$DB->get_records("listenote",array("idaffecterprof"=>$_GET['id'],"idetudiant"=>$userId));
+                                    foreach ($ligneliste as $key => $value) {
+                                        # code...
+                                    }
+                                    // var_dump($value->id);die;
+                                    $noteetu=new stdClass();
+                                    $noteetu->id=$value->id;
+                                    $noteetu->idaffecterprof=$_GET['id'];
+                                    $noteetu->idbulletin=$_GET['idbu'];
+                                    $noteetu->idetudiant=$userId;
+                                    $noteetu->note2=$note;
+                                    $DB->update_record("listenote", $noteetu);
+                                    
+                                    $itest1++;
+                                }
+                                
+                            }
+                    }else
+                    {
+                        \core\notification::add('Vos ne pouvez pas remplir les données dans la case controle continu', \core\output\notification::NOTIFY_ERROR);
+
+                        redirect($CFG->wwwroot . '/local/powerschool/entrernote.php?idbu='.$_GET["idbu"].'&idsa='.$_GET["idsa"].'&idcour='.$_GET["idcour"].'&idsp='.$_GET["idsp"].'&idcy='.$_GET["idcy"].'&idsem='.$_GET["idsem"].'&idca='.$_GET["idca"].'&idan='.$_GET["idan"].'&libelcou='.$_GET["libelcou"].'');                        
                     }
-                    
-                }
+   
     
                 // if($itest==0)
                 // {
