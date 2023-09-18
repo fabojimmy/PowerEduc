@@ -8,6 +8,11 @@ $idanneescolaires=$DB->get_records("anneescolaire");
 foreach($idanneescolaires as $key=> $idannee){}
 $salleete= new stdClass();
 
+$affecterppp=$DB->get_records_sql("SELECT af.id FROM {coursspecialite} sp,{courssemestre} cs,{affecterprof} af
+                                   WHERE sp.id=cs.idcoursspecialite AND cs.id=af.idcourssemestre AND idanneescolaire='".$idannee->id."'
+                                   AND af.idsalle='".$_POST["salle"]."'");
+
+
 if(!empty($_POST["salle"])&&!empty($_POST["etudiantsid"]))
 {
     for($i=0;$i<count($etudiantsidd);$i++)
@@ -37,6 +42,19 @@ if(!empty($_POST["salle"])&&!empty($_POST["etudiantsid"]))
     foreach($groupsal as $key)
     {}
     $DB->delete_records("groups_members",array("groupid"=>$key->id,"userid"=>$etudiantsidd[$i]));
+
+    foreach($affecterppp as $key )
+    {
+        $listenote=$DB->get_records("listenote",array("idaffecterprof"=>$key->id,"idetudiant"=>$etudiantsidd[$i],"retirersalle"=>0));
+         foreach($listenote as $keyli)
+         {
+             $listenoteet=new stdClass();
+
+             $listenoteet->id=$keyli->id;
+             $listenoteet->retirersalle=1;
+             $DB->update_record("listenote",$listenoteet);
+         }
+    }
 }
     // }
 

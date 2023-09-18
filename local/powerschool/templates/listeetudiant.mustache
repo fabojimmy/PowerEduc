@@ -97,6 +97,7 @@
                 <th scope="col">Campus</th>
                 <th scope="col">Specialite</th>
                 <th scope="col">Cycle</th>
+                <th scope="col">Salle</th>
                 <th scope="col">Actions</th>
               </tr>
             </thead>
@@ -110,8 +111,9 @@
                     <td>{{villecampus}} - {{libellecampus}}  </td>
                     <td>{{libellespecialite}}  ({{abreviationspecialite}})  </td>
                     <td>{{libellecycle}} ({{nombreannee}} ans) </td>
+                    <td>{{numerosalle}}</td>
                     <td>
-                        <input type="button" class="btn btn-info local_annee_delete_button" value="affecter" action="affectercours" onclick="location.href='{{affectercours}}?id={{id}}&liste=listeet&idca={{idca}}&idsp={{idsp}}&idcy={{idcy}}&idfi={{idfi}}&idan={{idan}}'">
+                        <input type="button" class="btn btn-info local_annee_delete_button" value="affecter" action="affectercours" onclick="location.href='{{affectercours}}?id={{id}}&liste=listeet&idca={{idca}}&idsp={{idsp}}&idcy={{idcy}}&idfi={{idfi}}&idan={{idan}}&idsa={{idsa}}'">
                     </td>
                 </tr>
             </tbody>

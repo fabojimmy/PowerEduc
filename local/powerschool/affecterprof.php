@@ -66,7 +66,7 @@ if (!empty($_POST["professeur"])&& !empty($_POST["specialite"])&& !empty($_POST[
      foreach ($cours as $key => $value) {
          
     }
-    $verifsallf=$DB->get_records("affecterprof",array("idcourssemestre"=>$value->idcouse,"idsalle"=>$_POST["salle"]));
+    $verifsallf=$DB->get_records("affecterprof",array("idcourssemestre"=>$value->idcouse,"idsalle"=>$_POST["salle"],"quit"=>0));
 
     $verifisaletsql="SELECT * FROM {salleele} sa,{inscription} i WHERE sa.idsalle='".$_POST["salle"]."'
                      AND sa.idetudiant=i.idetudiant AND i.idspecialite='".$_POST["specialite"]."' AND i.idcycle='".$_POST["cycle"]."'";
@@ -78,7 +78,7 @@ if (!empty($_POST["professeur"])&& !empty($_POST["specialite"])&& !empty($_POST[
 
          if($verifisal)
          {
-             $veriprof=$DB->get_records_sql("SELECT * FROM {coursspecialite} as csp,{courssemestre} cse,{affecterprof} af WHERE af.idcourssemestre=cse.id AND csp.id=cse.idcoursspecialite AND idsemestre='".$_POST["semestre"]."' AND idcourses='".$_POST["cours"]."' AND idspecialite='".$_POST["specialite"]."' AND idcycle='".$_POST["cycle"]."' AND idprof='".$_POST["professeur"]."' AND idsalle='".$_POST["salle"]."'");
+             $veriprof=$DB->get_records_sql("SELECT * FROM {coursspecialite} as csp,{courssemestre} cse,{affecterprof} af WHERE af.idcourssemestre=cse.id AND csp.id=cse.idcoursspecialite AND idsemestre='".$_POST["semestre"]."' AND idcourses='".$_POST["cours"]."' AND idspecialite='".$_POST["specialite"]."' AND idcycle='".$_POST["cycle"]."' AND idprof='".$_POST["professeur"]."' AND idsalle='".$_POST["salle"]."' AND quit=0");
              
              if(!$veriprof)
              {
@@ -164,7 +164,7 @@ if (!empty($_POST["professeur"])&& !empty($_POST["specialite"])&& !empty($_POST[
                             //  $DB->insert_record("groups_members", $groupsa);
                             // die;
                              groups_add_member($mo->id,$recordtoinsert->idprof);
-                         $DB->execute("INSERT INTO mdl_affecterprof VALUES (0,'".$recordtoinsert->idcourssemestre."', '".$recordtoinsert->idprof."', '".$USER->id."','".time()."','".time()."','".$_POST["salle"]."')");
+                         $DB->execute("INSERT INTO mdl_affecterprof VALUES (0,'".$recordtoinsert->idcourssemestre."', '".$recordtoinsert->idprof."', '".$USER->id."','".time()."','".time()."','".$_POST["salle"]."',0)");
              }
              else
              {
@@ -194,9 +194,31 @@ if (!empty($_POST["professeur"])&& !empty($_POST["specialite"])&& !empty($_POST[
 
 if($_GET['id']) {
 
-    // var_dump($_GET["id"]);die;
-    $mform->supp_affecterprof($_GET['id']);
-    redirect($CFG->wwwroot . '/local/powerschool/affecterprof.php', 'Bien supp');
+    // var_dump($_GET["idcou"]);die;
+    $cont=$DB->get_records_sql("SELECT * FROM {context} WHERE contextlevel=50 AND instanceid='".$_GET["idcou"]."'");
+                             foreach ($cont as $key => $value4) {
+                                 // array_push($tarcon,$value4->id);
+                                 // var_dump($value4->id,$val->fullname);die;
+                                 }
+    $sql_cours = "SELECT e.id as iden FROM {enrol} e ,{course} c
+                 WHERE e.enrol='manual' AND e.courseid=c.id  AND courseid='".$_GET["idcou"]."'";
+
+
+                 $recuperer_cours = $DB->get_records_sql($sql_cours);
+             // die;
+             // die;
+             foreach ($recuperer_cours as $key => $value) {
+                // array_push($tarcon,$value4->id);
+                // var_dump($value4->id,$val->fullname);die;
+                }
+    $DB->delete_records("user_enrolments",array("enrolid"=>$value->iden,"userid"=>$_GET["iduser"]));
+    $DB->delete_records("role_assignments",array("contextid"=>$value4->id,"userid"=>$_GET["iduser"],"roleid"=>3));
+    // $mform->supp_affecterprof($_GET['id']);
+    $prof=new stdClass();
+    $prof->id=$_GET["id"];
+    $prof->quit=1;
+    $DB->update_record("affecterprof",$prof);
+    redirect($CFG->wwwroot . '/local/powerschool/affecterprof.php?idca='.$_GET["idca"].'', 'Bien supp');
         
 }
 
@@ -248,9 +270,9 @@ $sql1="SELECT * FROM {salle} WHERE idcampus='".$_GET["idca"]."'";
 $salle=$DB->get_records_sql($sql1);
 
 // var_dump($salle);die;
-$affecter=$DB->get_recordset_sql("SELECT af.id as idaffe,libellecycle,libellespecialite,libellesemestre,fullname,firstname,lastname,numerosalle FROM {coursspecialite} as csp,{courssemestre} cse,{affecterprof} af,
+$affecter=$DB->get_recordset_sql("SELECT af.id as idaffe,libellecycle,libellespecialite,libellesemestre,fullname,firstname,lastname,numerosalle,cou.id as idcouu,us.id as iduser FROM {coursspecialite} as csp,{courssemestre} cse,{affecterprof} af,
                             {semestre} se,{specialite} sp,{cycle} cy,{course} cou,{user} as us,{filiere} f,{salle} sal WHERE sal.id=af.idsalle AND sp.idfiliere=f.id AND csp.id=cse.idcoursspecialite AND us.id=idprof
-                            AND idsemestre=se.id AND idcourses=cou.id AND idspecialite=sp.id AND idcycle=cy.id AND af.idcourssemestre=cse.id AND f.idcampus='".$_GET["idca"]."'");
+                            AND idsemestre=se.id AND idcourses=cou.id AND idspecialite=sp.id AND idcycle=cy.id AND af.idcourssemestre=cse.id AND f.idcampus='".$_GET["idca"]."' AND quit=0");
 // $affecterprof = $DB->get_recordset_sql('affecterprof', null, 'id');
 $affecterprof = array();
 foreach ($affecter as $record) {

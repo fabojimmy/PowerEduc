@@ -210,7 +210,7 @@ $tarcon=array();
                 
                 foreach ($listenote1 as $key => $value1) {
                     # code...
-                    $sql2="SELECT * FROM {affecterprof} c WHERE c.idcourssemestre='".$value1->id."'";
+                    $sql2="SELECT * FROM {affecterprof} c WHERE c.idcourssemestre='".$value1->id."' AND idsalle='".$_GET["idsa"]."' AND quit=0";
                     $listenote2=$DB->get_records_sql($sql2);
                     // var_dump($listenote2);
                     // var_dump($listenote1);die;
@@ -226,6 +226,7 @@ $tarcon=array();
                         $notet->note1=0;
                         $notet->note2=0;
                         $notet->note3=0;
+                        $notet->retirersalle=0;
                         //  var_dump($notet);
                         $DB->insert_record('listenote',$notet);
                     }

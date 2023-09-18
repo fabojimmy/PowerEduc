@@ -111,7 +111,7 @@ if($_GET['id']) {
 // var_dump($inscription);
 // die;
 $message=$DB->get_records("materiels",array("idcampus"=>$_GET["idca"]));
-$somme=$DB->get_records_sql("SELECT SUM(sommetota) as sommateriel FROM {materiels}");
+$somme=$DB->get_records_sql("SELECT SUM(sommetota) as sommateriel FROM {materiels} WHERE idcampus='".$_GET["idca"]."'");
 $templatecontext = (object)[
     'materiels' => array_values($message),
     'somme' => array_values($somme),
