@@ -127,7 +127,7 @@ $filiere=$DB->get_records_sql($sql);
 $sql2="SELECT * FROM {campus}";
 //cours
 $sql3="SELECT c.id,fullname,shortname FROM {course} c,{coursspecialite} cs,{courssemestre} css,{affecterprof} af,{specialite} s,{filiere} f
-       WHERE f.id=s.idfiliere AND s.id=cs.idspecialite AND c.id=cs.idcourses AND css.idcoursspecialite=cs.id AND css.id=af.idcourssemestre AND idprof='".$USER->id."' AND f.idcampus='".$_GET["idca"]."'";
+       WHERE f.id=s.idfiliere AND s.id=cs.idspecialite AND c.id=cs.idcourses AND css.idcoursspecialite=cs.id AND css.id=af.idcourssemestre AND af.quit=0 AND idprof='".$USER->id."' AND f.idcampus='".$_GET["idca"]."'";
 
 $cours=$DB->get_records_sql($sql3);
 // $salle=$DB->get_records_sql($sql1);

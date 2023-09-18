@@ -51,7 +51,7 @@ $PAGE->navbar->add(get_string('listeetudiant', 'local_powerschool'), $management
 
 // $inscription =$tab = array();
 
-$sql_inscrip = "SELECT i.id, u.firstname, u.lastname, a.datedebut, a.datefin, c.libellecampus, c.villecampus, 
+$sql_inscrip = "SELECT i.id, u.firstname, u.lastname, a.datedebut, a.datefin, c.libellecampus, c.villecampus,i.idetudiant, 
                 s.libellespecialite, s.abreviationspecialite , cy.libellecycle, cy.nombreannee,s.idfiliere,idcycle,i.idcampus,idspecialite
                 FROM {inscription} i, {anneescolaire} a, {user} u, {specialite} s, {campus} c, {cycle} cy
                 WHERE i.idanneescolaire=a.id AND i.idspecialite=s.id AND i.idetudiant=u.id 
@@ -78,6 +78,15 @@ foreach ($inscription as $key ){
     $key->datedebut = $dated;
     $key->datefin = $datef;
 
+    // die;
+    $salle=$DB->get_records_sql("SELECT sa.id,numerosalle FROM {salle} sa,{salleele} saa WHERE sa.id=saa.idsalle AND saa.idetudiant='".$key->idetudiant."'");
+
+    foreach($salle as $sallee)
+    {
+
+    }
+    $key->numerosalle=$sallee->numerosalle;
+    $key->idsa=$sallee->id;
 }
 
 // var_dump($i);

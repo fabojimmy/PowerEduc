@@ -47,82 +47,140 @@ $PAGE->set_heading('Listes des differents apprenants et leur Moyennes');
 $sql1="SELECT firstname,lastname,libellespecialite,libellecycle,idetudiant FROM {inscription} i,{user} u,{specialite} sp,{cycle} cy WHERE i.idetudiant=u.id
        AND i.idspecialite='".$_GET["idsp"]."' AND i.idcycle='".$_GET["idcy"]."' AND sp.id=idspecialite
        AND cy.id=idcycle";
+$sql2c="SELECT count(idetudiant) coutet FROM {inscription} i,{user} u,{specialite} sp,{cycle} cy WHERE i.idetudiant=u.id
+       AND i.idspecialite='".$_GET["idsp"]."' AND i.idcycle='".$_GET["idcy"]."' AND sp.id=idspecialite
+       AND cy.id=idcycle";
+$counttt=$DB->get_records_sql($sql2c);
 $inscription=$DB->get_records_sql($sql1);
 // var_dump($inscription);
 // die;
-$moyyenne=0;
+
+$moyennespe=0;
+
 $rolecam=$DB->get_records_sql("SELECT * FROM {campus} c,{typecampus} ty WHERE c.idtypecampus=ty.id AND c.id='".$_GET["idca"]."'");
 foreach($inscription as $key => $vvallno)
 {
+    $sommenote=0;
+$sommecredi=0;
     foreach($rolecam as $key => $rolev)
     {}
     if($rolev->libelletype=="universite")
     {
-    $sql="SELECT
-        ln.note2,
-        ln.note3
-    FROM
-     
-        {listenote} ln 
-    WHERE
-     
-     
-        ln.idetudiant='".$vvallno->idetudiant."'
-    ";
+    // $user=$DB->get_records("user");
+    // foreach($user as $key)
+    // {
+        $sqlli="SELECT note2,credit,note3,idetudiant FROM {coursspecialite} sp,{courssemestre} cs,{affecterprof} af,{listenote} li
+                WHERE sp.id=cs.idcoursspecialite AND af.idcourssemestre=cs.id AND li.idaffecterprof=af.id AND sp.idspecialite='".$_GET["idsp"]."'
+                AND sp.idcycle='".$_GET["idcy"]."' AND cs.idsemestre='".$_GET["idsem"]."' AND li.idetudiant='".$vvallno->idetudiant."'";
+
+        $gromoy=$DB->get_records_sql($sqlli);
+        foreach($gromoy as $key =>$keynote)
+        {   
+        
+        
+        if($keynote->idetudiant==$vvallno->idetudiant)  
+        {
+            
+                $pourcent=$DB->get_records("configurationnote",array("idcampus"=>$_GET["idca"]));
+        
+                foreach($pourcent as $key =>$pou)
+                {}
+                $sommenote=$sommenote+(($keynote->note2*($pou->cc/100))*$keynote->credit+($keynote->note3*($pou->normal/100))*$keynote->credit);
+                $sommecredi=$sommecredi+$keynote->credit;
+                // $nobret++;
+            
+            $moyenne=$sommenote/$sommecredi;
+            $vvallno->moyenne_semestre=round($moyenne,2);
+            
+            
+        }
+        
+    }
+    $moyennespe=$moyennespe+$vvallno->moyenne_semestre;
+
+        // var_dump($moyenne,$sommecredi,$sommenote,$keynote->idetudiant===$vvallno->idetudiant);
+        // die;
+    }
+    else if($rolev->libelletype=="college" || $rolev->libelletype=="lycee")
+    {
+        $sqlli="SELECT note2,credit,note3,idetudiant FROM {coursspecialite} sp,{courssemestre} cs,{affecterprof} af,{listenote} li
+                WHERE sp.id=cs.idcoursspecialite AND af.idcourssemestre=cs.id AND li.idaffecterprof=af.id AND sp.idspecialite='".$_GET["idsp"]."'
+                AND sp.idcycle='".$_GET["idcy"]."' AND cs.idsemestre='".$_GET["idsem"]."' AND li.idetudiant='".$vvallno->idetudiant."'";
+
+        $gromoy=$DB->get_records_sql($sqlli);
+        foreach($gromoy as $key =>$keynote)
+        {   
+        
+        
+        if($keynote->idetudiant==$vvallno->idetudiant)  
+        {
+            
+                $sommenote=$sommenote+(($keynote->note3)*$keynote->credit);
+                $sommecredi=$sommecredi+$keynote->credit;
+                // $nobret++;
+            
+            $moyenne=$sommenote/$sommecredi;
+            $vvallno->moyenne_semestre=round($moyenne,2);
+            
+            
+        }
+        
+    }
+    $moyennespe=$moyennespe+$vvallno->moyenne_semestre;
     }
     else{
-        $sql="SELECT
-        ln.idetudiant,
-        csms.idsemestre,
-        u.firstname,
-        u.lastname,
-        libellespecialite,
-        libellecycle,
-        SUM(ln.note3) as moyenne_semestre
-    FROM
-        {coursspecialite} cs
-    INNER JOIN
-        {courssemestre} csms ON cs.id = csms.idcoursspecialite
-    INNER JOIN
-        {affecterprof} ap ON csms.id = ap.idcourssemestre
-    INNER JOIN
-        {listenote} ln ON ap.id = ln.idaffecterprof
-    INNER JOIN 
-        {specialite} sp ON cs.idspecialite=sp.id
-    INNER JOIN 
-        {cycle} cy ON cs.idcycle=cy.id
-    INNER JOIN 
-        {user} u ON u.id=ln.idetudiant
-    WHERE
-        csms.idsemestre='".$_GET["idsem"]."'
-    AND 
-        cs.idanneescolaire='".$_GET["idan"]."'
-    AND 
-        ln.idetudiant='".$vvallno->idetudiant."'
-    ";
-    }
-    $moyen=$DB->get_records_sql($sql);
-    var_dump($moyen);
-    foreach($moyen as $key =>$vvvv)
-    {
+        $nobret=0;
+        $sqlli="SELECT note2,credit,note3,idetudiant FROM {coursspecialite} sp,{courssemestre} cs,{affecterprof} af,{listenote} li
+        WHERE sp.id=cs.idcoursspecialite AND af.idcourssemestre=cs.id AND li.idaffecterprof=af.id AND sp.idspecialite='".$_GET["idsp"]."'
+        AND sp.idcycle='".$_GET["idcy"]."' AND cs.idsemestre='".$_GET["idsem"]."' AND li.idetudiant='".$vvallno->idetudiant."'";
 
-        if($rolev->libelletype=="universite")
+        $gromoy=$DB->get_records_sql($sqlli);
+        foreach($gromoy as $key =>$keynote)
+        {   
+
+
+        if($keynote->idetudiant==$vvallno->idetudiant)  
         {
-            $pourcent=$DB->get_records("configurationnote",array("idcampus"=>$_GET["idca"]));
-    
-            foreach($pourcent as $key =>$pou)
-            {}
-            $moyyenne=$moyyenne+(($vvvv->note3*$vvvv->credit) * $pou->cc/100+($vvvv->note2*$vvvv->credit) * $pou->normal/100);
+            
+                $sommenote=$sommenote+(($keynote->note3));
+                $sommecredi=$sommecredi+$keynote->credit;
+                $nobret++;
+            
+            $moyenne=$sommenote/$nobret;
+            $vvallno->moyenne_semestre=round($moyenne,2);
+            
+            
         }
-        $vvallno->moyenne_semestre=$vvvv->credit;
-    }
-   
-    // var_dump($moyen);
-}
 
-die;
+        }
+        $moyennespe=$moyennespe+$vvallno->moyenne_semestre;
+    }
+    // $moyen=$DB->get_records_sql($sql);
+    // var_dump($moyen);
+    // foreach($moyen as $key =>$vvvv)
+    // {
+
+    //     if($rolev->libelletype=="universite")
+    //     {
+    //         $pourcent=$DB->get_records("configurationnote",array("idcampus"=>$_GET["idca"]));
+    
+    //         foreach($pourcent as $key =>$pou)
+    //         {}
+    //         $moyyenne=$moyyenne+(($vvvv->note3*$vvvv->credit) * $pou->cc/100+($vvvv->note2*$vvvv->credit) * $pou->normal/100);
+    //     }
+    //     $vvallno->moyenne_semestre=$vvvv->credit;
+    // }
+   
+   
+   
+}
+foreach($counttt as $mm){}
+$moyennespe=round($moyennespe/$mm->coutet,2);
+// var_dump($mm->coutet,$moyennebb,$moyennespe);
+// die;
 $templatecontext = (object)[
     'etudiant' => array_values($inscription),
+    'moyennegene' => $moyennespe,
     'reglagesedit' => new moodle_url('/local/powerschool/reglagesedit.php'),
     'reglagessupp'=> new moodle_url('/local/powerschool/reglages.php'),
     'filiere' => new moodle_url('/local/powerschool/filiere.php'),

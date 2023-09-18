@@ -57,7 +57,7 @@ $PAGE->navbar->add("Entrer Note", $managementurl);
 // $inscription =$tab = array();
 
 //cours
-$sql="SELECT c.id as idcourse,fullname FROM {coursspecialite} as cs,{course} as c,{affecterprof} as af,{courssemestre} as cse WHERE cse.idcoursspecialite=cs.id AND af.idcourssemestre=cse.id AND idprof='".$USER->id."' AND c.id=cs.idcourses AND idspecialite='".$_GET["idsp"]."' AND idcycle='".$_GET["idcy"]."' AND idsemestre='".$_GET["idsem"]."' AND af.idsalle='".$_GET["idsa"]."'";
+$sql="SELECT c.id as idcourse,fullname FROM {coursspecialite} as cs,{course} as c,{affecterprof} as af,{courssemestre} as cse WHERE cse.idcoursspecialite=cs.id AND af.idcourssemestre=cse.id AND idprof='".$USER->id."' AND c.id=cs.idcourses AND idspecialite='".$_GET["idsp"]."' AND idcycle='".$_GET["idcy"]."' AND idsemestre='".$_GET["idsem"]."' AND af.idsalle='".$_GET["idsa"]."' AND af.quit=0";
 $cours=$DB->get_records_sql($sql);
 
 //etudiants
@@ -82,7 +82,7 @@ foreach ($courspe as $key => $value1) {
 
 $sql_etuu="SELECT u.id as userid, u.firstname, u.lastname,note1,note2,note3 FROM (((((({listenote} l LEFT JOIN {affecterprof} af ON l.idaffecterprof=af.id)LEFT JOIN {courssemestre} couss ON couss.id=af.idcourssemestre)
             LEFT JOIN {coursspecialite} coursspe ON coursspe.id=couss.idcoursspecialite)
-            LEFT JOIN {course} c ON c.id=coursspe.idcourses) LEFT JOIN {user} u ON u.id=l.idetudiant) LEFT JOIN {salleele} saa ON saa.idetudiant=u.id) WHERE af.id='".$value2->id."' AND saa.idsalle='".$_GET["idsa"]."' AND saa.etudiantpresen=1";
+            LEFT JOIN {course} c ON c.id=coursspe.idcourses) LEFT JOIN {user} u ON u.id=l.idetudiant) LEFT JOIN {salleele} saa ON saa.idetudiant=u.id) WHERE af.id='".$value2->id."' AND saa.idsalle='".$_GET["idsa"]."' AND af.quit=0 AND saa.etudiantpresen=1";
 $etudiants = $DB->get_records_sql($sql_etuu);
 // var_dump($etudiants);die;
 
