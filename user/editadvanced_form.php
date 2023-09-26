@@ -134,6 +134,8 @@ class user_editadvanced_form extends moodleform {
         $mform->setType('role', PARAM_RAW);
 
         $purpose = user_edit_map_field_purpose($userid, 'password');
+
+        // var_dump($purpose);die;
         $mform->addElement('passwordunmask', 'newpassword', get_string('newpassword'), 'size="20"' . $purpose);
         $mform->addHelpButton('newpassword', 'newpassword');
         $mform->setType('newpassword', core_user::get_property_type('password'));

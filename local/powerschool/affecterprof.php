@@ -148,13 +148,13 @@ if (!empty($_POST["professeur"])&& !empty($_POST["specialite"])&& !empty($_POST[
                          }    
                          //  $DB->insert_record('affecterprof', $recordtoinsert);
                      }
-                           $salet=$DB->get_records("salle",array("id"=>$_POST["salle"]));
-                             foreach($salet as $valss)
-                             {
-                             }
-                             $grid=$DB->get_records("groups",array("name"=>$valss->numerosalle,"courseid"=>$_POST["cours"]));
-                             // if(!$grid)
-                             foreach($grid as $mo){}
+                            //    $salet=$DB->get_records("salle",array("id"=>$_POST["salle"]));
+                            //      foreach($salet as $valss)
+                            //      {
+                            //      }
+                            //      $grid=$DB->get_records("groups",array("name"=>$valss->numerosalle,"courseid"=>$_POST["cours"]));
+                            //      // if(!$grid)
+                            //      foreach($grid as $mo){}
                             //  var_dump($mo->id,$_POST["cours"],$valss->numerosalle);
                             //  $groupsa=new stdClass();
                             //  $groupsa->groupid=$mo->id;
@@ -163,7 +163,7 @@ if (!empty($_POST["professeur"])&& !empty($_POST["specialite"])&& !empty($_POST[
                             //  $groupsa->itemid=0;
                             //  $DB->insert_record("groups_members", $groupsa);
                             // die;
-                             groups_add_member($mo->id,$recordtoinsert->idprof);
+                            //  groups_add_member($mo->id,$recordtoinsert->idprof);
                          $DB->execute("INSERT INTO mdl_affecterprof VALUES (0,'".$recordtoinsert->idcourssemestre."', '".$recordtoinsert->idprof."', '".$USER->id."','".time()."','".time()."','".$_POST["salle"]."',0)");
              }
              else

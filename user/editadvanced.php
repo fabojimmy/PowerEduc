@@ -202,6 +202,7 @@ if ($userform->is_cancelled()) {
         } else {
             $usernew->password = AUTH_PASSWORD_NOT_CACHED;
         }
+        // var_dump($usernew->password);die;
         $usernew->id = user_create_user($usernew, false, false);
 
         if (!$authplugin->is_internal() and $authplugin->can_change_password() and !empty($usernew->newpassword)) {

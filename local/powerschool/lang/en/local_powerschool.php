@@ -61,6 +61,8 @@ $string['logo'] = 'Logo EN';
 $string['absenceetu'] = 'Gérer les absences des Apprenants EN';
 $string['materiel'] = 'Materiel EN';
 $string['groupsalle'] = 'Groupe de salle EN';
+$string['importationimpo'] = 'Importation EN';
+$string['exportation'] = 'Exportation inscription EN';
 
 
 

@@ -24,6 +24,8 @@ use core\progress\display;
 use local_powerschool\inscription;
 
 require_once(__DIR__ . '/../../config.php');
+require_once(__DIR__ .'/../../group/lib.php');
+
 require_once($CFG->dirroot.'/local/powerschool/classes/inscription.php');
 // require_once('tcpdf/tcpdf.php');
 
@@ -114,6 +116,7 @@ $veripaie=$DB->get_records("paiement",array("idinscription"=>$_GET['id']));
     {
       if($veriaff)
       {
+        
                 $getid = $_GET['id'];
 
                 $sql_get_inscrip = "SELECT idetudiant FROM {inscription} WHERE id = $getid " ;
@@ -192,15 +195,34 @@ $tarcon=array();
                     // var_dump($val->fullname);
                     // die;
                     
+                    
                     $DB->insert_record('user_enrolments', $sql_enrol);
                     $DB->insert_record('role_assignments', $sql_roleass);
                     
-                
+                    
+                    
+                    $salllle=$DB->get_records("salle",array("id"=>$_GET["idsa"]));
+                    
+                    foreach($salllle as $key =>$valcapa){}
+                    $versalgro=$DB->get_records("groups",array("name"=>$valcapa->numerosalle,"courseid"=>$val->courseid));
+                    // var_dump($versalgro);
+                    // die;
+
+                    if($versalgro)
+                    {                        
+                        foreach($versalgro as $keygro)
+                        {}
+                        groups_add_member($keygro->id,$idetudiant);
+                        
+                    }
+
                         
                 }
 
 
             }
+
+           
             //  die;       
             $sql="SELECT * FROM {coursspecialite} WHERE idspecialite='".$val->idspecialite."' AND idcycle='".$val->idcycle."'";
             $listenote=$DB->get_records_sql($sql);
@@ -280,6 +302,26 @@ $sql_inscrip = "SELECT i.id, u.firstname, u.lastname, a.datedebut, a.datefin, c.
                 FROM {inscription} i, {anneescolaire} a, {user} u, {specialite} s, {campus} c, {cycle} cy
                 WHERE i.idanneescolaire=a.id AND i.idspecialite=s.id AND i.idetudiant=u.id 
                 AND i.idcampus=c.id AND i.idcycle = cy.id AND i.idcampus='".$_GET["idca"]."'" ;
+    
+    if($_GET["filiere"])
+    {
+        $sql_inscrip.=" AND s.idfiliere='".$_GET["filiere"]."'";
+        
+    }
+    if($_GET["specialite"])
+    {
+        $sql_inscrip.=" AND s.id='".$_GET["specialite"]."'";
+    }
+    if($_GET["cycle"])
+    {
+        $sql_inscrip.=" AND i.idcycle='".$_GET["cycle"]."'";
+        // var_dump($sql_inscrip);
+        // die;
+    }
+    if($_GET["annee"])
+    {
+        $sql_inscrip.=" AND i.idanneescolaire='".$_GET["annee"]."'";
+    }
 
 // $inscription = $DB->get_records('inscription', null, 'id');
 
@@ -308,14 +350,33 @@ foreach ($inscription as $key ){
 // var_dump($inscription);
 // die;
 $campus=$DB->get_records("campus");
+$semestre=$DB->get_records("semestre");
+$annee=$DB->get_records("anneescolaire");
+
+foreach($annee as $key =>$ab)
+{
+    $time = $ab->datedebut;
+                $timef = $ab->datefin;
+
+                $dated = date('Y',$time);
+                $datef = date('Y',$timef);
+
+                $ab->datedebut = $dated;
+                $ab->datefin = $datef;
+}
 $templatecontext = (object)[
     'inscription' => array_values($inscription),
+    'campus' => array_values($campus),
+    'semestre' => array_values($semestre),
+    'annee' => array_values($annee),
     // 'nb'=>array_values($tab),
     'inscriptionedit' => new moodle_url('/local/powerschool/inscriptionedit.php'),
     'inscriptionpayer'=> new moodle_url('/local/powerschool/paiement.php'),
     'affectercours'=> new moodle_url('/local/powerschool/inscription.php'),
+    'inpf'=> new moodle_url('/local/powerschool/inscription.php'),
     'suppins'=> new moodle_url('/local/powerschool/inscription.php'),
-    'idca'=>$_GET["idca"]
+    'idca'=>$_GET["idca"],
+    'roote'=>$CFG->wwwroot,
     // 'imprimer' => new moodle_url('/local/powerschool/imp.php'),
 ];
 $campuss=(object)[
