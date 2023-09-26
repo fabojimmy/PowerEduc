@@ -91,7 +91,7 @@ s.libellespecialite, cy.libellecycle
 ORDER BY
 s.libellespecialite ASC, cy.libellecycle ASC;
 ";
-$salleocc=$DB->get_records_sql($sql3);
+$salleo=$DB->get_recordset_sql($sql3);
 $sql4="SELECT
 s.libellespecialite,
 cy.libellecycle,
@@ -124,6 +124,10 @@ $sallenonoc=$DB->get_records_sql($sql4);
 // Remplacez 'valeur_idca' par la valeur de $_GET["idca"]
 // var_dump($sallenonoc);die;
 
+$salleocc = array();
+foreach ($salleo as $record) {
+    $salleocc[] = (array) $record;
+}
 $sql="SELECT * FROM {filiere} WHERE idcampus='".$_GET["idca"]."'";
 $sql1="SELECT * FROM {salle} WHERE idcampus='".$_GET["idca"]."'";
 $sql2="SELECT * FROM {campus}";

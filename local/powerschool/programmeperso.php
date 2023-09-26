@@ -49,37 +49,37 @@ $PAGE->set_heading('Votre Programme');
 
 $sqllu = "SELECT fullname,DATE_FORMAT(FROM_UNIXTIME(p.datecours),'%D %b %Y') as datec,heuredebutcours,heurefincours,numerosalle FROM {course} c, {semestre} s,{specialite} sp,{cycle} cy,{salle} sa, {programme} p,{inscription} i
 WHERE p.idcourses = c.id AND p.idsemestre =s.id AND p.idspecialite = sp.id AND i.idetudiant='".$USER->id."'
-AND p.idcycle = cy.id AND i.idcycle=cy.id AND i.idspecialite=sp.id AND idsemestre=1
+AND p.idcycle = cy.id AND i.idcycle=cy.id AND i.idspecialite=sp.id AND idsemestre='".$_GET["idsem"]."'
 AND sa.id=p.idsalle AND DAYOFWEEK(FROM_UNIXTIME(p.datecours))=2";
 
 $lundi=$DB->get_records_sql($sqllu);
 $sqlma = "SELECT fullname,DATE_FORMAT(FROM_UNIXTIME(p.datecours),'%D %b %Y') as datec,heuredebutcours,heurefincours,numerosalle FROM {course} c, {semestre} s,{specialite} sp,{cycle} cy,{salle} sa, {programme} p,{inscription} i
 WHERE p.idcourses = c.id AND p.idsemestre =s.id AND p.idspecialite = sp.id AND i.idetudiant='".$USER->id."'
-AND p.idcycle = cy.id AND i.idcycle=cy.id AND i.idspecialite=sp.id AND idsemestre=1
+AND p.idcycle = cy.id AND i.idcycle=cy.id AND i.idspecialite=sp.id AND idsemestre='".$_GET["idsem"]."'
 AND sa.id=p.idsalle AND DAYOFWEEK(FROM_UNIXTIME(p.datecours))=3";
 
 $mardi=$DB->get_records_sql($sqlma);
 $sqlme = "SELECT fullname,DATE_FORMAT(FROM_UNIXTIME(p.datecours),'%D %b %Y') as datec,heuredebutcours,heurefincours,numerosalle FROM {course} c, {semestre} s,{specialite} sp,{cycle} cy,{salle} sa, {programme} p,{inscription} i
 WHERE p.idcourses = c.id AND p.idsemestre =s.id AND p.idspecialite = sp.id AND i.idetudiant='".$USER->id."'
-AND p.idcycle = cy.id AND i.idcycle=cy.id AND i.idspecialite=sp.id AND idsemestre=1
+AND p.idcycle = cy.id AND i.idcycle=cy.id AND i.idspecialite=sp.id AND idsemestre='".$_GET["idsem"]."'
 AND sa.id=p.idsalle AND DAYOFWEEK(FROM_UNIXTIME(p.datecours))=4";
 
 $mercredi=$DB->get_records_sql($sqlme);
 $sqljeu = "SELECT fullname,DATE_FORMAT(FROM_UNIXTIME(p.datecours),'%D %b %Y') as datec,heuredebutcours,heurefincours,numerosalle FROM {course} c, {semestre} s,{specialite} sp,{cycle} cy,{salle} sa, {programme} p,{inscription} i
 WHERE p.idcourses = c.id AND p.idsemestre =s.id AND p.idspecialite = sp.id AND i.idetudiant='".$USER->id."'
-AND p.idcycle = cy.id AND i.idcycle=cy.id AND i.idspecialite=sp.id AND idsemestre=1
+AND p.idcycle = cy.id AND i.idcycle=cy.id AND i.idspecialite=sp.id AND idsemestre='".$_GET["idsem"]."'
 AND sa.id=p.idsalle AND DAYOFWEEK(FROM_UNIXTIME(p.datecours))=5";
 
 $jeudi=$DB->get_records_sql($sqljeu);
 $sqlven = "SELECT fullname,DATE_FORMAT(FROM_UNIXTIME(p.datecours),'%D %b %Y') as datec,heuredebutcours,heurefincours,numerosalle FROM {course} c, {semestre} s,{specialite} sp,{cycle} cy,{salle} sa, {programme} p,{inscription} i
 WHERE p.idcourses = c.id AND p.idsemestre =s.id AND p.idspecialite = sp.id AND i.idetudiant='".$USER->id."'
-AND p.idcycle = cy.id AND i.idcycle=cy.id AND i.idspecialite=sp.id AND idsemestre=1
+AND p.idcycle = cy.id AND i.idcycle=cy.id AND i.idspecialite=sp.id AND idsemestre='".$_GET["idsem"]."'
 AND sa.id=p.idsalle AND DAYOFWEEK(FROM_UNIXTIME(p.datecours))=6";
 
 $vendredi=$DB->get_records_sql($sqlven);
 $sqlsad = "SELECT fullname,DATE_FORMAT(FROM_UNIXTIME(p.datecours),'%D %b %Y') as datec,heuredebutcours,heurefincours,numerosalle FROM {course} c, {semestre} s,{specialite} sp,{cycle} cy,{salle} sa, {programme} p,{inscription} i
 WHERE p.idcourses = c.id AND p.idsemestre =s.id AND p.idspecialite = sp.id AND i.idetudiant='".$USER->id."'
-AND p.idcycle = cy.id AND i.idcycle=cy.id AND i.idspecialite=sp.id AND idsemestre=1
+AND p.idcycle = cy.id AND i.idcycle=cy.id AND i.idspecialite=sp.id AND idsemestre='".$_GET["idsem"]."'
 AND sa.id=p.idsalle AND DAYOFWEEK(FROM_UNIXTIME(p.datecours))=7";
 
 $samedi=$DB->get_records_sql($sqlsad);
@@ -142,15 +142,20 @@ $progr='
    </table>
 </div>';
 $menu = (object)[
-    'programme' => new moodle_url('/local/powerschool/anneescolaire.php'),
+    'programme' => new moodle_url('/local/powerschool/programmeperso.php'),
     'paiement' => new moodle_url('/local/powerschool/paiementperso.php'),
     'note' => new moodle_url('/local/powerschool/bulletinnoteperso.php'),
     'absence' => new moodle_url('/local/powerschool/listeetuabsenetu.php'),
 
 ];
+$semestre=$DB->get_records("semestre");
 
+// var_dump($semestre);
+// die;
 $templatecontext=[
-    "programme"=>$progr
+    "programme"=>$progr,
+    "semestre"=>array_values($semestre),
+    "courssemestre"=>new moodle_url('/local/powerschool/programmeperso.php')
 ];
 echo $OUTPUT->header();
 

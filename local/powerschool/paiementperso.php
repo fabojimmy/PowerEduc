@@ -103,7 +103,7 @@ $PAGE->set_heading('Liste de vos paiement');
 // $sql="SELECT * FROM {paiement} as pa RIGHT JOIN {tranche} as t ON pa.idtranche=t.id WHERE pa.idinscription=:idins";
 
 // $paiement = $DB->get_records_sql($sql,array("idins"=>$_GET["idins"]));
-$sqlfi="SELECT idfiliere,i.idcampus,i.idspecialite FROM {inscription} i,{specialite} s,{cycle} c WHERE i.idspecialite=s.id AND c.id=i.idcycle AND idetudiant='".$USER->id."'";
+$sqlfi="SELECT idfiliere,i.idcampus,i.idspecialite,i.idcycle FROM {inscription} i,{specialite} s,{cycle} c WHERE i.idspecialite=s.id AND c.id=i.idcycle AND idetudiant='".$USER->id."'";
 $fil=$DB->get_records_sql($sqlfi);
 
 // var_dump($fil);die;
@@ -119,9 +119,9 @@ foreach($campuss as $key => $vaca){}
 if($vaca->idtypecampus==1)
 {
     $sqlsommmm="SELECT sum(somme) as som FROM {filierecycletranc} as filcy ,{filiere} as fil,{tranche} as tran
-       WHERE filcy.idfiliere=fil.id AND tran.id=filcy.idtranc AND idfiliere='".$idfil->idfiliere."'";
+       WHERE filcy.idfiliere=fil.id AND tran.id=filcy.idtranc AND idfiliere='".$idfil->idfiliere."' AND idcycle='".$idfil->idcycle."'";
     $sql1="SELECT * FROM {filierecycletranc} as filcy ,{filiere} as fil,{tranche} as tran
-        WHERE filcy.idfiliere=fil.id AND tran.id=filcy.idtranc AND idfiliere='".$idfil->idfiliere."'";
+        WHERE filcy.idfiliere=fil.id AND tran.id=filcy.idtranc AND idfiliere='".$idfil->idfiliere."' AND idcycle='".$idfil->idcycle."'";
 }else{
     $sql1="SELECT * FROM {filierecycletranc} as filcy ,{filiere} as fil,{tranche} as tran
         WHERE filcy.idfiliere=fil.id AND tran.id=filcy.idtranc AND idfiliere='".$idfil->idfiliere."' AND filcy.idspecialite='".$idfil->idspecialite."'";

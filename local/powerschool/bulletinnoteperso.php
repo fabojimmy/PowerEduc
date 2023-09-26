@@ -57,16 +57,27 @@ $PAGE->set_heading('Vos Notes ');
 // $inscription =$tab = array();
 
 $sql="SELECT * FROM {listenote} li,{affecterprof} af,{coursspecialite} co,{course} scou,{courssemestre} cse
-                WHERE af.id=li.idaffecterprof AND cse.id=af.idcourssemestre AND cse.idcoursspecialite=co.id AND co.idcourses=scou.id AND li.idetudiant='".$USER->id."'";
+      WHERE af.id=li.idaffecterprof AND cse.id=af.idcourssemestre AND cse.idcoursspecialite=co.id 
+      AND co.idcourses=scou.id AND li.idetudiant='".$USER->id."' AND cse.idsemestre='".$_GET["idsem"]."'";
   $notes=$DB->get_records_sql($sql);
+
+  $semestre=$DB->get_records("semestre");
+
+// var_dump($semestre);
+// die;
+$templatecontext=[
+    "programme"=>$progr,
+    // "bulletinnote"=>new moodle_url('/local/powerschool/bulletinnoteperso.php')
+];
 //   var_dump($notes);die;
 $templatecontext = (object)[
     'notes'=>array_values($notes),
+    "semestre"=>array_values($semestre),
     'ajoute'=> new moodle_url('/local/powerschool/inscription.php'),
     'affectercours'=> new moodle_url('/local/powerschool/inscription.php'),
     'ajou'=> new moodle_url('/local/powerschool/classes/entrernote.php'),
     'coursid'=> new moodle_url('/local/powerschool/entrernote.php'),
-    'bulletinnote'=> new moodle_url('/local/powerschool/bulletinnote.php'),
+    'bulletinnote'=> new moodle_url('/local/powerschool/bulletinnoteperso.php'),
     'root'=>$CFG->wwwroot,
     'tirerbulletin'=>new moodle_url('/local/powerschool/recu/facture/bulletin.php'),
     'idetu'=>$_GET["idet"]

@@ -25,7 +25,68 @@
 }}
 
 <h1>inscription de cours</h1>
+<form action="{{inpf}}?id=4" method="GET">
+    <div class="d-flex justify-content-around" style="margin-top:35px">
+              <div class="col-2">
+                  <label>Choisir Année</label>
+                  <select class="form-control annee1" name="annee">
+                  <option value=""></option>
+                  {{#annee}}
+                    <option value="{{id}}">{{datedebut}}-{{datefin}}</option>
+                  {{/annee}}
+                  </select>
+              </div>
+              <div class="col-2">
+                  <label>Choisir Etablissement</label>
+                  <select class="form-control campus1" name="idca">
+                  <option value=""></option>
+                  {{#campus}}
+                  <option value="{{id}}">{{libellecampus}}</option>
+                  {{/campus}}
 
+                  </select>
+              </div>
+              <div class="col-2">
+                  <label>Choisir Filiere</label>
+                  <select class="form-control filiere1" name="filiere">
+                  <option value=""></option>
+                  {{#filiere1}}
+                    <option value="{{id}}">{{libellefiliere}}</option>
+                  {{/filiere1}}
+                  </select>
+              </div>
+              <div class="col-2">
+                  <label>Choisir Specialite/Classe</label>
+                  <select class="form-control specialite1" name="specialite">
+                  <option value=""></option>
+                  {{#specialite1}}
+                  <option value="{{id}}">{{libellespecialite}}</option>
+                  {{/specialite1}}
+                  </select>
+              </div>
+              <div class="col-2">
+                  <label>Choisir Cycle</label>
+                  <select class="form-control cycle1" name="cycle">
+                    <option></option>
+                  {{#cycle1}}
+                  <option value="{{id}}">{{libellecycle}}</option>
+                  {{/cycle1}}
+                  </select>
+              </div>
+              
+      </div> 
+    {{! <div class="d-flex justify-content-around" style="margin-top:35px">
+              <div class="col-2">
+                  <label>Choisir Genre</label>
+                  <select class="form-control" name="gender">
+                  <option value=""></option>
+                    <option value="f">Femme</option>
+                    <option value="h">Homme</option>
+                  </select>
+              </div>
+      </div>  }}
+      <input class="form-control col-1 mt-5" style="margin-left:30px" type="submit" name="valider" value="valider" >
+</form>
 <div class="table card mt-2 mb-2">
         <table class="table">
             <thead>
@@ -59,5 +120,12 @@
             {{/inscription}}
           </table>
 </div>
+ <input type="hidden" class="roote" value="{{roote}}">
 
+ <script src="{{wwwroot}}/moodle1/local/powerschool/js/jquery.js"></script>
+    <script src="{{wwwroot}}/moodle1/local/powerschool/js/chart.js"></script>
+    <script src="{{wwwroot}}/moodle1/local/powerschool/js/statitisquefiltrer.js"></script>
+    <script src="{{wwwroot}}/moodle1/local/powerschool/js/circulaires.js"></script>
+    <script src="{{wwwroot}}/moodle1/local/powerschool/js/statistique.js"></script>
+    <script src="{{wwwroot}}/moodle1/local/powerschool/js/statistiquenotee.js"></script>
 <hr>
