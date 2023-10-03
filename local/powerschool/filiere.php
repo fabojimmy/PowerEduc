@@ -24,6 +24,8 @@ use core\progress\display;
 use local_powerschool\filiere;
 
 require_once(__DIR__ . '/../../config.php');
+require_once(__DIR__ . '/lib.php');
+
 require_once($CFG->dirroot.'/local/powerschool/classes/filiere.php');
 
 global $DB;
@@ -86,9 +88,16 @@ $recordtoinsert = $fromform;
     foreach ($categ as $key => $value1) {
         # code...
     }
-    // var_dump($value1->name);die;
-    $DB->insert_record('filiere', $recordtoinsert);
-    redirect($CFG->wwwroot . '/course/editcategory.php?parent='.$value1->id.'&filiere='.$recordtoinsert->libellefiliere.'&idca='.$_POST["idcampus"].'', 'Enregistrement effectué');
+    // get_string("local_powerschool:createfiliere");
+    // $fffff=context::instance_by_id(CONTEXT_MODULE,70);
+    // var_dump($fffff);die;
+    // role_assign()
+    // if(has_capability('local_powerschool:createfiliere',$fffff)) {
+
+        $DB->insert_record('filiere', $recordtoinsert);
+        redirect($CFG->wwwroot . '/course/editcategory.php?parent='.$value1->id.'&filiere='.$recordtoinsert->libellefiliere.'&idca='.$_POST["idcampus"].'', 'Enregistrement effectué');
+    // }
+   
     exit;
 } else {
     //  redirect($CFG->wwwroot . '/local/powerschool/filiere.php', 'Cette filiere excite');
@@ -105,7 +114,7 @@ if($_GET['id'] && $_GET['idca']) {
         
 }
 
-
+// http://127.0.0.1/moodle1/local/powerschool/filiere.php
 
 // var_dump($mform->selectfiliere());
 // die;
@@ -137,8 +146,10 @@ $filiere = $DB->get_records('filiere', array("idcampus"=>$_GET["idca"]));
 // die;
 $tarfilierecat=array();
 
+// var_dump($iddetablisse);
+// die;
 
-if(!empty($_GET["idca"]))
+if($iddetablisse)
 {
     // $_GET["idca"]
     // die;
@@ -158,11 +169,11 @@ if(!empty($_GET["idca"]))
     $stringfilierecat=implode("','",$tarfilierecat);
     // var_dump($stringfilierecat);
     // die;
-    $filierecat = $DB->get_records_sql("SELECT * FROM {filiere} WHERE idcampus ='".$_GET["idca"]."' AND libellefiliere NOT IN ('$stringfilierecat')");
+    $filierecat = $DB->get_records_sql("SELECT * FROM {filiere} WHERE idcampus ='".$iddetablisse."' AND libellefiliere NOT IN ('$stringfilierecat')");
     // var_dump($filierecat);
     // die;
     
-    $filierecat1 = $DB->get_records_sql("SELECT * FROM {filiere} WHERE idcampus ='".$_GET["idca"]."' AND libellefiliere IN ('$stringfilierecat')");
+    $filierecat1 = $DB->get_records_sql("SELECT * FROM {filiere} WHERE idcampus ='".$iddetablisse."' AND libellefiliere IN ('$stringfilierecat')");
 }else
 {
     $filierecat[]="";
@@ -170,10 +181,10 @@ if(!empty($_GET["idca"]))
     // $tarfilierecat[]="";
     // $tarfilierecat1[]="";
 }
-// var_dump($filierecat);die;
+// var_dump($iddetablisse);die;
 $campus=$DB->get_records("campus");
 $vericam=$DB->get_records_sql("SELECT * FROM {campus} c,{typecampus} t
-                                WHERE t.id=c.idtypecampus AND c.id='".$_GET["idca"]."'");    
+                                WHERE t.id=c.idtypecampus AND c.id='".$iddetablisse."'");    
             foreach($vericam as $key => $ver)
             { 
                 if($ver->libelletype=="college"|| $ver->libelletype=="lycee")
@@ -210,7 +221,7 @@ $templatecontext = (object)[
     'catfiliere' => new moodle_url('/course/editcategory.php'),
     'cattfiliere' => new moodle_url('/local/powerschool/filiere.php'),
     'root'=>$CFG->wwwroot,
-    'idca'=>$_GET["idca"],
+    'idca'=>$iddetablisse,
     'filiereca'=>urlencode($_GET["filiere"]),
     'category'=>$value1categ->id,
     'categorychoi'=>"la categorie choisie est ".$_GET["filiere"]."",
@@ -268,7 +279,7 @@ echo $OUTPUT->header();
 // {
     // }
     // echo $OUTPUT->render_from_template('local_powerschool/navbar', $menu);
-    echo $OUTPUT->render_from_template('local_powerschool/campustou', $campuss);
+    // echo $OUTPUT->render_from_template('local_powerschool/campustou', $campuss);
     
     $mform->display();
     

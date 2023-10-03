@@ -24,6 +24,8 @@ use core\progress\display;
 use local_powerschool\cycle;
 
 require_once(__DIR__ . '/../../config.php');
+require_once(__DIR__ . '/lib.php');
+
 require_once($CFG->dirroot.'/local/powerschool/classes/cycle.php');
 
 global $DB;
@@ -91,7 +93,7 @@ if($_GET['id']) {
 
 // var_dump($mform->selectcycle());
 // die;
-$cycle = $DB->get_records('cycle',array("idcampus"=>$_GET["idca"]));
+$cycle = $DB->get_records('cycle',array("idcampus"=>$iddetablisse));
 $campus = $DB->get_records('campus');
 
 $campuss=(object)[
@@ -99,7 +101,7 @@ $campuss=(object)[
     'confpaie'=>new moodle_url('/local/powerschool/cycle.php'),
             ]; 
 
-            $rolecasql="SELECT * FROM {campus} c,{typecampus} t WHERE c.idtypecampus=t.id AND c.id='".$_GET["idca"]."'";
+            $rolecasql="SELECT * FROM {campus} c,{typecampus} t WHERE c.idtypecampus=t.id AND c.id='".$iddetablisse."'";
             $campusr=$DB->get_records_sql($rolecasql);
             foreach($campusr as $key=>$campu)
             {}
@@ -121,7 +123,7 @@ $templatecontext = (object)[
     'coursspecialite'=> new moodle_url('/local/powerschool/coursspecialite.php'),
     'programme' => new moodle_url('/local/powerschool/programme.php'),
     'root' => $CFG->wwwroot,
-    'idca' => $_GET["idca"],
+    'idca' => $iddetablisse,
 ];
 
 // $menu = (object)[
@@ -167,7 +169,7 @@ echo $OUTPUT->header();
 
 
 // echo $OUTPUT->render_from_template('local_powerschool/navbar', $menu);
-echo $OUTPUT->render_from_template('local_powerschool/campustou', $campuss);
+// echo $OUTPUT->render_from_template('local_powerschool/campustou', $campuss);
 $mform->display();
 
 

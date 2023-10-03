@@ -34,9 +34,10 @@ class specialite extends moodleform {
     public function definition() {
         global $CFG;
         
-        global $USER,$DB;
+        global $USER,$DB,$iddetablisse;
 
 
+        // var_dump($iddetablisse);die;
         $sqlspec="SELECT * FROM {specialite} WHERE id='".$_GET["id"]."'";
         $speccat=$DB->get_records_sql($sqlspec);
         foreach($speccat as $key =>$vaspelca)
@@ -89,7 +90,7 @@ class specialite extends moodleform {
 
         $reqq = new campus();
         $annee = array();
-        $sql = "SELECT * FROM {filiere} WHERE idcampus='".$_GET["idca"]."'";
+        $sql = "SELECT * FROM {filiere} WHERE idcampus='".$iddetablisse."'";
         $filiere = $reqq->select($sql);
         
         $mform = $this->_form; // Don't forget the underscore!
@@ -101,7 +102,7 @@ class specialite extends moodleform {
 
         $mform->addElement('hidden', 'idcampus');
         $mform->setType('idcampus', PARAM_INT);
-        $mform->setDefault('idcampus', $_GET["idca"]);        //Default value
+        $mform->setDefault('idcampus', $iddetablisse);        //Default value
 
         $mform->addElement('text', 'libellespecialite', 'Libellé specialite'); // Add elements to your form
         $mform->setType('libellespecialite', PARAM_TEXT);                   //Set type of element

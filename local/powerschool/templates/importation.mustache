@@ -1,0 +1,25 @@
+<html>
+ <div>
+    <form action="{{importationn}}" enctype="multipart/form-data" method="POST">
+        <h5>Importation des inscription</h5>
+        <input type="file" class="" name="excel" required value="">
+            {{! <select>
+                <option></option>
+                <option value="insc">Inscription</option>
+                <option value="user">User</option>
+            </select> }}
+        <button type="submit" class="btn btn-primary" name="import">Import</button>
+    </form>
+    <form action="{{importationpaie}}" enctype="multipart/form-data" method="POST">
+        <h5>Importation des paiements</h5>
+        <input type="file" class="" name="excel" required value="">
+            {{! <select>
+                <option></option>
+                <option value="insc">Inscription</option>
+                <option value="user">User</option>
+            </select> }}
+        <button type="submit" class="btn btn-primary" name="import">Import</button>
+    </form>
+    
+ </div>
+</html>

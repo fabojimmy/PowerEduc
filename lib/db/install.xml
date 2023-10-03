@@ -105,10 +105,12 @@
         <FIELD NAME="originalcourseid" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="the id of the source course when a new course originates from a restore of another course on the same site."/>
         <FIELD NAME="showactivitydates" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="Whether to display activity dates to user. 0 = do not display, 1 = display activity dates"/>
         <FIELD NAME="showcompletionconditions" TYPE="int" LENGTH="1" NOTNULL="false" SEQUENCE="false" COMMENT="Whether to display completion conditions to user. 0 = do not display, 1 = display conditions"/>
+        <FIELD NAME="idcamp" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="id representant le campus"/>
       </FIELDS>
       <KEYS>
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
         <KEY NAME="originalcourseid" TYPE="foreign" FIELDS="originalcourseid" REFTABLE="course" REFFIELDS="id"/>
+        <KEY NAME="idcamp" TYPE="foreign" FIELDS="idcamp" REFTABLE="campus" REFFIELDS="id"/>
       </KEYS>
       <INDEXES>
         <INDEX NAME="category" UNIQUE="false" FIELDS="category"/>
@@ -875,9 +877,12 @@
         <FIELD NAME="middlename" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" COMMENT="Middle name"/>
         <FIELD NAME="alternatename" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" COMMENT="Alternate name - Useful for three-name countries."/>
         <FIELD NAME="moodlenetprofile" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" COMMENT="Moodle.net profile information"/>
+        <FIELD NAME="idcampuser" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="idcampuser"/>
       </FIELDS>
       <KEYS>
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+        <KEY NAME="idcampuser" TYPE="foreign" FIELDS="idcampuser" REFTABLE="campus" REFFIELDS="id"/>
+
       </KEYS>
       <INDEXES>
         <INDEX NAME="username" UNIQUE="true" FIELDS="mnethostid, username"/>

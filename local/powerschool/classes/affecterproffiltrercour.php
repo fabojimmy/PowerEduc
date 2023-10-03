@@ -2,7 +2,9 @@
    require_once(__DIR__ . '/../../../config.php');
    global $DB;
    if ($_POST["cycle"] && $_POST["specialite"]) {
-    $sql="SELECT c.id as idco,c.fullname FROM {coursspecialite},{cycle} as cy,{course} as c WHERE idspecialite='".$_POST['specialite']."' AND idcycle='".$_POST['cycle']."' AND idcourses=c.id";
+    $sql="SELECT c.id as idco,c.fullname FROM {coursspecialite},{cycle} as cy,{course} as c WHERE 
+    idspecialite='".$_POST['specialite']."' AND idcycle='".$_POST['cycle']."' AND idcourses=c.id
+    AND idanneescolaire='".$_POST["annee"]."'";
     $cours=$DB->get_records_sql($sql);
     // var_dump($cours);die;
     echo'<option value=""><option>';

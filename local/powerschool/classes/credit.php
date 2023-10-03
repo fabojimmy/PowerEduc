@@ -33,7 +33,7 @@ class credit extends moodleform {
 
     //Add elements to form
     public function definition() {
-        global $CFG;
+        global $CFG,$iddetablisse;
         
         global $USER;
         $mform = $this->_form;
@@ -65,7 +65,7 @@ class credit extends moodleform {
 
         $mform->addElement('hidden', 'idcampus', 'date de modification'); // Add elements to your form
         $mform->setType('idcampus', PARAM_INT);                   //Set type of element
-        $mform->setDefault('idcampus',$_GET["idca"]);        //Default value
+        $mform->setDefault('idcampus',$iddetablisse);        //Default value
 
        
 

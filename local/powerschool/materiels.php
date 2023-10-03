@@ -26,6 +26,7 @@ use local_powerschool\materiels;
 require_once(__DIR__ . '/../../config.php');
 require_once($CFG->dirroot.'/local/powerschool/classes/materiels.php');
 // require_once('tcpdf/tcpdf.php');
+require_once(__DIR__ . '/lib.php');
 
 global $DB;
 global $USER;
@@ -110,8 +111,8 @@ if($_GET['id']) {
 // var_dump($i);
 // var_dump($inscription);
 // die;
-$message=$DB->get_records("materiels",array("idcampus"=>$_GET["idca"]));
-$somme=$DB->get_records_sql("SELECT SUM(sommetota) as sommateriel FROM {materiels} WHERE idcampus='".$_GET["idca"]."'");
+$message=$DB->get_records("materiels",array("idcampus"=>$iddetablisse));
+$somme=$DB->get_records_sql("SELECT SUM(sommetota) as sommateriel FROM {materiels} WHERE idcampus='".$iddetablisse."'");
 $templatecontext = (object)[
     'materiels' => array_values($message),
     'somme' => array_values($somme),
@@ -152,7 +153,7 @@ echo $OUTPUT->header();
 
 echo $OUTPUT->render_from_template('local_powerschool/navbarconfiguration', $menumini);
 echo'<div style="margin-top:55px"></div>';
-echo $OUTPUT->render_from_template('local_powerschool/campustou', $campuss);
+// echo $OUTPUT->render_from_template('local_powerschool/campustou', $campuss);
 $mform->display();
 
 

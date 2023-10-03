@@ -24,6 +24,8 @@ use core\progress\display;
 use local_powerschool\coursspecialite;
 
 require_once(__DIR__ . '/../../config.php');
+require_once(__DIR__ . '/lib.php');
+
 require_once($CFG->dirroot.'/local/powerschool/classes/coursspecialite.php');
 
 global $DB;
@@ -174,15 +176,15 @@ if($_GET['id']) {
 
 
 $sql = "SELECT cs.id,cy.id as idcy,s.id as idsp,f.idcampus,libellespecialite,libellecycle,credit,abreviationspecialite,cy.nombreannee,libellesemestre,cs.idspecialite,css.idsemestre,idfiliere,nombreheure,credit FROM {specialite} s, {cycle} cy,{coursspecialite} cs,{filiere} f,{courssemestre} css,{semestre} see
-        WHERE see.id=css.idsemestre AND s.idfiliere=f.id AND css.idcoursspecialite=cs.id AND cs.idcycle = cy.id AND cs.idspecialite = s.id AND f.idcampus='".$_GET["idca"]."' AND idcourses NOT IN(SELECT id FROM {course})";
+        WHERE see.id=css.idsemestre AND s.idfiliere=f.id AND css.idcoursspecialite=cs.id AND cs.idcycle = cy.id AND cs.idspecialite = s.id AND f.idcampus='".$iddetablisse."' AND idcourses NOT IN(SELECT id FROM {course})";
 // $sql = "SELECT cs.id,fullname,libellespecialite,libellecycle,credit,shortname,abreviationspecialite,cy.nombreannee FROM {course} c, {specialite} s, {cycle} cy,{coursspecialite} cs,{filiere} f
 //         WHERE s.idfiliere=f.id AND cs.idcycle = cy.id AND cs.idspecialite = s.id AND cs.idcourses = c.id AND f.idcampus='".$_GET["idca"]."'";
 
 $sql1 = "SELECT cs.id,cy.id as idcy,s.id as idsp,f.idcampus,libellespecialite,libellecycle,abreviationspecialite,cs.idspecialite,credit FROM {specialite} s, {cycle} cy,{coursspecialite} cs,{filiere} f
-        WHERE s.idfiliere=f.id AND cs.idcycle = cy.id AND cs.idspecialite = s.id AND f.idcampus='".$_GET["idca"]."' AND cs.id NOT IN (SELECT idcoursspecialite FROM {courssemestre})";
+        WHERE s.idfiliere=f.id AND cs.idcycle = cy.id AND cs.idspecialite = s.id AND f.idcampus='".$iddetablisse."' AND cs.id NOT IN (SELECT idcoursspecialite FROM {courssemestre})";
 
 $sql2 = "SELECT cs.id,nombreannee,cy.id as idcy,s.id as idsp,f.idcampus,libellespecialite,libellecycle,abreviationspecialite,cs.idspecialite,fullname,shortname,libellesemestre,nombreheure,credit FROM {specialite} s, {cycle} cy,{coursspecialite} cs,{filiere} f,{course} c,{courssemestre} css,{semestre} sem
-         WHERE sem.id=css.idsemestre AND cs.id=css.idcoursspecialite AND c.id =cs.idcourses AND s.idfiliere=f.id AND cs.idcycle = cy.id AND cs.idspecialite = s.id AND f.idcampus='".$_GET["idca"]."'";
+         WHERE sem.id=css.idsemestre AND cs.id=css.idcoursspecialite AND c.id =cs.idcourses AND s.idfiliere=f.id AND cs.idcycle = cy.id AND cs.idspecialite = s.id AND f.idcampus='".$iddetablisse."'";
 // $sql = "SELECT cs.id,fullname,libellespecialite,libellecycle,credit,shortname,abreviationspecialite,nombreannee FROM {course} c, {specialite} s, {cycle} cy , {coursspecialite} cs,{filiere} f
 //         WHERE s.idfiliere=f.id AND cs.idcycle = cy.id AND cs.idspecialite = s.id AND cs.idcourses = c.id AND idcampus='".$_GET["idca"]."'";
 
@@ -349,8 +351,8 @@ $campuss=(object)[
 echo $OUTPUT->header();
 
 echo $OUTPUT->render_from_template('local_powerschool/navbarconfiguration', $menumini);
-echo'<div style="margin-top:35px"></div>';
-echo $OUTPUT->render_from_template('local_powerschool/campustou', $campuss);
+echo'<div style="margin-top:50px"></div>';
+// echo $OUTPUT->render_from_template('local_powerschool/campustou', $campuss);
 $mform->display();
 
 

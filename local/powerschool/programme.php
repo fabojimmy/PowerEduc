@@ -27,6 +27,7 @@ use local_powerschool\programme;
 require_once(__DIR__ . '/../../config.php');
 require_once($CFG->dirroot.'/local/powerschool/classes/programme.php');
 require_once($CFG->dirroot.'/local/powerschool/classes/date.php');
+require_once(__DIR__ . '/lib.php');
 
 global $DB;
 global $USER;
@@ -93,7 +94,7 @@ $recordtoinsert = new stdClass();
     WHERE cy.id=cs.idcycle AND cs.idspecialite=s.id AND css.idcoursspecialite=cs.id AND css.id=af.idcourssemestre AND s.idfiliere=f.id AND af.idprof=u.id AND f.idcampus='".$_POST["idcampus"]."' 
     AND s.id='".$_POST["idspecialite"]."' AND cy.id='".$_POST["idcycle"]."' AND u.id='".$_POST["idprof"]."' AND idcourses='".$_POST["idcourses"]."'");
     $verappart=$DB->get_records_sql("SELECT * FROM {programme} WHERE idspecialite='".$_POST["idspecialite"]."' AND idcycle='".$_POST["idcycle"]."' AND DATE_FORMAT(FROM_UNIXTIME(datecours), '%e-%c-%Y')='".$verda."'AND idsemestre='".$_POST["idsemestre"]."' AND heuredebutcours='".$_POST["heuredebutcours"]."' AND heurefincours='".$_POST["heurefincours"]."'");
-    // var_dump($veriprof);die;
+    // var_dump($veriprofss,$_POST["idcampus"],$_POST["idprof"],$_POST["idspecialite"],$_POST["idcourses"],$_POST["idcycle"]);die;
     // var_dump($verappart,$verda,$_POST["idspecialite"],$_POST["idcycle"],$_POST["idsemestre"]);die;
 if(!$verappart){
    
@@ -191,7 +192,7 @@ if($_GET['id']) {
 }
 
 $sql = "SELECT * FROM {course} c, {semestre} s,{specialite} sp,{cycle} cy, {programme} p WHERE p.idcourses = c.id AND p.idsemestre =s.id AND p.idspecialite = sp.id
-        AND p.idcycle = cy.id  AND cy.idcampus='".$_GET["idca"]."'";
+        AND p.idcycle = cy.id  AND cy.idcampus='".$iddetablisse."'";
 
     $programmes = $DB->get_records_sql($sql);
 
@@ -224,7 +225,7 @@ $templatecontext = (object)[
     'programmesupp'=> new moodle_url('/local/powerschool/programme.php'),
     'affecter' => new moodle_url('/local/powerschool/affecter.php'),
     'periode' => new moodle_url('/local/powerschool/periode.php'),
-    'idca' =>$_GET["idca"],
+    'idca' =>$iddetablisse,
 ];
 
 // $menu = (object)[
@@ -305,7 +306,7 @@ echo $OUTPUT->header();
 // echo $OUTPUT->render_from_template('local_powerschool/tableau', $getWeeks);
 
 echo $OUTPUT->render_from_template('local_powerschool/navbar', $menu);
-echo $OUTPUT->render_from_template('local_powerschool/campustou', $campuss);
+// echo $OUTPUT->render_from_template('local_powerschool/campustou', $campuss);
 
 $mform->display();
 

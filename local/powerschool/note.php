@@ -26,6 +26,7 @@ use local_powerschool\note;
 require_once(__DIR__ . '/../../config.php');
 require_once($CFG->dirroot.'/local/powerschool/classes/note.php');
 // require_once('tcpdf/tcpdf.php');
+require_once(__DIR__ . '/lib.php');
 
 global $DB;
 global $USER;
@@ -76,6 +77,7 @@ $recordtoinsert = new stdClass();
        "idsemestre"=>$_POST["idsemestre"],
        "idanneescolaire"=>$_POST["idanneescolaire"],
        "idprofesseur"=>$USER->id,
+       "idsalle"=>$_POST["salle"],
     ];
     $verib=$DB->get_records("bulletin",$vetar);
         if(!$verib)

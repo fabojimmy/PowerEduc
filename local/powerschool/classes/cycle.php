@@ -32,11 +32,11 @@ class cycle extends moodleform {
 
     //Add elements to form
     public function definition() {
-        global $CFG,$DB;
+        global $CFG,$DB,$iddetablisse;
         
         global $USER;
         $mform = $this->_form; // Don't forget the underscore!
-        $rolecasql="SELECT * FROM {campus} c,{typecampus} t WHERE c.idtypecampus=t.id AND c.id='".$_GET["idca"]."'";
+        $rolecasql="SELECT * FROM {campus} c,{typecampus} t WHERE c.idtypecampus=t.id AND c.id='".$iddetablisse."'";
         $campus=$DB->get_records_sql($rolecasql);
 
         
@@ -50,7 +50,7 @@ class cycle extends moodleform {
        
         $mform->addElement('hidden', 'idcampus');
         $mform->setType('idcampus', PARAM_INT);
-        $mform->setDefault('idcampus', $_GET["idca"]);
+        $mform->setDefault('idcampus', $iddetablisse);
 
         $mform->addElement('text', 'libellecycle', 'Libellé cycle'); // Add elements to your form
         $mform->setType('libellecycle', PARAM_TEXT);                   //Set type of element

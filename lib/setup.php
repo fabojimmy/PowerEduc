@@ -460,6 +460,7 @@ global $DB;
  */
 global $SESSION;
 
+
 /**
  * Holds the user table record for the current user. Will be the 'guest'
  * user record for people who are not logged in.

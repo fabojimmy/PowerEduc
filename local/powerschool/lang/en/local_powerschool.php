@@ -47,7 +47,7 @@ $string['configurationminini'] = 'Configuration minimal EN';
 $string['programme'] = 'Programme EN';
 $string['bulletin'] = 'Bulletin EN';
 $string['tranche'] = 'Tranche EN';
-$string['affecterprof'] = 'Affecter le cours à un professeur EN';
+$string['affecterprof'] = 'Affecter le cours à un enseignant EN';
 $string['configurerpaie'] = 'Configuration des differentes Tranches paiement EN';
 $string['sallelere'] = 'retirer les apprenants dans une classe EN';
 $string['sallele'] = 'affecter les apprenants dans une classe EN';
@@ -63,6 +63,9 @@ $string['materiel'] = 'Materiel EN';
 $string['groupsalle'] = 'Groupe de salle EN';
 $string['importationimpo'] = 'Importation EN';
 $string['exportation'] = 'Exportation inscription EN';
+$string['activat'] = 'Activation';
+$string['local_powerschool:createfiliere'] = 'Vous avez pas la capacité de créer une filiere EN';
+// $string['local_powereduc:createfiliere'] = 'Activation';
 
 
 

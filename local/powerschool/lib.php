@@ -1,4 +1,35 @@
 <?php
+
+    /**
+ * Database connection. Used for all access to the database.
+ * @global int $etablisse
+ * @name $etablisse
+ */
+ global $iddetablisse;
+ /**
+  * Database connection. Used for all access to the database.
+  * @global int $annee
+  * @name $annee
+  */
+  global $gloannee;
+    require_once(__DIR__.'/../../config.php');
+    //l'appel de l'etablissement selectionné
+    global $DB;
+    // die;
+    $etablissement=$DB->get_records("campus",array("activerca"=>1));
+    foreach($etablissement as $key => $valet)
+    {
+
+    }
+    // die;
+    $scolaire=$DB->get_records("anneescolaire",array("activeran"=>1));
+    foreach($scolaire as $key => $valean)
+    {
+
+    }
+    // var_dump($scolaire);die;
+    $gloannee=$valean->id;
+    $iddetablisse=$valet->id;
 function  local_powerschool_extend_navigation (global_navigation $navigation  ){
       
     global $USER,$SESSION,$CFG,$DB;

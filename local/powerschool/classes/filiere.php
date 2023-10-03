@@ -34,7 +34,7 @@ class filiere extends moodleform {
     public function definition() {
         global $CFG;
         
-        global $USER,$DB;
+        global $USER,$DB,$iddetablisse;
         $mform = $this->_form; // Don't forget the underscore!
 
 
@@ -96,11 +96,15 @@ class filiere extends moodleform {
         }
         // var_dump( $campus->selectcampus($sql)); 
         // die;
-        $mform->addElement('select', 'idcampus', 'Campus', $selectcamp ); // Add elements to your form
-        $mform->setType('idcampus', PARAM_TEXT);                   //Set type of element
-        $mform->setDefault('idcampus', '');        //Default value
-        $mform->addRule('idcampus', 'Choix du Campus', 'required', null, 'client');
-        $mform->addHelpButton('idcampus', 'campus');
+        $mform->addElement('hidden', 'idcampus'); // Add elements to your form
+        $mform->setType('idcampus', PARAM_INT);                   //Set type of element
+        $mform->setDefault('idcampus', $iddetablisse);        //Default value
+
+        // $mform->addElement('select', 'idcampus', 'Campus', $selectcamp ); // Add elements to your form
+        // $mform->setType('idcampus', PARAM_TEXT);                   //Set type of element
+        // $mform->setDefault('idcampus', '');        //Default value
+        // $mform->addRule('idcampus', 'Choix du Campus', 'required', null, 'client');
+        // $mform->addHelpButton('idcampus', 'campus');
         
         $mform->addElement('hidden', 'usermodified'); // Add elements to your form
         $mform->setType('usermodified', PARAM_INT);                   //Set type of element

@@ -26,6 +26,7 @@ use local_powerschool\tranche;
 
 require_once(__DIR__ . '/../../config.php');
 require_once($CFG->dirroot.'/local/powerschool/classes/tranche.php');
+require_once(__DIR__ . '/lib.php');
 
 global $DB;
 global $USER;
@@ -75,7 +76,7 @@ if($_GET['id']) {
 }
 
 
-$sql = "SELECT * FROM {tranche}  ";
+$sql = "SELECT * FROM {tranche} WHERE idcampus='".$iddetablisse."'";
 
 $tranche = $DB->get_records_sql($sql);
 
@@ -130,7 +131,7 @@ echo $OUTPUT->header();
 
 echo $OUTPUT->render_from_template('local_powerschool/navbarconfiguration', $menumini);
 // echo $OUTPUT->render_from_template('local_powerschool/navbar', $menu);
-echo html_writer::start_tag("div",array("style"=>"margin-top:40px"));
+echo html_writer::start_tag("div",array("style"=>"margin-top:80px"));
 echo html_writer::end_tag("div");
 $mform->display();
 

@@ -35,10 +35,11 @@ class inscription extends moodleform {
     public function definition() {
         global $CFG;
         
-        global $USER,$DB;
+        global $USER,$DB,$iddetablisse;
 
+        // var_dump($iddetablisse);die;
         $tarspecialcat=array();
-        $camp=$DB->get_records("campus",array("id"=>$_GET["idca"]));
+        $camp=$DB->get_records("campus",array("id"=>$iddetablisse));
         foreach ($camp as $key => $value) {
             # code...
         }
@@ -73,15 +74,15 @@ class inscription extends moodleform {
         $stringspecialitecat=implode("','",$tarspecialcat);
         // die;
         
-        $sql8 = "SELECT s.id,libellespecialite,libellefiliere,abreviationspecialite FROM {filiere} f, {specialite} s WHERE s.idfiliere = f.id AND idcampus='".$_GET["idca"]."' AND libellespecialite IN ('$stringspecialitecat')";
+        $sql8 = "SELECT s.id,libellespecialite,libellefiliere,abreviationspecialite FROM {filiere} f, {specialite} s WHERE s.idfiliere = f.id AND idcampus='".$iddetablisse."' AND libellespecialite IN ('$stringspecialitecat')";
         
         $campus = new campus();
         $etudiant = $anneescolaire = $ecole = $specialite = $cycle =  array();
-        $sql1 = "SELECT u.id as userid,firstname,lastname FROM {user} u,{role_assignments} ro WHERE u.id=userid AND roleid=5";
+        $sql1 = "SELECT u.id as userid,firstname,lastname FROM {user} u,{role_assignments} ro WHERE u.id=userid AND roleid=5 AND u.idcampuser='".$iddetablisse."'";
         $sql2 = "SELECT * FROM {anneescolaire} ";
         $sql3 = "SELECT * FROM {campus} ";
         // $sql4 = "SELECT * FROM {specialite} ";
-        $sql5 = "SELECT * FROM {cycle} WHERE idcampus='".$_GET["idca"]."'";
+        $sql5 = "SELECT * FROM {cycle} WHERE idcampus='".$iddetablisse."'";
 
         $etudiant = $campus->select($sql1);
         $anneescolaire = $campus->select($sql2);
@@ -153,7 +154,7 @@ class inscription extends moodleform {
         // $mform->addRule('idcampus', 'Choix du campus', 'required', null, 'client');
         // $mform->addHelpButton('idcampus', 'specialite');
         $mform->addElement('hidden','idcampus');
-        $mform->setDefault('idcampus',$_GET["idca"]);
+        $mform->setDefault('idcampus',$iddetablisse);
 
         $mform->addElement('select', 'idspecialite', 'Specialite/Classes', $selectspecialite ); // Add elements to your form
         $mform->setType('idspecialite', PARAM_TEXT);                   //Set type of element
@@ -239,11 +240,12 @@ class inscription extends moodleform {
     {
         global $DB;
         global $USER;
+        global $iddetablisse;
         $object = new stdClass();
         $object->id = $id;
         $object->idetudiant = $idetudiant ;
         $object->idanneescolaire = $idanneescolaire ;
-        $object->idcampus = $idcampus ;
+        $object->idcampus = $$iddetablisse ;
         $object->idspecialite = $idspecialite ;
         $object->idcycle = $idcycle ;
         $object->nomsparent = $nomsparent ;

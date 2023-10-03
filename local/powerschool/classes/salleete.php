@@ -7,7 +7,7 @@ global $DB;
 $etudiantsidd=explode(",",$_POST["etudiantsid"]);
 $idanneescolaires=$DB->get_records("anneescolaire");
 
-$sqlverisalle="SELECT count(idetudiant) as countetu FROM {salleele} WHERE idsalle='".$_POST["salle"]."' AND etudiantpresen=1";
+$sqlverisalle="SELECT count(idetudiant) as countetu FROM {salleele} WHERE idsalle='".$_POST["salle"]."' AND etudiantpresen=1 AND idanneescolaire='".$_POST["annee"]."'";
 $sqlcapacitesalle="SELECT capacitesalle,numerosalle FROM {salle} WHERE id='".$_POST["salle"]."'";
 $verisalle=$DB->get_records_sql($sqlverisalle);
 $capacitesalle=$DB->get_records_sql($sqlcapacitesalle);
@@ -22,7 +22,7 @@ if($valversal->countetu==$valcapa->capacitesalle)
 {
 
     $vrisaaal=$DB->get_records_sql("SELECT i.idspecialite FROM {inscription} i,{salleele} sa WHERE i.idspecialite='".$_POST["specialite"]."' AND i.idcycle='".$_POST["cycle"]."'
-     AND i.idetudiant=sa.idetudiant AND sa.idsalle='".$_POST["salle"]."' AND etudiantpresen=1");
+     AND i.idetudiant=sa.idetudiant AND sa.idsalle='".$_POST["salle"]."' AND etudiantpresen=1 AND sa.idanneescolaire='".$_POST["annee"]."'");
 
      foreach($vrisaaal as $key1)
      {}
@@ -36,20 +36,21 @@ if($valversal->countetu==$valcapa->capacitesalle)
         if($versalgro)
         {
             foreach($versalgro as $mo){}
-            if(!empty($_POST["salle"])&&!empty($_POST["etudiantsid"]))
+            if($_POST["salle"]&&$_POST["etudiantsid"])
             {
                 
                 for($i=0;$i<count($etudiantsidd);$i++)
                 {
-                $sql="SELECT * FROM {salleele} WHERE idetudiant='".$etudiantsidd[$i]."' AND idsalle='".$_POST["salle"]."' AND etudiantpresen=1";
+                $sql="SELECT * FROM {salleele} WHERE idetudiant='".$etudiantsidd[$i]."' AND idsalle='".$_POST["salle"]."' AND etudiantpresen=1 AND idanneescolaire='".$_POST["annee"]."'";
                 $versalle=$DB->get_records_sql($sql);
                 if(!$versalle){
                     // if(!$grid)
                     //  var_dump("dfghjkl",$mo->name,$etudiantsidd[$i]);
                 
+                    // echo "fghjk"; die;
                 groups_add_member($mo->id,$etudiantsidd[$i]);
                 // die;
-                $sql="SELECT * FROM {coursspecialite} WHERE idspecialite='".$_POST["specialite"]."' AND idcycle='".$_POST["cycle"]."' AND idanneescolaire='".$idannee->id."'";
+                $sql="SELECT * FROM {coursspecialite} WHERE idspecialite='".$_POST["specialite"]."' AND idcycle='".$_POST["cycle"]."' AND idanneescolaire='".$_POST["annee"]."'";
                 $listenote=$DB->get_records_sql($sql);
     
                 // je réaffecte les cours de cette salle aux etudiants
@@ -66,7 +67,7 @@ if($valversal->countetu==$valcapa->capacitesalle)
                         foreach ($listenote2 as $key => $value2) {
                             // var_dump($value2->id);
                             // var_dump($value2->id); 
-                        $verliste=$DB->get_records("listenote",array("idaffecterprof"=>$value2->id,"idetudiant"=>$idetudiant));
+                        $verliste=$DB->get_records("listenote",array("idaffecterprof"=>$value2->id,"idetudiant"=>$idetudiant,"retirersalle"=>0));
                         if(!$verliste){
     
                             $notet=new stdClass();
@@ -110,7 +111,7 @@ if($valversal->countetu==$valcapa->capacitesalle)
             {
                 for($i=0;$i<count($etudiantsidd);$i++)
                 {
-                $sql="SELECT * FROM {salleele} WHERE idetudiant='".$etudiantsidd[$i]."' AND idsalle='".$_POST["salle"]."' AND etudiantpresen=1";
+                $sql="SELECT * FROM {salleele} WHERE idetudiant='".$etudiantsidd[$i]."' AND idsalle='".$_POST["salle"]."' AND etudiantpresen=1 AND idanneescolaire='".$_POST["annee"]."'";
                 $versalle=$DB->get_records_sql($sql);
                 //  var_dump($versall)
             if(!$versalle){
@@ -136,11 +137,11 @@ if($valversal->countetu==$valcapa->capacitesalle)
     }
     else
     {
-        $veriii=$DB->get_records_sql("SELECT * FROM {salleele} WHERE idsalle=".$_POST["salle"]." AND etudiantpresen=1");
+        $veriii=$DB->get_records_sql("SELECT * FROM {salleele} WHERE idsalle=".$_POST["salle"]." AND etudiantpresen=1 AND idanneescolaire='".$_POST["annee"]."'");
         if($veriii)
         {
             $vrispecy=$DB->get_records_sql("SELECT sp.libellespecialite,cy.libellecycle FROM {inscription} i,{salleele} sa,{specialite} sp,{cycle} cy WHERE i.idspecialite=sp.id AND i.idcycle=cy.id
-     AND i.idetudiant=sa.idetudiant AND sa.idsalle='".$_POST["salle"]."' AND etudiantpresen=1");
+     AND i.idetudiant=sa.idetudiant AND sa.idsalle='".$_POST["salle"]."' AND etudiantpresen=1 AND i.idanneescolaire='".$_POST["annee"]."'");
 
             foreach($vrispecy as $valsp)
             {}
@@ -158,7 +159,7 @@ if($valversal->countetu==$valcapa->capacitesalle)
                     
                     for($i=0;$i<count($etudiantsidd);$i++)
                     {
-                    $sql="SELECT * FROM {salleele} WHERE idetudiant='".$etudiantsidd[$i]."' AND idsalle='".$_POST["salle"]."' AND etudiantpresen=1";
+                    $sql="SELECT * FROM {salleele} WHERE idetudiant='".$etudiantsidd[$i]."' AND idsalle='".$_POST["salle"]."' AND etudiantpresen=1 AND idanneescolaire='".$_POST["annee"]."'";
                     $versalle=$DB->get_records_sql($sql);
                     //  var_dump($versall)
                 if(!$versalle){
@@ -166,7 +167,7 @@ if($valversal->countetu==$valcapa->capacitesalle)
                     
                     groups_add_member($mo->id,$etudiantsidd[$i]);
                     // die;
-                    $sql="SELECT * FROM {coursspecialite} WHERE idspecialite='".$_POST["specialite"]."' AND idcycle='".$_POST["cycle"]."' AND idanneescolaire='".$idannee->id."'";
+                    $sql="SELECT * FROM {coursspecialite} WHERE idspecialite='".$_POST["specialite"]."' AND idcycle='".$_POST["cycle"]."' AND idanneescolaire='".$_POST["annee"]."'";
                     $listenote=$DB->get_records_sql($sql);
         
                     // je réaffecte les cours de cette salle aux etudiants
@@ -227,7 +228,7 @@ if($valversal->countetu==$valcapa->capacitesalle)
                 {
                     for($i=0;$i<count($etudiantsidd);$i++)
                     {
-                    $sql="SELECT * FROM {salleele} WHERE idetudiant='".$etudiantsidd[$i]."' AND idsalle='".$_POST["salle"]."' AND etudiantpresen=1";
+                    $sql="SELECT * FROM {salleele} WHERE idetudiant='".$etudiantsidd[$i]."' AND idsalle='".$_POST["salle"]."' AND etudiantpresen=1 AND idanneescolaire='".$_POST["annee"]."'";
                     $versalle=$DB->get_records_sql($sql);
                     //  var_dump($versall)
                 if(!$versalle){

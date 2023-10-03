@@ -26,6 +26,7 @@ use local_powerschool\affecterprof;
 require_once(__DIR__ . '/../../config.php');
 require_once($CFG->dirroot.'/local/powerschool/classes/affecterprof.php');
 require_once(__DIR__ .'/../../group/lib.php');
+require_once(__DIR__ .'/lib.php');
 global $DB;
 global $USER;
 
@@ -223,7 +224,7 @@ if($_GET['id']) {
 }
 
 //professeur
-$sql="SELECT us.id as userid,firstname,lastname FROM {user} as us,{role_assignments} WHERE us.id=userid AND roleid=3";
+$sql="SELECT us.id as userid,firstname,lastname FROM {user} as us,{role_assignments} WHERE us.id=userid AND roleid=3 AND us.idcampuser='".$iddetablisse."'";
 $professeur=$DB->get_records_sql($sql);
 //specialite
 $tarspecialcat=array();
@@ -262,17 +263,17 @@ $tarspecialcat=array();
         $stringspecialitecat=implode("','",$tarspecialcat);
         // die;
         
-        $sql8 = "SELECT s.id,libellespecialite,libellefiliere,abreviationspecialite FROM {filiere} f, {specialite} s WHERE s.idfiliere = f.id AND idcampus='".$_GET["idca"]."' AND libellespecialite IN ('$stringspecialitecat')";
+        $sql8 = "SELECT s.id,libellespecialite,libellefiliere,abreviationspecialite FROM {filiere} f, {specialite} s WHERE s.idfiliere = f.id AND idcampus='".$iddetablisse."' AND libellespecialite IN ('$stringspecialitecat')";
 // $sql="SELECT sp.id,libellespecialite FROM {specialite} sp,{filiere} f WHERE sp.idfiliere=f.id AND idcampus='".$_GET["idca"]."'";
 $specialite=$DB->get_records_sql($sql8);
 
-$sql1="SELECT * FROM {salle} WHERE idcampus='".$_GET["idca"]."'";
+$sql1="SELECT * FROM {salle} WHERE idcampus='".$iddetablisse."'";
 $salle=$DB->get_records_sql($sql1);
 
 // var_dump($salle);die;
 $affecter=$DB->get_recordset_sql("SELECT af.id as idaffe,libellecycle,libellespecialite,libellesemestre,fullname,firstname,lastname,numerosalle,cou.id as idcouu,us.id as iduser FROM {coursspecialite} as csp,{courssemestre} cse,{affecterprof} af,
                             {semestre} se,{specialite} sp,{cycle} cy,{course} cou,{user} as us,{filiere} f,{salle} sal WHERE sal.id=af.idsalle AND sp.idfiliere=f.id AND csp.id=cse.idcoursspecialite AND us.id=idprof
-                            AND idsemestre=se.id AND idcourses=cou.id AND idspecialite=sp.id AND idcycle=cy.id AND af.idcourssemestre=cse.id AND f.idcampus='".$_GET["idca"]."' AND quit=0");
+                            AND idsemestre=se.id AND idcourses=cou.id AND idspecialite=sp.id AND idcycle=cy.id AND af.idcourssemestre=cse.id AND f.idcampus='".$iddetablisse."' AND quit=0");
 // $affecterprof = $DB->get_recordset_sql('affecterprof', null, 'id');
 $affecterprof = array();
 foreach ($affecter as $record) {
@@ -288,7 +289,7 @@ $templatecontext = (object)[
     'salle' => new moodle_url('/local/powerschool/salle.php'),
     'courssemestre' => new moodle_url('/local/powerschool/affecterprof.php'),
     'root'=>$CFG->wwwroot,
-    'idca'=>$_GET["idca"],
+    'idca'=>$iddetablisse,
     'affec'=>get_string('affecterprof', 'local_powerschool')
 ];
 
@@ -332,7 +333,7 @@ echo $OUTPUT->header();
 
 echo $OUTPUT->render_from_template('local_powerschool/navbarconfiguration', $menumini);
 echo '<div style="margin-top:80px";><wxcvbn</div>';
-echo $OUTPUT->render_from_template('local_powerschool/campustou', $campuss);
+// echo $OUTPUT->render_from_template('local_powerschool/campustou', $campuss);
 // $mform->display();
 
 

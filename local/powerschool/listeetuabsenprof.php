@@ -26,6 +26,7 @@ use core\progress\display;
 require_once(__DIR__ . '/../../config.php');
 // require_once($CFG->dirroot.'/local/powerschool/classes/note.php');
 // require_once('tcpdf/tcpdf.php');
+require_once(__DIR__ . '/lib.php');
 
 global $DB;
 global $USER;
@@ -166,8 +167,8 @@ $campuss=(object)[
 echo $OUTPUT->header();
 
 // echo $OUTPUT->render_from_template('local_powerschool/navbarconfiguration', $menumini);
-echo '<div style="margin-top:80px";><wxcvbn</div>';
-echo $OUTPUT->render_from_template('local_powerschool/campustou', $campuss);
+echo '<div style="margin-top:80px";></div>';
+echo '<div class="mx-6">'.$OUTPUT->render_from_template('local_powerschool/campustou', $campuss).'</div>';
 // echo $OUTPUT->render_from_template('local_powerschool/navbar', $menu);
 // $mform->display();
 

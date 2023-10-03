@@ -35,12 +35,12 @@ class programme extends moodleform {
     public function definition() {
         global $CFG;
         
-        global $USER,$DB;
+        global $USER,$DB,$iddetablisse;
         $campus = new campus();
         $cours = $specialite = $cycle =  array();
 
         $tarspecialcat=array();
-$camp=$DB->get_records("campus",array("id"=>$_GET["idca"]));
+$camp=$DB->get_records("campus",array("id"=>$iddetablisse));
 foreach ($camp as $key => $value) {
     # code...
 }
@@ -75,22 +75,22 @@ foreach($catfill as $key => $valfil)
 $stringspecialitecat=implode("','",$tarspecialcat);
 // die;
 
-$sql8 = "SELECT s.id,libellespecialite,libellefiliere,abreviationspecialite FROM {filiere} f, {specialite} s WHERE s.idfiliere = f.id AND idcampus='".$_GET["idca"]."' AND libellespecialite IN ('$stringspecialitecat')";
+$sql8 = "SELECT s.id,libellespecialite,libellefiliere,abreviationspecialite FROM {filiere} f, {specialite} s WHERE s.idfiliere = f.id AND idcampus='".$iddetablisse."' AND libellespecialite IN ('$stringspecialitecat')";
 
 // $specialites = $DB->get_records_sql($sql);
         
         $sql9="SELECT u.id,firstname,lastname FROM {user} u,{coursspecialite} cs,{courssemestre} css,{affecterprof} af,{specialite} s,{filiere} f
-               WHERE cs.idspecialite=s.id AND css.idcoursspecialite=cs.id AND css.id=af.idcourssemestre AND s.idfiliere=f.id AND af.idprof=u.id AND f.idcampus='".$_GET["idca"]."'";
+               WHERE cs.idspecialite=s.id AND css.idcoursspecialite=cs.id AND css.id=af.idcourssemestre AND s.idfiliere=f.id AND af.idprof=u.id AND f.idcampus='".$iddetablisse."'";
         $sql1 = "SELECT c.id,fullname FROM {course} c,{coursspecialite} cs,{specialite} s,{filiere} f WHERE c.id=cs.idcourses 
-                 AND cs.idspecialite=s.id AND s.idfiliere=f.id AND idcampus='".$_GET["idca"]."'";
+                 AND cs.idspecialite=s.id AND s.idfiliere=f.id AND idcampus='".$iddetablisse."'";
         $sql2 = "SELECT * FROM {semestre}";
         // $sql3 = "SELECT s.id,libellespecialite FROM {specialite} s,{filiere} f WHERE f.id=s.idfiliere AND idcampus='".$_GET["idca"]."'";
-        $sql4 = "SELECT * FROM {cycle} WHERE idcampus='".$_GET["idca"]."'";
+        $sql4 = "SELECT * FROM {cycle} WHERE idcampus='".$iddetablisse."'";
         $sql5 = "SELECT * FROM {anneescolaire} ";
         
         $sql6 = "SELECT * FROM {periode} ";
 
-        $sql7 = "SELECT id,numerosalle FROM {salle} WHERE idcampus='".$_GET["idca"]."'";
+        $sql7 = "SELECT id,numerosalle FROM {salle} WHERE idcampus='".$iddetablisse."'";
 
         $cours = $campus->select($sql1);
         $semestre = $campus->select($sql2);
@@ -147,7 +147,7 @@ $sql8 = "SELECT s.id,libellespecialite,libellefiliere,abreviationspecialite FROM
         // var_dump( $campus->selectcampus($sql)); 
         // die;
         $mform->addElement('hidden', 'idcampus'); // Add elements to your form
-        $mform->setDefault('idcampus', $_GET["idca"]); // Add elements to your form
+        $mform->setDefault('idcampus', $iddetablisse); // Add elements to your form
 
         $mform->addElement('select', 'idanneescolaire', 'Annee scolaire', $selectanneescolaire ); // Add elements to your form
         $mform->setType('idanneescolaire', PARAM_TEXT);                   //Set type of element

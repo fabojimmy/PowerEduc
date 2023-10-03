@@ -24,14 +24,15 @@
 
        <div class="d-flex justify-content-around mt-5">
           <div class="col-2">
-         <label>Choisir l'etablissement</label>
-            <select name="campus"onchange="if (this.value) location.href=this.value;" class="form-control ">
-            <option value=""></option>
-            {{#campus}}
-            <option value="{{salleele}}?idca={{id}}">{{libellecampus}}</option>
-            {{/campus}}
-            </select>
+                  <label>Choisir Année</label>
+                  <select class="form-control annee" name="annee">
+                  <option value=""></option>
+                  {{#anneee}}
+                    <option value="{{id}}">{{datedebut}}-{{datefin}}</option>
+                  {{/anneee}}
+                  </select>
           </div>
+          
           <div class="col-2">
               <label>Choisir Salle</label>
               <select class="form-control salle" name="salle">

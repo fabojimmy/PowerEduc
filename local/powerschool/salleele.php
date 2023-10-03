@@ -24,6 +24,7 @@ use core\progress\display;
 use local_powerschool\note;
 
 require_once(__DIR__ . '/../../config.php');
+require_once(__DIR__ . '/lib.php');
 require_once($CFG->dirroot.'/local/powerschool/classes/note.php');
 // require_once('tcpdf/tcpdf.php');
 
@@ -85,7 +86,7 @@ JOIN
 JOIN
 {salle} sa ON saet.idsalle = sa.id
 WHERE
-etudiantpresen = 1 AND i.idcampus = '".$_GET["idca"]."'
+etudiantpresen = 1 AND i.idcampus = '".$iddetablisse."'
 GROUP BY
 s.libellespecialite, cy.libellecycle
 ORDER BY
@@ -113,8 +114,8 @@ JOIN
 JOIN
 {salle} sa ON saet.idsalle = sa.id
 WHERE
-(etudiantpresen = 0 OR sa.id NOT IN (SELECT saaa.id FROM {salle} saaa, {salleele} saa WHERE saaa.id = saa.idsalle AND saa.etudiantpresen = 1 AND saaa.idcampus = '".$_GET["idca"]."'))
-    AND i.idcampus = '".$_GET["idca"]."'
+(etudiantpresen = 0 OR sa.id NOT IN (SELECT saaa.id FROM {salle} saaa, {salleele} saa WHERE saaa.id = saa.idsalle AND saa.etudiantpresen = 1 AND saaa.idcampus = '".$iddetablisse."'))
+    AND i.idcampus = '".$iddetablisse."'
 GROUP BY
 s.libellespecialite, cy.libellecycle
 ORDER BY
@@ -128,17 +129,29 @@ $salleocc = array();
 foreach ($salleo as $record) {
     $salleocc[] = (array) $record;
 }
-$sql="SELECT * FROM {filiere} WHERE idcampus='".$_GET["idca"]."'";
-$sql1="SELECT * FROM {salle} WHERE idcampus='".$_GET["idca"]."'";
+$sql="SELECT * FROM {filiere} WHERE idcampus='".$iddetablisse."'";
+$sql1="SELECT * FROM {salle} WHERE idcampus='".$iddetablisse."'";
 $sql2="SELECT * FROM {campus}";
 $filiere=$DB->get_records_sql($sql);
 $salle=$DB->get_records_sql($sql1);
 $campus=$DB->get_records_sql($sql2);
+$annee=$DB->get_records_sql("SELECT * FROM {anneescolaire}");
+            foreach($annee as $key => $ab)
+            {
+                $time = $ab->datedebut;
+                $timef = $ab->datefin;
 
+                $dated = date('Y',$time);
+                $datef = date('Y',$timef);
+
+                $ab->datedebut = $dated;
+                $ab->datefin = $datef;
+            }
 $templatecontext = (object)[
     'filiere'=>array_values($filiere),
     'campus'=>array_values($campus),
     'salle'=>array_values($salle),
+    'anneee'=>array_values($annee),
     'salleocc'=>array_values($salleocc),
     'ajoute'=> new moodle_url('/local/powerschool/inscription.php'),
     'affectercours'=> new moodle_url('/local/powerschool/inscription.php'),
