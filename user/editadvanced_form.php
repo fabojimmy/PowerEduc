@@ -121,17 +121,23 @@ class user_editadvanced_form extends moodleform {
 
         global $DB;
         $rolesql=$DB->get_records("role");
-        
+        $campussql=$DB->get_records("campus");
         // $roles=array();
 
         foreach ($rolesql as $key => $value) {
             $roles[$key]=$value->shortname;
-    }
+        }
+        foreach ($campussql as $key1 => $value1) {
+            $campus[$key1]=$value1->libellecampus;
+        }
     // var_dump($roles);
     // die;
         $mform->addElement('select', 'role', "Role", $roles);
         $mform->addHelpButton('role', 'username', 'auth');
         $mform->setType('role', PARAM_RAW);
+        $mform->addElement('select', 'idcampuser', "Campus", $campus);
+        $mform->addHelpButton('idcampuser', 'campus', 'auth');
+        $mform->setType('idcampuser', PARAM_RAW);
 
         $purpose = user_edit_map_field_purpose($userid, 'password');
 

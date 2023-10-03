@@ -24,6 +24,7 @@ use core\progress\display;
 use local_powerschool\statistique;
 
 require_once(__DIR__ . '/../../config.php');
+require_once(__DIR__ . '/lib.php');
 require_once($CFG->dirroot.'/local/powerschool/classes/statistique.php');
 
 global $DB;
@@ -33,6 +34,7 @@ require_login();
 $context = context_system::instance();
 // require_capability('local/powerschool:managepages', $context);
 
+// var_dump($etablisse,$annee);die;
 $PAGE->set_url(new moodle_url('/local/powerschool/statistique.php'));
 $PAGE->set_context(\context_system::instance());
 $PAGE->set_title('Enregistrer une statistique');
@@ -1509,6 +1511,9 @@ if($vericcc)
 }
 // var_dump(json_encode($tanoteefiliere));die;
 $semestre=$DB->get_records("semestre");
+
+// var_dump($CFG->libdir);
+// die;
 $templatecontext = (object)[
     'htmlcyetdet'=>$htmlcyetdet,
     'anneee'=>array_values($annee),
@@ -1631,6 +1636,8 @@ $menu = (object)[
     'bulletin' => new moodle_url('/local/powerschool/bulletin.php'),
     'configurermini' => new moodle_url('/local/powerschool/configurationmini.php'),
     'listeetudiant' => new moodle_url('/local/powerschool/listeetudiant.php'),
+    'activer' => new moodle_url('/local/powerschool/activat.php'),
+    'activat' => get_string('activat', 'local_powerschool'),
     // 'gerer' => new moodle_url('/local/powerschool/gerer.php'),
 
     //navbar

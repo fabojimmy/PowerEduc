@@ -28,6 +28,7 @@ use local_powerschool\programme;
 require_once(__DIR__ . '/../../config.php');
 require_once($CFG->dirroot.'/local/powerschool/classes/indexprogramme.php');
 require_once($CFG->dirroot.'/local/powerschool/classes/date.php');
+require_once(__DIR__ . '/lib.php');
 
 global $DB;
 global $USER;
@@ -309,9 +310,10 @@ for($i = 0 ; $i < $getWeeks; $i++){
         $heuredebut = $event->heuredebutcours;
         $heurefin = $event->heurefincours;
         echo '<div>'
-        .$heuredebut.'h -'.$heurefin.'h :   '.'<a href="/moodle1/local/powerschool/programmeedit.php?id='.$event->id.'&idca='.$_GET["idca"].'">'.$eventday.' '.$specialitecy.' '.$salle.'</a>
+        .$heuredebut.'h -'.$heurefin.'h :   '.'<a>'.$eventday.' '.$specialitecy.' '.$salle.'</a>
         </div>';
       }
+      //.$heuredebut.'h -'.$heurefin.'h :   '.'<a href="/moodle1/local/powerschool/programmeedit.php?id='.$event->id.'&idca='.$iddetablisse.'">'.$eventday.' '.$specialitecy.' '.$salle.'</a>
        '</td>';
     }
     echo '</tr>';

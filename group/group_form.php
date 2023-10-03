@@ -40,7 +40,7 @@ class group_form extends moodleform {
      * Definition of the form
      */
     function definition () {
-        global $USER, $CFG, $COURSE;
+        global $USER, $CFG, $COURSE,$iddetablisse;
         $coursecontext = context_course::instance($COURSE->id);
 
         $mform =& $this->_form;
@@ -55,7 +55,7 @@ class group_form extends moodleform {
         
         // var_dump($_GET["idca"]);die;        
         $mform->addElement('hidden','campus');
-        $mform->setDefault('campus', $_GET["idca"]);
+        $mform->setDefault('campus', $iddetablisse);
         
         $mform->addElement('hidden','idsalle');
         $mform->setDefault('idsalle', $_GET["idsalle"]);

@@ -24,6 +24,7 @@ use core\progress\display;
 use local_powerschool\note;
 
 require_once(__DIR__ . '/../../config.php');
+require_once(__DIR__ . '/lib.php');
 require_once($CFG->dirroot.'/local/powerschool/classes/note.php');
 // require_once('tcpdf/tcpdf.php');
 
@@ -59,17 +60,29 @@ $PAGE->navbar->add(get_string('sallelere', 'local_powerschool'), $managementurl)
 //cours
 
 //filiere
-$sql="SELECT * FROM {filiere} WHERE idcampus='".$_GET["idca"]."'";
+$sql="SELECT * FROM {filiere} WHERE idcampus='".$iddetablisse."'";
 // $sql1="SELECT * FROM {salle}";
 $filiere=$DB->get_records_sql($sql);
 $sql2="SELECT * FROM {campus}";
 
 // $salle=$DB->get_records_sql($sql1);
 $campus=$DB->get_records_sql($sql2);
+$annee=$DB->get_records_sql("SELECT * FROM {anneescolaire}");
+            foreach($annee as $key => $ab)
+            {
+                $time = $ab->datedebut;
+                $timef = $ab->datefin;
 
+                $dated = date('Y',$time);
+                $datef = date('Y',$timef);
+
+                $ab->datedebut = $dated;
+                $ab->datefin = $datef;
+            }
 $templatecontext = (object)[
     'filiere'=>array_values($filiere),
     'campus'=>array_values($campus),
+    'annee'=>array_values($annee),
     'ajoute'=> new moodle_url('/local/powerschool/inscription.php'),
     'affectercours'=> new moodle_url('/local/powerschool/inscription.php'),
     'ajou'=> new moodle_url('/local/powerschool/classes/entrernote.php'),

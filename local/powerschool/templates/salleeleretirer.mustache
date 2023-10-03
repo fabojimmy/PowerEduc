@@ -23,15 +23,6 @@
     </nav>
 </div>
        <div class="d-flex justify-content-around mt-5">
-        <div class="col-2">
-         <label>Choisir l'etablissement</label>
-            <select name="campus"onchange="if (this.value) location.href=this.value;" class="form-control ">
-            <option value=""></option>
-            {{#campus}}
-            <option value="{{salleeleretirer}}?idca={{id}}">{{libellecampus}}</option>
-            {{/campus}}
-            </select>
-          </div>
           <div class="col-2">
               <label>Choisir filiere</label>
               <select class="form-control filiere" name="filiere">
@@ -55,12 +46,18 @@
                 <option value=""> </option>
               </select>
           </div>
-
+          
           <div class="col-2">
               <label>Choisir Salle</label>
               <select class="form-control salle1" name="salleretirer">
                 <option value="">select </option>
               </select>
+          </div>
+         <div class="col-2">
+                  <label>Choisir Année</label>
+                  <select class="form-control annee1" name="annee1">
+                    <option value=""></option>
+                  </select>
           </div>
         </div>
             <input type="hidden" value="{{root}}" class="roote"/>

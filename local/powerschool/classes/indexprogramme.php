@@ -43,16 +43,16 @@ class indexprogramme extends moodleform {
     public function definition() {
         global $CFG;
         
-        global $USER;
+        global $USER,$iddetablisse;
         $campus = new campus();
         $cours = $specialite = $cycle =  array();
         
         
         $sql1 = "SELECT * FROM {course} ";
-        $sql6 = "SELECT * FROM {salle} WHERE idcampus='".$_GET["idca"]."'";
+        $sql6 = "SELECT * FROM {salle} WHERE idcampus='".$iddetablisse."'";
         $sql2 = "SELECT * FROM {semestre} ";
-        $sql3 = "SELECT s.id,libellespecialite FROM {specialite} s,{filiere} f WHERE s.idfiliere=f.id AND idcampus='".$_GET["idca"]."'";
-        $sql4 = "SELECT * FROM {cycle} WHERE idcampus='".$_GET["idca"]."'";
+        $sql3 = "SELECT s.id,libellespecialite FROM {specialite} s,{filiere} f WHERE s.idfiliere=f.id AND idcampus='".$iddetablisse."'";
+        $sql4 = "SELECT * FROM {cycle} WHERE idcampus='".$iddetablisse."'";
         $sql5 = "SELECT * FROM {anneescolaire} ";
 
         $cours = $campus->select($sql1);
@@ -112,7 +112,7 @@ class indexprogramme extends moodleform {
 
         $mform->addElement('hidden', 'idcampus' ); // Add elements to your form
         $mform->setType('idcampus', PARAM_TEXT);                   //Set type of element
-        $mform->setDefault('idcampus', $_GET["idca"]);        //Default value
+        $mform->setDefault('idcampus', $iddetablisse);        //Default value
 
         // $mform->addElement('select', 'idcourses', 'Cours', $selectcours ); // Add elements to your form
         // $mform->setType('idcourses', PARAM_TEXT);                   //Set type of element

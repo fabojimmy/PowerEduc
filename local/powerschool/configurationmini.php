@@ -24,6 +24,8 @@ use core\progress\display;
 use local_powerschool\configurerpaiement;
 
 require_once(__DIR__ . '/../../config.php');
+require_once(__DIR__ . '/lib.php');
+
 // require_once($CFG->dirroot.'/local/powerschool/classes/configurerpaiement.php');
 
 global $DB;

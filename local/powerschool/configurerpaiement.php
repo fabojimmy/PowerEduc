@@ -24,6 +24,8 @@ use core\progress\display;
 use local_powerschool\configurerpaiement;
 
 require_once(__DIR__ . '/../../config.php');
+require_once(__DIR__ . '/lib.php');
+
 require_once($CFG->dirroot.'/local/powerschool/classes/configurerpaiement.php');
 
 global $DB;
@@ -141,7 +143,7 @@ if($_GET['id']) {
         
 }
 
-$sqlrole="SELECT c.id,t.libelletype FROM {campus} c,{typecampus} t WHERE t.id=c.idtypecampus AND c.id='".$_GET["idca"]."'";
+$sqlrole="SELECT c.id,t.libelletype FROM {campus} c,{typecampus} t WHERE t.id=c.idtypecampus AND c.id='".$iddetablisse."'";
 // var_dump($role);die;
 $role=$DB->get_records_sql($sqlrole);
 foreach($role as $key => $rol)
@@ -151,11 +153,11 @@ if($rol->libelletype=="universite")
     
     $sql="SELECT conf.id as idconf,libellefiliere,libelletranche,libellecycle,somme,datelimite FROM
       {filierecycletranc} as conf,{filiere} as f,{tranche} as t,{cycle} as cy WHERE
-      conf.idfiliere=f.id AND conf.idtranc=t.id AND conf.idcycle=cy.id AND f.idcampus='".$_GET["idca"]."'";
+      conf.idfiliere=f.id AND conf.idtranc=t.id AND conf.idcycle=cy.id AND f.idcampus='".$iddetablisse."'";
 }else{
     $sql="SELECT conf.id as idconf,libellefiliere,libelletranche,libellespecialite,somme,datelimite,f.idcampus FROM
       {filierecycletranc} as conf,{filiere} as f,{tranche} as t,{specialite} as sp WHERE
-      conf.idfiliere=f.id AND conf.idtranc=t.id AND conf.idspecialite=sp.id AND f.idcampus='".$_GET["idca"]."'";
+      conf.idfiliere=f.id AND conf.idtranc=t.id AND conf.idspecialite=sp.id AND f.idcampus='".$iddetablisse."'";
 }
 $configurer = $DB->get_records_sql($sql);
 // var_dump($_GET["idca"],$configurer);die;
@@ -218,8 +220,9 @@ echo'<div style="margin-top:45px;"></div>';
     //    $campuss.= "<option value=''".$CFG->wwwroot."'/local/powerschool/configurerpaiement.php?idca='".$vall->id."''>".$vall->libellecampus."</option>";
     // }
     // echo $campuss.="</select>";
-    echo $OUTPUT->render_from_template('local_powerschool/campustou', $campuss);
+    // echo $OUTPUT->render_from_template('local_powerschool/campustou', $campuss);
 
+    echo '<div style="margin-top:70px;"></div>';
 $mform->display();
 
 

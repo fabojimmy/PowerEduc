@@ -113,6 +113,8 @@ function user_create_user($user, $updatepassword = true, $triggerevent = true) {
             $user->$field = core_user::clean_field($user->$field, $field);
         }
     }
+    // var_dump($user->idcampuser);
+    // die;
 
     // Insert the user into the database.
     $newuserid = $DB->insert_record('user', $user);

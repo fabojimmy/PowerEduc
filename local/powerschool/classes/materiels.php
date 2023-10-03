@@ -33,7 +33,7 @@ class materiels extends moodleform {
 
     //Add elements to form
     public function definition() {
-        global $CFG,$DB,$USER;
+        global $CFG,$DB,$USER,$iddetablisse;
 
         
 
@@ -51,7 +51,7 @@ class materiels extends moodleform {
         $mform->setType('id', PARAM_INT);
        
         $mform->addElement('hidden', 'idcampus');
-        $mform->setDefault('idcampus', $_GET["idca"]);
+        $mform->setDefault('idcampus', $iddetablisse);
         $mform->addElement('hidden', 'usermodified');
         $mform->setDefault('usermodified', $USER->id);
         $mform->addElement('hidden', 'timecreated');

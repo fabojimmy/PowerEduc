@@ -16,7 +16,7 @@ class course_edit_form extends moodleform {
      * Form definition.
      */
     function definition() {
-        global $CFG, $PAGE;
+        global $CFG, $PAGE,$DB;
 
         $mform    = $this->_form;
         $PAGE->requires->js_call_amd('core_course/formatchooser', 'init');
@@ -38,6 +38,13 @@ class course_edit_form extends moodleform {
             $context = $categorycontext;
         }
 
+        $campussql=$DB->get_records("campus");
+        // $roles=array();
+
+    
+        foreach ($campussql as $key1 => $value1) {
+            $campus[$key1]=$value1->libellecampus;
+        }
         $courseconfig = get_config('moodlecourse');
 
         $this->course  = $course;
@@ -143,7 +150,11 @@ class course_edit_form extends moodleform {
                 $mform->setConstant('visible', $courseconfig->visible);
             }
         }
+        $mform->addElement('hidden', 'idcamp');
+        $mform->addHelpButton('idcamp', 'campus', );
+        $mform->setDefault('idcamp', $_GET["idca"]);
 
+        // var_dump($_GET["idca"]);die;
         // Download course content.
         if ($CFG->downloadcoursecontentallowed) {
             $downloadchoices = [

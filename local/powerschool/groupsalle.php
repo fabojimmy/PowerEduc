@@ -24,6 +24,8 @@ use core\progress\display;
 use local_powerschool\note;
 
 require_once(__DIR__ . '/../../config.php');
+require_once(__DIR__ . '/lib.php');
+
 require_once($CFG->dirroot.'/local/powerschool/classes/note.php');
 // require_once('tcpdf/tcpdf.php');
 
@@ -59,7 +61,7 @@ $PAGE->navbar->add(get_string('groupsalle', 'local_powerschool'), $managementurl
 //cours
 
 //filiere
-$sql="SELECT * FROM {filiere} WHERE idcampus='".$_GET["idca"]."'";
+$sql="SELECT * FROM {filiere} WHERE idcampus='".$iddetablisse."'";
 // $sql1="SELECT * FROM {salle}";
 $filiere=$DB->get_records_sql($sql);
 $sql2="SELECT * FROM {campus}";
@@ -117,7 +119,7 @@ echo $OUTPUT->header();
 // $mform->display();
 
 echo $OUTPUT->render_from_template('local_powerschool/navbarconfiguration', $menumini);
-
+echo '<div style="margin-top:75px;"></div>';
 echo $OUTPUT->render_from_template('local_powerschool/groupsalle', $templatecontext);
 
 

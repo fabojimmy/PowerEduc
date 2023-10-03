@@ -24,6 +24,7 @@ use core\progress\display;
 use local_powerschool\specialite;
 
 require_once(__DIR__ . '/../../config.php');
+require_once(__DIR__ . '/lib.php');
 require_once($CFG->dirroot.'/local/powerschool/classes/specialite.php');
 
 global $DB;
@@ -98,12 +99,12 @@ $recordtoinsert->idfiliere=$_POST["idfiliere"];
 if($_GET['id']) {
 
     $mform->supp_specialite($_GET['id']);
-    redirect($CFG->wwwroot . '/local/powerschool/specialite.php?idca='.$_GET["idca"].'', 'Information Bien supprimée');
+    redirect($CFG->wwwroot . '/local/powerschool/specialite.php?idca='.$iidetablisse.'', 'Information Bien supprimée');
         
 }
 
 $tarspecialcat=array();
-$camp=$DB->get_records("campus",array("id"=>$_GET["idca"]));
+$camp=$DB->get_records("campus",array("id"=>$iddetablisse));
 foreach ($camp as $key => $value) {
     # code...
 }
@@ -138,11 +139,11 @@ foreach($catfill as $key => $valfil)
 $stringspecialitecat=implode("','",$tarspecialcat);
 // die;
 
-$sql = "SELECT s.id,libellespecialite,libellefiliere,abreviationspecialite FROM {filiere} f, {specialite} s WHERE s.idfiliere = f.id AND idcampus='".$_GET["idca"]."' AND libellespecialite IN ('$stringspecialitecat')";
+$sql = "SELECT s.id,libellespecialite,libellefiliere,abreviationspecialite FROM {filiere} f, {specialite} s WHERE s.idfiliere = f.id AND idcampus='".$iddetablisse."' AND libellespecialite IN ('$stringspecialitecat')";
 
 $specialites = $DB->get_records_sql($sql);
 
-$sqlcat = "SELECT s.id as idsp,libellefiliere,libellespecialite,f.id as idfi FROM {filiere} f, {specialite} s WHERE s.idfiliere = f.id AND idcampus='".$_GET["idca"]."' AND libellespecialite NOT IN ('$stringspecialitecat')";
+$sqlcat = "SELECT s.id as idsp,libellefiliere,libellespecialite,f.id as idfi FROM {filiere} f, {specialite} s WHERE s.idfiliere = f.id AND idcampus='".$iddetablisse."' AND libellespecialite NOT IN ('$stringspecialitecat')";
 
 $specialitescat = $DB->get_records_sql($sqlcat);
 
@@ -156,10 +157,10 @@ $verif2=[];
 $campus=$DB->get_records('campus');
 
 // $campus=$DB->get_records("campus");
-$sql_fil="SELECT * FROM {filiere} WHERE idcampus='".$_GET["idca"]."'";
+$sql_fil="SELECT * FROM {filiere} WHERE idcampus='".$iddetablisse."'";
 $filiere=$DB->get_records_sql($sql_fil);
 $vericam=$DB->get_records_sql("SELECT * FROM {campus} c,{typecampus} t
-                                WHERE t.id=c.idtypecampus AND c.id='".$_GET["idca"]."'");    
+                                WHERE t.id=c.idtypecampus AND c.id='".$iddetablisse."'");    
             foreach($vericam as $key => $ver)
             {
                 if ($ver->libelletype=="primaire") {
@@ -204,11 +205,12 @@ $vericam=$DB->get_records_sql("SELECT * FROM {campus} c,{typecampus} t
             foreach ($camp as $key => $value) {
                 # code...
               }
+    // var_dump($_GET["idfi"]);die;
               $categ=$DB->get_records("course_categories",array("name"=>$value->libellefiliere,"depth"=>2));
               foreach ($categ as $key => $value1spec) {
                   # code...
               }
-            // var_dump($_GET["idca"],$verfi2);die;
+            // var_dump($value->libellefiliere);die;
 $campuss=(object)[
     'campus'=>array_values($campus),
     'confpaie'=>new moodle_url('/local/powerschool/specialite.php'),
@@ -228,7 +230,7 @@ $templatecontext = (object)[
     'catspecialite' => new moodle_url('/course/editcategory.php'),
     'specialitesupp'=> new moodle_url('/local/powerschool/specialite.php'),
     'cycle' => new moodle_url('/local/powerschool/cycle.php'),
-    'idca'=>$_GET["idca"],
+    'idca'=>$iddetablisse,
     'root'=>$CFG->wwwroot,
     'specialiteca'=>urlencode($_GET["specialite"]),
     'specialitec'=>$_GET["specialite"],
@@ -278,7 +280,7 @@ echo $OUTPUT->header();
 
 
 // echo $OUTPUT->render_from_template('local_powerschool/navbar', $menu);
-echo $OUTPUT->render_from_template('local_powerschool/campustou', $campuss);
+// echo $OUTPUT->render_from_template('local_powerschool/campustou', $campuss);
 $mform->display();
 
 

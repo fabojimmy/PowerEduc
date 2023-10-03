@@ -91,12 +91,20 @@ class primary extends view {
                  $this->add("Notes", new \moodle_url('/local/powerschool/note.php'), self::TYPE_ROOTNODE, null, 'notes');
                  $this->add("Gérer les absences", new \moodle_url('/local/powerschool/absenceetu.php'), self::TYPE_ROOTNODE, null, 'notes');
                  $this->add("Liste des apprenants absences", new \moodle_url('/local/powerschool/listeetuabsenprof.php'), self::TYPE_ROOTNODE, null, 'notes');
-                }
+             }
+            $role=$DB->get_records("role_assignments",array("userid"=>$USER->id,"roleid"=>1));
+             if($role&& isloggedin())
+             {
+    
+                 $this->add("Réglages d'etblissement", new \moodle_url('/local/powerschool/statistique.php'), self::TYPE_ROOTNODE, null, 'notes');
+             }
             }
             if(is_siteadmin())
             {
 
                 $this->add("Liste des absences", new \moodle_url('/local/powerschool/listeetuabsenadmin.php'), self::TYPE_ROOTNODE, null, 'notes');
+                // $this->add("Liste des absences",null, self::TYPE_ROOTNODE, null, 'notes');
+
             }
         
         if ($showsiteadminnode ) {

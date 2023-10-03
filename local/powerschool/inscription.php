@@ -25,6 +25,7 @@ use local_powerschool\inscription;
 
 require_once(__DIR__ . '/../../config.php');
 require_once(__DIR__ .'/../../group/lib.php');
+require_once(__DIR__ . '/lib.php');
 
 require_once($CFG->dirroot.'/local/powerschool/classes/inscription.php');
 // require_once('tcpdf/tcpdf.php');
@@ -301,7 +302,7 @@ $sql_inscrip = "SELECT i.id, u.firstname, u.lastname, a.datedebut, a.datefin, c.
                 s.libellespecialite, s.abreviationspecialite , cy.libellecycle, cy.nombreannee,s.idfiliere,idcycle,i.idcampus,idspecialite
                 FROM {inscription} i, {anneescolaire} a, {user} u, {specialite} s, {campus} c, {cycle} cy
                 WHERE i.idanneescolaire=a.id AND i.idspecialite=s.id AND i.idetudiant=u.id 
-                AND i.idcampus=c.id AND i.idcycle = cy.id AND i.idcampus='".$_GET["idca"]."'" ;
+                AND i.idcampus=c.id AND i.idcycle = cy.id AND i.idcampus='".$iddetablisse."'" ;
     
     if($_GET["filiere"])
     {
@@ -375,7 +376,7 @@ $templatecontext = (object)[
     'affectercours'=> new moodle_url('/local/powerschool/inscription.php'),
     'inpf'=> new moodle_url('/local/powerschool/inscription.php'),
     'suppins'=> new moodle_url('/local/powerschool/inscription.php'),
-    'idca'=>$_GET["idca"],
+    'idca'=>$iddetablisse,
     'roote'=>$CFG->wwwroot,
     // 'imprimer' => new moodle_url('/local/powerschool/imp.php'),
 ];
@@ -436,7 +437,7 @@ echo $OUTPUT->header();
 
 echo $OUTPUT->render_from_template('local_powerschool/navbar', $menu);
 echo '<div style="margin-top:80px";><wxcvbn</div>';
-echo $OUTPUT->render_from_template('local_powerschool/campustou', $campuss);
+// echo $OUTPUT->render_from_template('local_powerschool/campustou', $campuss);
 
 $mform->display();
 

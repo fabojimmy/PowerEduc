@@ -35,10 +35,11 @@ class coursspecialite extends moodleform {
     public function definition() {
         global $CFG;
         
-        global $USER,$DB;
+        global $USER,$DB,$iddetablisse;
 
+        // var_dump($iddetablisse);die;
         $tarspecialcat=array();
-        $camp=$DB->get_records("campus",array("id"=>$_GET["idca"]));
+        $camp=$DB->get_records("campus",array("id"=>$iddetablisse));
         foreach ($camp as $key => $value) {
             # code...
         }
@@ -73,14 +74,14 @@ class coursspecialite extends moodleform {
         $stringspecialitecat=implode("','",$tarspecialcat);
         // die;
         
-        $sql8 = "SELECT s.id,libellespecialite,libellefiliere,abreviationspecialite FROM {filiere} f, {specialite} s WHERE s.idfiliere = f.id AND idcampus='".$_GET["idca"]."' AND libellespecialite IN ('$stringspecialitecat')";
+        $sql8 = "SELECT s.id,libellespecialite,libellefiliere,abreviationspecialite FROM {filiere} f, {specialite} s WHERE s.idfiliere = f.id AND idcampus='".$iddetablisse."' AND libellespecialite IN ('$stringspecialitecat')";
         
         $campus = new campus();
         $cours = $specialite = $cycle =  array();
         $sql1 = "SELECT * FROM {course} ";
-        $sql2 = "SELECT sp.id,libellespecialite FROM {specialite} sp,{filiere} f WHERE sp.idfiliere=f.id AND idcampus='".$_GET["idca"]."' ";
+        $sql2 = "SELECT sp.id,libellespecialite FROM {specialite} sp,{filiere} f WHERE sp.idfiliere=f.id AND idcampus='".$iddetablisse."' ";
 
-        $sql4="SELECT * FROM {campus} c ,{typecampus} t WHERE c.idtypecampus=t.id AND c.id='".$_GET["idca"]."'";
+        $sql4="SELECT * FROM {campus} c ,{typecampus} t WHERE c.idtypecampus=t.id AND c.id='".$iddetablisse."'";
         
         
         $cours = $campus->select($sql1);
@@ -91,7 +92,7 @@ class coursspecialite extends moodleform {
         {}
         
         
-            $sql3 = "SELECT id,libellecycle FROM {cycle} WHERE idcampus='".$_GET["idca"]."'";
+            $sql3 = "SELECT id,libellecycle FROM {cycle} WHERE idcampus='".$iddetablisse."'";
         
         $cycle = $campus->select($sql3);
 
@@ -169,7 +170,7 @@ class coursspecialite extends moodleform {
 
         $mform->addElement('hidden', 'idcampus', 'date de modification'); // Add elements to your form
         $mform->setType('idcampus', PARAM_INT);                   //Set type of element
-        $mform->setDefault('idcampus',$_GET["idca"]);        //Default value
+        $mform->setDefault('idcampus',$iddetablisse);        //Default value
 
        
 

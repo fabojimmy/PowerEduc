@@ -64,7 +64,7 @@ class block_online_users extends block_base {
                              && $this->page->course->groupmodeforce
                              && !has_capability('moodle/site:accessallgroups', $this->page->context));
 
-        //Get the user current group
+        //Get the user current group  
         $currentgroup = $isseparategroups ? groups_get_course_group($this->page->course) : NULL;
 
         $sitelevel = $this->page->course->id == SITEID || $this->page->context->contextlevel < CONTEXT_COURSE;

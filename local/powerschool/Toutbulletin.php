@@ -26,6 +26,7 @@ use local_powerschool\note;
 require_once(__DIR__ . '/../../config.php');
 // require_once($CFG->dirroot.'/local/powerschool/classes/note.php');
 // require_once('tcpdf/tcpdf.php');
+require_once(__DIR__ . '/lib.php');
 
 global $DB;
 global $USER;

@@ -24,6 +24,8 @@ use local_powerschool\configurationnote;
 use local_powerschool\periode;
 
 require_once(__DIR__ . '/../../config.php');
+require_once(__DIR__ . '/lib.php');
+
 require_once($CFG->dirroot.'/local/powerschool/classes/configurationnote.php');
 
 global $DB;

@@ -32,10 +32,12 @@ class tranche extends moodleform {
 
     //Add elements to form
     public function definition() {
-        global $CFG;
+        global $CFG,$iddetablisse;
         
         global $USER;
 
+        // var_dump($iddetablisse);
+        // die;
         $reqq = new campus();
         $annee = array();
         $sql = "SELECT * FROM {anneescolaire} ";
@@ -60,11 +62,15 @@ class tranche extends moodleform {
         $mform->addHelpButton('libelletranche', 'specialite');
         
         
-        $mform->addElement('select', 'idcampus', 'Campus', $selectcampus ); // Add elements to your form
-        $mform->setType('idcampus', PARAM_TEXT);                   //Set type of element
-        $mform->setDefault('idcampus', '');        //Default value
-        $mform->addRule('idcampus', 'Choix du campus', 'required', null, 'client');
-        $mform->addHelpButton('idcampus', 'specialite');
+        $mform->addElement('hidden', 'idcampus' ); // Add elements to your form
+        $mform->setType('idcampus', PARAM_INT);                   //Set type of element
+        $mform->setDefault('idcampus', $iddetablisse);        //Default value
+      
+        // $mform->addElement('select', 'idcampus', 'Campus', $selectcampus ); // Add elements to your form
+        // $mform->setType('idcampus', PARAM_TEXT);                   //Set type of element
+        // $mform->setDefault('idcampus', '');        //Default value
+        // $mform->addRule('idcampus', 'Choix du campus', 'required', null, 'client');
+        // $mform->addHelpButton('idcampus', 'specialite');
 
         foreach ($annee as $key => $value) {
             # code...
