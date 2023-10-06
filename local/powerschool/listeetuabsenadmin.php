@@ -168,7 +168,7 @@ echo $OUTPUT->header();
 
 // echo $OUTPUT->render_from_template('local_powerschool/navbarconfiguration', $menumini);
 echo '<div style="margin-top:20px";><wxcvbn</div>';
-echo $OUTPUT->render_from_template('local_powerschool/campustou', $campuss);
+echo "<div class='mx-6 px-2'>".$OUTPUT->render_from_template('local_powerschool/campustou', $campuss)."</div>";
 // echo $OUTPUT->render_from_template('local_powerschool/navbar', $menu);
 // $mform->display();
 

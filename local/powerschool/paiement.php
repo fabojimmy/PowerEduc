@@ -223,13 +223,20 @@ else{
 
     // echo $OUTPUT->render_from_template('local_powerschool/navbar', $menu);
 
-
-
+    // effectuerpaiement
+    if(has_capability("local/powerschool:effectuerpaiement",context_system::instance(),$USER->id))
+    {
+    
         $mform->display();
+        echo $OUTPUT->render_from_template('local_powerschool/paiement', $templatecontext);
+    }
+    else{
+        \core\notification::add("Vous avez pas autorisation", \core\output\notification::NOTIFY_ERROR);
+    
+    }
 
 
 
-    echo $OUTPUT->render_from_template('local_powerschool/paiement', $templatecontext);
 
 
     echo $OUTPUT->footer();

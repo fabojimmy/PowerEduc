@@ -24,7 +24,7 @@ use core\progress\display;
 use local_powerschool\courssemestre;
 
 require_once(__DIR__ . '/../../config.php');
-require_once(__DIR__ . '/lib.php');
+require_once(__DIR__ . '/idetablisse.php');
 
 require_once($CFG->dirroot.'/local/powerschool/classes/courssemestre.php');
 
@@ -40,7 +40,7 @@ $PAGE->set_context(\context_system::instance());
 $PAGE->set_title('Enregistrer une partie de l\'année scolaire à cette configuration ');
 $PAGE->set_heading('Enregistrer une partie de l\'année scolaire à cette configuration');
 
-$PAGE->navbar->add(get_string('coursspecialite', 'local_powerschool'),  new moodle_url('/local/powerschool/coursspecialite.php?idca='.$_GET["idca"].''));
+$PAGE->navbar->add(get_string('coursspecialite', 'local_powerschool'),  new moodle_url('/local/powerschool/coursspecialite.php?idca='.$iddetablisse.''));
 $PAGE->navbar->add(get_string('courssemestre', 'local_powerschool'), $managementurl);
 // $PAGE->requires->js_call_amd('local_powerschool/confirmsupp');
 // $PAGE->requires->js_call_amd('local_powerschool/confirmsupp');

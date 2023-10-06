@@ -25,7 +25,7 @@ use local_powerschool\inscription;
 
 require_once(__DIR__ . '/../../config.php');
 require_once(__DIR__ .'/../../group/lib.php');
-require_once(__DIR__ . '/lib.php');
+require_once(__DIR__ . '/idetablisse.php');
 
 require_once($CFG->dirroot.'/local/powerschool/classes/inscription.php');
 // require_once('tcpdf/tcpdf.php');
@@ -109,7 +109,7 @@ if($_GET['id'] && $_GET['action']='affectercours') {
 
 $veriaff=$DB->get_records_sql("SELECT c.id as coursid,c.fullname,en.id as enroleid FROM {coursspecialite} cs,{course} c,{courssemestre} css,{affecterprof} af,{enrol} en
                                WHERE cs.idspecialite='".$_GET["idsp"]."' AND cs.idcycle='".$_GET["idcy"]."' AND en.courseid=c.id
-                               AND cs.idcourses=c.id AND css.idcoursspecialite=cs.id AND af.idcourssemestre=css.id");
+                               AND cs.idcourses=c.id AND css.idcoursspecialite=cs.id AND af.idcourssemestre=css.id AND quit=0");
 $veripaie=$DB->get_records("paiement",array("idinscription"=>$_GET['id']));
 
 // var_dump($veriaff);die;
@@ -289,10 +289,20 @@ $tarcon=array();
 }
 
 if($_GET['idins']) {
+    // effectuerpaiement
+    if(has_capability("local/powerschool:supprimerinscription",context_system::instance(),$USER->id))
+    {
 
-    $mform->supp_inscription($_GET['idins']);
-    redirect($CFG->wwwroot . '/local/powerschool/inscription.php?idca='.$_GET["idca"].'', 'Information Bien supprimée');
-        
+        // $mform->display();
+        $mform->supp_inscription($_GET['idins']);
+        redirect($CFG->wwwroot . '/local/powerschool/inscription.php?idca='.$_GET["idca"].'', 'Information Bien supprimée');
+            
+    }
+    else
+    {
+        \core\notification::add("Vous avez pas autorisation", \core\output\notification::NOTIFY_ERROR);
+
+    }
 }
 
 
@@ -434,15 +444,29 @@ $menu = (object)[
 
 echo $OUTPUT->header();
 
+if(has_capability("local/powerschool:inscription",context_system::instance(),$USER->id))
+{
+    echo $OUTPUT->render_from_template('local_powerschool/navbar', $menu);
+    // echo '<div style="margin-top:10px";><wxcvbn</div>';
+    // echo $OUTPUT->render_from_template('local_powerschool/campustou', $campuss);
+    if(has_capability("local/powerschool:voirapprenantinscription",context_system::instance(),$USER->id))
+    {
 
-echo $OUTPUT->render_from_template('local_powerschool/navbar', $menu);
-echo '<div style="margin-top:80px";><wxcvbn</div>';
-// echo $OUTPUT->render_from_template('local_powerschool/campustou', $campuss);
+        $mform->display();
+    }
+    else
+    {
+        \core\notification::add("Vous avez pas autorisation", \core\output\notification::NOTIFY_ERROR);
+        
+    }
+    
+    
+    echo $OUTPUT->render_from_template('local_powerschool/inscription', $templatecontext);
+}
+else{
+    \core\notification::add("Vous avez pas autorisation", \core\output\notification::NOTIFY_ERROR);
 
-$mform->display();
-
-
-echo $OUTPUT->render_from_template('local_powerschool/inscription', $templatecontext);
+}
 
 
 echo $OUTPUT->footer();

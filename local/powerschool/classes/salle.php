@@ -30,7 +30,7 @@ use local_powerschool\lib;
 
 require_once("$CFG->libdir/formslib.php");
 require_once($CFG->dirroot.'/local/powerschool/classes/campus.php');
-require_once($CFG->dirroot.'/local/powerschool/lib.php');
+require_once($CFG->dirroot.'/local/powerschool/idetablisse.php');
 
 class salle extends moodleform {
 
@@ -44,7 +44,7 @@ class salle extends moodleform {
         $sql = "SELECT * FROM {campus} ";
         $camp = $campus->select($sql);
         
-
+        // var_dump($iddetablisse);die;
         $mform = $this->_form; // Don't forget the underscore!
 
         $mform->addElement('header','Salle', 'Salle');

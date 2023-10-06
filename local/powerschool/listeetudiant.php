@@ -37,8 +37,8 @@ $context = context_system::instance();
 
 $PAGE->set_url(new moodle_url('/local/powerschool/inscription.php'));
 $PAGE->set_context(\context_system::instance());
-$PAGE->set_title('Liste des etudiants');
-$PAGE->set_heading('Liste des Etudiants Et affectation de cours');
+$PAGE->set_title('Liste des Apprenants');
+$PAGE->set_heading('Liste des Apprenants Et affectation de cours');
 
 $PAGE->navbar->add('Administration du Site', $CFG->wwwroot.'/admin/search.php');
 $PAGE->navbar->add(get_string('listeetudiant', 'local_powerschool'), $managementurl);
@@ -173,12 +173,19 @@ $menu = (object)[
 
 echo $OUTPUT->header();
 
+if(has_capability("local/powerschool:affectercours",context_system::instance(),$USER->id))
+    {
+        echo $OUTPUT->render_from_template('local_powerschool/navbar', $menu);
+        echo $OUTPUT->render_from_template('local_powerschool/listeetudiant', $templatecontext);
+    }
+    else
+    {
+        \core\notification::add("Vous avez pas autorisation", \core\output\notification::NOTIFY_ERROR);
 
-echo $OUTPUT->render_from_template('local_powerschool/navbar', $menu);
+    }
 // $mform->display();
 
 
-echo $OUTPUT->render_from_template('local_powerschool/listeetudiant', $templatecontext);
 
 
 echo $OUTPUT->footer();

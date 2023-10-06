@@ -24,7 +24,7 @@ use core\progress\display;
 use local_powerschool\configurerpaiement;
 
 require_once(__DIR__ . '/../../config.php');
-require_once(__DIR__ . '/lib.php');
+require_once(__DIR__ . '/idetablisse.php');
 
 // require_once($CFG->dirroot.'/local/powerschool/classes/configurerpaiement.php');
 
@@ -105,8 +105,15 @@ echo $OUTPUT->header();
 // echo $OUTPUT->render_from_template('local_powerschool/navbarconfiguration', $menumini);
 // $mform->display();
 
+if(has_capability("local/powerschool:configurationminimal",context_system::instance(),$USER->id))
+{
 
-echo $OUTPUT->render_from_template('local_powerschool/configurationmini', $templatecontext);
+    echo $OUTPUT->render_from_template('local_powerschool/configurationmini', $templatecontext);
+}
+else{
+    \core\notification::add("Vous avez pas autorisation", \core\output\notification::NOTIFY_ERROR);
+
+}
 
 
 echo $OUTPUT->footer();

@@ -26,7 +26,7 @@
 defined('MOODLE_INTERNAL') || die;
 
 require_once($CFG->dirroot.'/lib/formslib.php');
-
+require_once(__DIR__."/../local/powerschool/idetablisse.php");
 /**
  * Group form class
  *

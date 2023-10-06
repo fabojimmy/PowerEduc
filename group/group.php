@@ -130,9 +130,9 @@ if ($editform->is_cancelled()) {
                     groups_add_member($id,$valss->idetudiant);
                 }
                 // die;
+                $returnu = $CFG->wwwroot.'/local/powerschool/groupsalle.php?idca='.$_POST["campus"].'';
+                redirect($returnu,'Vous avez enregistré un groupe dans cette matiere');
             }
-            $returnurl = $CFG->wwwroot.'/local/powerschool/groupsalle.php?idca='.$_POST["campus"].'';
-            redirect($returnurl,'Vous avez enregistré un groupe dans cette matiere');
         }
         $returnurl = $CFG->wwwroot.'/group/index.php?id='.$course->id.'&group='.$id;
     }

@@ -129,11 +129,20 @@ $menu = (object)[
 echo $OUTPUT->header();
 
 
-echo $OUTPUT->render_from_template('local_powerschool/navbar', $menu);
+if(has_capability("local/powerschool:bulletin",context_system::instance(),$USER->id))
+{
+
+    echo $OUTPUT->render_from_template('local_powerschool/navbar', $menu);
+    echo $OUTPUT->render_from_template('local_powerschool/bulletin', $templatecontext);
+}
+else
+{
+    \core\notification::add("Vous avez pas autorisation", \core\output\notification::NOTIFY_ERROR);
+
+}
 // $mform->display();
 
 
-echo $OUTPUT->render_from_template('local_powerschool/bulletin', $templatecontext);
 
 
 echo $OUTPUT->footer();

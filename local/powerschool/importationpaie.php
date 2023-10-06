@@ -7,7 +7,7 @@
     require_once($CFG->dirroot.'/user/profile/lib.php');
     require_once($CFG->dirroot.'/user/lib.php');
     require_once($CFG->dirroot.'/webservice/lib.php');
-    require_once(__DIR__ . '/lib.php');
+    require_once(__DIR__ . '/idetablisse.php');
 
    $file=$_FILES["excel"]["name"];
    $fileExtension=explode('.',$file);

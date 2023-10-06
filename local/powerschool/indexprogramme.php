@@ -28,7 +28,7 @@ use local_powerschool\programme;
 require_once(__DIR__ . '/../../config.php');
 require_once($CFG->dirroot.'/local/powerschool/classes/indexprogramme.php');
 require_once($CFG->dirroot.'/local/powerschool/classes/date.php');
-require_once(__DIR__ . '/lib.php');
+require_once(__DIR__ . '/idetablisse.php');
 
 global $DB;
 global $USER;

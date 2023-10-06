@@ -202,7 +202,10 @@ $menu = (object)[
 
 echo $OUTPUT->header();
 
-
+if(has_capability("local/powerschool:notes",context_system::instance(),$USER->id))
+{
+    
+}
 // echo $OUTPUT->render_from_template('local_powerschool/navbar', $menu);
 echo '<div style="margin-top:80px";><wxcvbn</div>';
 echo $OUTPUT->render_from_template('local_powerschool/campustou', $campuss);

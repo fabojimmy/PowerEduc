@@ -26,7 +26,7 @@ use local_powerschool\affecterprof;
 require_once(__DIR__ . '/../../config.php');
 require_once($CFG->dirroot.'/local/powerschool/classes/affecterprof.php');
 require_once(__DIR__ .'/../../group/lib.php');
-require_once(__DIR__ .'/lib.php');
+require_once(__DIR__ .'/idetablisse.php');
 global $DB;
 global $USER;
 

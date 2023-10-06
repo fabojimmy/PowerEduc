@@ -16,6 +16,7 @@
 
 namespace core\navigation\views;
 
+use context_system;
 use navigation_node;
 
 /**
@@ -84,27 +85,45 @@ class primary extends view {
 
         if ($showsiteadminnode ) {
             // We don't need everything from the node just the initial link.
-            $role=$DB->get_records("role_assignments",array("userid"=>$USER->id,"roleid"=>3));
-             if($role&& isloggedin())
-             {
-    
-                 $this->add("Notes", new \moodle_url('/local/powerschool/note.php'), self::TYPE_ROOTNODE, null, 'notes');
-                 $this->add("Gérer les absences", new \moodle_url('/local/powerschool/absenceetu.php'), self::TYPE_ROOTNODE, null, 'notes');
-                 $this->add("Liste des apprenants absences", new \moodle_url('/local/powerschool/listeetuabsenprof.php'), self::TYPE_ROOTNODE, null, 'notes');
-             }
-            $role=$DB->get_records("role_assignments",array("userid"=>$USER->id,"roleid"=>1));
-             if($role&& isloggedin())
-             {
-    
-                 $this->add("Réglages d'etblissement", new \moodle_url('/local/powerschool/statistique.php'), self::TYPE_ROOTNODE, null, 'notes');
-             }
+
+             $modulecontext=context_system::instance();
+
+            //  if(has_capability("local/powerschool:notes",$modulecontext,$USER->id)){
+            //     $this->add("Notes", new \moodle_url('/local/powerschool/note.php'), self::TYPE_ROOTNODE, null, 'notes');
+            // }
+            // var_dump($modulecontext,$USER->id,has_capability("local/powerschool:notes",$modulecontext,$USER->id));die;
+            $role=$DB->get_records("role_assignments",array("userid"=>$USER->id,"roleid"=>3,"contextid"=>0));
+            $role1=$DB->get_records("role_assignments",array("userid"=>$USER->id,"roleid"=>2));
+            if ($role1) {
+
+                $this->add("Ajouter le cours dans une classe/specialite", new \moodle_url('/local/powerschool/coursspecialite.php'), self::TYPE_ROOTNODE, null, 'notes');
+                # code...
             }
-            if(is_siteadmin())
+            if($role&& isloggedin())
             {
+                $this->add("Notes", new \moodle_url('/local/powerschool/note.php'), self::TYPE_ROOTNODE, null, 'notes');
+
+                $this->add("Gérer les absences", new \moodle_url('/local/powerschool/absenceetu.php'), self::TYPE_ROOTNODE, null, 'notes');
+                $this->add("Liste des apprenants absences", new \moodle_url('/local/powerschool/listeetuabsenprof.php'), self::TYPE_ROOTNODE, null, 'notes');
+            }
+            // if(has_capability("local/powerschool:gererabsenceetudiantenseignant",$modulecontext,$USER->id))
+            // {
+            //     $this->add("Gérer les absences", new \moodle_url('/local/powerschool/absenceetu.php'), self::TYPE_ROOTNODE, null, 'notes');
+            //     $this->add("Liste des apprenants absences", new \moodle_url('/local/powerschool/listeetuabsenprof.php'), self::TYPE_ROOTNODE, null, 'notes');
+            // }
+            // var_dump(has_capability("local/powerschool:gererabsenceetudiantenseignant",$modulecontext,$USER->id));die;
+            // $role=$DB->get_records("role_assignments",array("userid"=>$USER->id,"roleid"=>1));
+            
+            if(has_capability("local/powerschool:reglageetablissement",$modulecontext,$USER->id)&&!is_siteadmin()){
+                $this->add("Réglages d'etablissement", new \moodle_url('/local/powerschool/statistique.php'), self::TYPE_ROOTNODE, null, 'notes');
+
+            }
+            if(has_capability("local/powerschool:reglageetablissement",$modulecontext,$USER->id)){
 
                 $this->add("Liste des absences", new \moodle_url('/local/powerschool/listeetuabsenadmin.php'), self::TYPE_ROOTNODE, null, 'notes');
-                // $this->add("Liste des absences",null, self::TYPE_ROOTNODE, null, 'notes');
-
+            }
+           
+          
             }
         
         if ($showsiteadminnode ) {
