@@ -68,16 +68,24 @@ if ($mform->is_cancelled()) {
     
         // var_dump($fromform);
         // die;
-    
+    if($recordtoinsert->idcampus)
+    {
+
         if (!$mform->veriSalle($recordtoinsert->numerosalle,$recordtoinsert->idcampus)) {
+            // var_dump($recordtoinsert->idcampus);die;
             $DB->insert_record('salle', $recordtoinsert);
             redirect($CFG->wwwroot . '/local/powerschool/salle.php', 'Enregistrement effectué');
             exit;
         }else{
             // redirect($CFG->wwwroot . '/local/powerschool/salle.php', 'Cette salle execite dans ce campus');
             \core\notification::add('Cette salle existe dans ce campus', \core\output\notification::NOTIFY_ERROR);
-
+            
         }
+    }else
+    {
+        \core\notification::add('Vous avez pas activer l\'établissement', \core\output\notification::NOTIFY_ERROR);
+
+    }
      
     }
 

@@ -30,7 +30,7 @@ global $DB;
 global $USER;
 
 require_login();
-$context = context_system::instance();
+// $context = context_system::instance();
 // require_capability('local/message:managemessages', $context);
 
 $PAGE->set_url(new moodle_url('/local/powerschool/reglages.php'));
@@ -88,24 +88,64 @@ echo $OUTPUT->render_from_template('local_powerschool/navbar', $menu);
 
 
 // echo $OUTPUT->render_from_template('local_powerschool/reglages', $templatecontext);
+$modulecontext=context_system::instance();
+if(has_capability("local/powerschool:reglageetablissement",$modulecontext,$USER->id))
+{
 
-echo html_writer::start_div("card",array('style' => "width: 100%;")) ;
-echo"  <div class='card-header text-center'>
-<p class=''> Gérer les réglages de vos Etablissements</p>
-</div>";
-echo" <ul class='list-group list-group-flush'>";
-    echo "<li class='list-group-item '>".html_writer::link(new moodle_url('/local/powerschool/anneescolaire.php'),get_string('annee', 'local_powerschool'),array("class"=>"fw-bold text-decoration-none fs-1 text-uppercase"))."</il>";echo "<br/>";
-    echo "<li class='list-group-item '>".html_writer::link(new moodle_url('/local/powerschool/campus.php'),get_string('campus', 'local_powerschool'),array("class"=>"fw-bold text-decoration-none fs-1 text-uppercase"))."</li>";echo "<br/>";
-    echo "<li class='list-group-item '>".html_writer::link(new moodle_url('/local/powerschool/semestre.php'),get_string('semestre', 'local_powerschool'),array("class"=>"fw-bold text-decoration-none fs-1 text-uppercase"))."</li>";echo "<br/>";
-    echo "<li class='list-group-item '>".html_writer::link(new moodle_url('/local/powerschool/salle.php'),get_string('salle', 'local_powerschool'),array("class"=>"fw-bold text-decoration-none fs-1 text-uppercase"))."</li>";echo "<br/>";
-    echo "<li class='list-group-item '>".html_writer::link(new moodle_url('/local/powerschool/filiere.php'),get_string('filiere', 'local_powerschool'),array("class"=>"fw-bold text-decoration-none fs-1 text-uppercase"))."</li>";echo "<br/>";
-    echo "<li class='list-group-item '>".html_writer::link(new moodle_url('/local/powerschool/specialite.php'),get_string('specialite', 'local_powerschool'),array("class"=>"fw-bold text-decoration-none fs-1 text-uppercase"))."</li>";echo "<br/>";
-    echo "<li class='list-group-item '>".html_writer::link(new moodle_url('/local/powerschool/cycle.php'),get_string('cycle', 'local_powerschool'),array("class"=>"fw-bold text-decoration-none fs-1 text-uppercase"))."</li>";echo "<br/>";
-    // echo "<li class='list-group-item '>".html_writer::link(new moodle_url('/local/powerschool/logo.php'),"Logo",array("class"=>"fw-bold text-decoration-none fs-1 text-uppercase"))."</li>";echo "<br/>";
-    echo "<li class='list-group-item '>".html_writer::link(new moodle_url('/local/powerschool/modepaiement.php'),get_string('modepaiement', 'local_powerschool'),array("class"=>"fw-bold text-decoration-none fs-1 text-uppercase"))."</li>";echo "<br/>";
-    echo "<li class='list-group-item '>".html_writer::link(new moodle_url('/local/powerschool/importationre.php'),get_string('importationimpo', 'local_powerschool'),array("class"=>"fw-bold text-decoration-none fs-1 text-uppercase"))."</li>";echo "<br/>";
-    echo "<li class='list-group-item '>".html_writer::link(new moodle_url('/local/powerschool/exportationre.php'),get_string('exportation', 'local_powerschool'),array("class"=>"fw-bold text-decoration-none fs-1 text-uppercase"))."</li>";echo "<br/>";
- echo"</ul>";
-echo html_writer::end_div();
+    echo html_writer::start_div("card",array('style' => "width: 100%;")) ;
+    echo"  <div class='card-header text-center'>
+    <p class=''> Gérer les réglages de vos Etablissements</p>
+    </div>";
+    echo" <ul class='list-group list-group-flush'>";
+        echo "<li class='list-group-item '>".html_writer::link(new moodle_url('/local/powerschool/anneescolaire.php'),get_string('annee', 'local_powerschool'),array("class"=>"fw-bold text-decoration-none fs-1 text-uppercase"))."</il>";echo "<br/>";
+        if(has_capability("local/powerschool:ajoutercampus",$modulecontext,$USER->id))
+        {
+            echo "<li class='list-group-item '>".html_writer::link(new moodle_url('/local/powerschool/campus.php'),get_string('campus', 'local_powerschool'),array("class"=>"fw-bold text-decoration-none fs-1 text-uppercase"))."</li>";echo "<br/>";
+        }
+        if(has_capability("local/powerschool:ajoutersemestre",$modulecontext,$USER->id))
+        {
+
+            echo "<li class='list-group-item '>".html_writer::link(new moodle_url('/local/powerschool/semestre.php'),get_string('semestre', 'local_powerschool'),array("class"=>"fw-bold text-decoration-none fs-1 text-uppercase"))."</li>";echo "<br/>";
+        }
+        echo "<li class='list-group-item '>".html_writer::link(new moodle_url('/local/powerschool/salle.php'),get_string('salle', 'local_powerschool'),array("class"=>"fw-bold text-decoration-none fs-1 text-uppercase"))."</li>";echo "<br/>";
+        if(has_capability("local/powerschool:createfiliere",$modulecontext,$USER->id))
+        {
+    
+            echo "<li class='list-group-item '>".html_writer::link(new moodle_url('/local/powerschool/filiere.php'),get_string('filiere', 'local_powerschool'),array("class"=>"fw-bold text-decoration-none fs-1 text-uppercase"))."</li>";echo "<br/>";
+        }
+        if(has_capability("local/powerschool:ajouterspecialite",$modulecontext,$USER->id))
+        {
+            
+            echo "<li class='list-group-item '>".html_writer::link(new moodle_url('/local/powerschool/specialite.php'),get_string('specialite', 'local_powerschool'),array("class"=>"fw-bold text-decoration-none fs-1 text-uppercase"))."</li>";echo "<br/>";
+        }
+        if(has_capability("local/powerschool:createcycle",$modulecontext,$USER->id))
+        {
+
+            echo "<li class='list-group-item '>".html_writer::link(new moodle_url('/local/powerschool/cycle.php'),get_string('cycle', 'local_powerschool'),array("class"=>"fw-bold text-decoration-none fs-1 text-uppercase"))."</li>";echo "<br/>";
+        }
+        if(has_capability("local/powerschool:ajoutermodepaiement",$modulecontext,$USER->id))
+        {
+
+            echo "<li class='list-group-item '>".html_writer::link(new moodle_url('/local/powerschool/modepaiement.php'),get_string('modepaiement', 'local_powerschool'),array("class"=>"fw-bold text-decoration-none fs-1 text-uppercase"))."</li>";echo "<br/>";
+        }
+        if(has_capability("local/powerschool:importation",$modulecontext,$USER->id))
+        {
+            
+            echo "<li class='list-group-item '>".html_writer::link(new moodle_url('/local/powerschool/importationre.php'),get_string('importationimpo', 'local_powerschool'),array("class"=>"fw-bold text-decoration-none fs-1 text-uppercase"))."</li>";echo "<br/>";
+        }
+        if(has_capability("local/powerschool:exportation",$modulecontext,$USER->id))
+        {
+
+            echo "<li class='list-group-item '>".html_writer::link(new moodle_url('/local/powerschool/exportationre.php'),get_string('exportation', 'local_powerschool'),array("class"=>"fw-bold text-decoration-none fs-1 text-uppercase"))."</li>";echo "<br/>";
+        }
+        // echo "<li class='list-group-item '>".html_writer::link(new moodle_url('/local/powerschool/logo.php'),"Logo",array("class"=>"fw-bold text-decoration-none fs-1 text-uppercase"))."</li>";echo "<br/>";
+     echo"</ul>";
+    echo html_writer::end_div();
+}
+else
+{
+    \core\notification::add('Vous avez pas autorisations néccessaire', \core\output\notification::NOTIFY_ERROR);
+
+}
 
 echo $OUTPUT->footer();

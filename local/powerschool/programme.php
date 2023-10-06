@@ -27,7 +27,7 @@ use local_powerschool\programme;
 require_once(__DIR__ . '/../../config.php');
 require_once($CFG->dirroot.'/local/powerschool/classes/programme.php');
 require_once($CFG->dirroot.'/local/powerschool/classes/date.php');
-require_once(__DIR__ . '/lib.php');
+require_once(__DIR__ . '/idetablisse.php');
 
 global $DB;
 global $USER;
@@ -305,12 +305,21 @@ echo $OUTPUT->header();
 
 // echo $OUTPUT->render_from_template('local_powerschool/tableau', $getWeeks);
 
-echo $OUTPUT->render_from_template('local_powerschool/navbar', $menu);
 // echo $OUTPUT->render_from_template('local_powerschool/campustou', $campuss);
+if(has_capability("local/powerschool:programme",context_system::instance(),$USER->id))
+{
+    echo $OUTPUT->render_from_template('local_powerschool/navbar', $menu);
 
-$mform->display();
+    // echo "<div class='mx-5'></div>";
+    $mform->display();
+    echo $OUTPUT->render_from_template('local_powerschool/programme', $templatecontext);
+    echo ' <a type="button" class="btn btn-danger" href="/moodle1/local/powerschool/indexprogramme.php?idca='.$_GET["idca"].'">Voir le Calendrier </a>';
+}
+else{
+    \core\notification::add("Vous avez pas autorisation", \core\output\notification::NOTIFY_ERROR);
 
-echo $OUTPUT->render_from_template('local_powerschool/programme', $templatecontext);
+}
+
 
 
 // echo '<div class="d-flex flex-row align-items-center justify-content-between mx-sm-5">
@@ -357,7 +366,6 @@ echo $OUTPUT->render_from_template('local_powerschool/programme', $templateconte
 // echo ' </table>
 //         </div>';
 
-echo ' <a type="button" class="btn btn-danger" href="/moodle1/local/powerschool/indexprogramme.php?idca='.$_GET["idca"].'">Voir le Calendrier </a>';
 
 
 echo $OUTPUT->footer();

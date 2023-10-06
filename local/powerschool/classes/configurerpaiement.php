@@ -43,6 +43,8 @@ class configurerpaiement extends moodleform {
         foreach ($camp as $key => $value) {
             # code...
         }
+
+        // var_dump($iddetablisse);die;
         $categ=$DB->get_records("course_categories",array("name"=>$value->libellecampus));
         foreach ($categ as $key => $value1categ) {
             # code...

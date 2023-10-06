@@ -24,7 +24,7 @@ use core\progress\display;
 use local_powerschool\statistique;
 
 require_once(__DIR__ . '/../../config.php');
-require_once(__DIR__ . '/lib.php');
+require_once(__DIR__ . '/idetablisse.php');
 require_once($CFG->dirroot.'/local/powerschool/classes/statistique.php');
 
 global $DB;
@@ -47,6 +47,7 @@ $PAGE->navbar->add(get_string('statistique', 'local_powerschool'));
 
 $mform=new statistique();
 
+// var_dump($iddetablisse);die;
 //fonction pour extraire les mois dans une année
 function extractMonths($startTimestamp, $endTimestamp) {
     $startDateObj = new DateTime();

@@ -31,7 +31,7 @@ if($_GET["notetest"]=="test"&&$_GET["idbu"]&&$_GET["id"])
                     foreach ($ligneliste as $key => $value) {
                         # code...
                     }
-                    // var_dump($_GET["notetest"]=="test"&&$_GET["idbu"]&&$_GET["id"]);die;
+                    // var_dump($vall->idetudiant);
                     $quiznote=$DB->get_records("quiz_grades", array("quiz"=>$_POST["test"],"userid"=>$vall->idetudiant));
                     // var_dump($value->id);die;
                 
@@ -42,7 +42,7 @@ if($_GET["notetest"]=="test"&&$_GET["idbu"]&&$_GET["id"])
                     if($_POST["test"])
                     {
 
-                        if($value->idetudiant==$valllle->userid)
+                        if($value->idetudiant==$valllle->userid && $value->idetudiant!=null)
                         {
                         
                             
@@ -51,17 +51,18 @@ if($_GET["notetest"]=="test"&&$_GET["idbu"]&&$_GET["id"])
                             $noteetu->idaffecterprof=$_GET['id'];
                             $noteetu->idbulletin=$_GET['idbu'];
                             $noteetu->idetudiant=$valllle->userid;
-
+                            
                             $vericam=$DB->get_records_sql("SELECT * FROM {campus} c,{typecampus} t WHERE c.idtypecampus=t.id AND c.id='".$_GET["idca"]."'");
-
+                            
                             foreach($vericam as $key)
                             {}
                             if($_POST["normalcc"]=="cc")
                             {
-                                if($key->libelletype=="universite")
-                                {
-
+                                    if($key->libelletype=="universite")
+                                    {
+                                    
                                     $noteetu->note2=$valllle->grade;
+                                    var_dump($noteetu);
                                 }else
                                 {
                                     \core\notification::add('Vos ne pouvez pas remplir les données dans la case controle continu', \core\output\notification::NOTIFY_ERROR);
@@ -77,7 +78,7 @@ if($_GET["notetest"]=="test"&&$_GET["idbu"]&&$_GET["id"])
                             // var_dump( $noteetu->note2);die;
                             $DB->update_record("listenote", $noteetu);
                         }
-
+                        // die;
                     }
                     else if($_POST["lesson"])
                     {
@@ -129,6 +130,7 @@ if($_GET["notetest"]=="test"&&$_GET["idbu"]&&$_GET["id"])
                     }
                     
                 }
+                // die;
             }else
             {
                 \core\notification::add('Selectionner le type de note'.$value->libellespecialite.'', \core\output\notification::NOTIFY_ERROR);

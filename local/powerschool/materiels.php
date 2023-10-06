@@ -26,7 +26,7 @@ use local_powerschool\materiels;
 require_once(__DIR__ . '/../../config.php');
 require_once($CFG->dirroot.'/local/powerschool/classes/materiels.php');
 // require_once('tcpdf/tcpdf.php');
-require_once(__DIR__ . '/lib.php');
+require_once(__DIR__ . '/idetablisse.php');
 
 global $DB;
 global $USER;

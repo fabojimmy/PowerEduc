@@ -24,7 +24,7 @@ use core\progress\display;
 use local_powerschool\coursspecialite;
 
 require_once(__DIR__ . '/../../config.php');
-require_once(__DIR__ . '/lib.php');
+require_once(__DIR__ . '/idetablisse.php');
 
 require_once($CFG->dirroot.'/local/powerschool/classes/coursspecialite.php');
 
@@ -40,7 +40,10 @@ $PAGE->set_context(\context_system::instance());
 $PAGE->set_title(get_string('coursspecialite', 'local_powerschool'));
 $PAGE->set_heading(get_string('coursspecialite', 'local_powerschool'));
 
-$PAGE->navbar->add(get_string('configurationminini', 'local_powerschool'),  new moodle_url('/local/powerschool/configurationmini.php'));
+if(has_capability("local/powerschool:configurationminimal",context_system::instance(),$USER->id))
+{
+    $PAGE->navbar->add(get_string('configurationminini', 'local_powerschool'),  new moodle_url('/local/powerschool/configurationmini.php'));
+}
 $PAGE->navbar->add(get_string('coursspecialite', 'local_powerschool'), $managementurl);
 // $PAGE->requires->js_call_amd('local_powerschool/confirmsupp');
 // $PAGE->requires->js_call_amd('local_powerschool/confirmsupp');
@@ -350,13 +353,25 @@ $campuss=(object)[
     ];
 echo $OUTPUT->header();
 
-echo $OUTPUT->render_from_template('local_powerschool/navbarconfiguration', $menumini);
+if(has_capability("local/powerschool:configurationminimal",context_system::instance(),$USER->id))
+{
+
+    echo $OUTPUT->render_from_template('local_powerschool/navbarconfiguration', $menumini);
+}
 echo'<div style="margin-top:50px"></div>';
 // echo $OUTPUT->render_from_template('local_powerschool/campustou', $campuss);
-$mform->display();
+if(has_capability("local/powerschool:coursspecialite",context_system::instance(),$USER->id))
+{
 
-
-echo $OUTPUT->render_from_template('local_powerschool/coursspecialite', $templatecontext);
+    $mform->display();
+    
+    
+    echo $OUTPUT->render_from_template('local_powerschool/coursspecialite', $templatecontext);
+}
+else
+{
+    \core\notification::add("Vous avez pas autorisation",\core\output\notification::NOTIFY_ERROR);
+}
 
 
 echo $OUTPUT->footer();

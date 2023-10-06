@@ -60,7 +60,7 @@ if($valversal->countetu==$valcapa->capacitesalle)
                     
                     foreach ($listenote1 as $key => $value1) {
                         # code...
-                        $sql2="SELECT * FROM {affecterprof} c WHERE c.idcourssemestre='".$value1->id."' AND idsalle='".$_POST["salle"]."'";
+                        $sql2="SELECT * FROM {affecterprof} c WHERE c.idcourssemestre='".$value1->id."' AND idsalle='".$_POST["salle"]."' AND quit=0";
                         $listenote2=$DB->get_records_sql($sql2);
                         // var_dump($listenote2);
                         // var_dump($listenote1);die;
@@ -177,7 +177,7 @@ if($valversal->countetu==$valcapa->capacitesalle)
                         
                         foreach ($listenote1 as $key => $value1) {
                             # code...
-                            $sql2="SELECT * FROM {affecterprof} c WHERE c.idcourssemestre='".$value1->id."' AND idsalle='".$_POST["salle"]."'";
+                            $sql2="SELECT * FROM {affecterprof} c WHERE c.idcourssemestre='".$value1->id."' AND idsalle='".$_POST["salle"]."' AND quit=0";
                             $listenote2=$DB->get_records_sql($sql2);
                             // var_dump($listenote2);
                             // var_dump($listenote1);die;

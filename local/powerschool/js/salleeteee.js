@@ -146,8 +146,8 @@ $(".validertrans").click(function (e) {
         data: {etudiantsid:idetudiants,salle:salle,specialite:specialite,cycle:cycle,annee:annee},
         success: function (response) {
             // Le bulletin de chaque étudiant a été imprimé avec succès
-            //    alert(response)
-            console.log(response)
+               alert(response)
+            // console.log(response)
             },
             error: function () {
             alert("Error")

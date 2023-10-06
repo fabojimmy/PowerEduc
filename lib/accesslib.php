@@ -574,6 +574,7 @@ function has_capability($capability, context $context, $user = null, $doanything
         $access =& $ACCESSLIB_PRIVATE->accessdatabyuser[$userid];
     }
 
+    // var_dump($userid,$context,$capability);die;
     return has_capability_in_accessdata($capability, $context, $access);
 }
 

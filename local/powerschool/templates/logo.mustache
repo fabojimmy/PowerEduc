@@ -24,9 +24,9 @@ input[type="file"] {
 </head>
 <body>
     
-<form method="post" action="{{logo}}" enctype="multipart/form-data">
+<form method="post" action="{{logo}}" enctype="multipart/form-data" class="mx-5">
   <!-- Ajoutez un label personnalisé pour le bouton "choisir un fichier" -->
-  <select class="form-control col-6" name="campus">
+  <select class="form-control col-2 mt-6 mb-2" name="campus">
   <option></option>
   {{#campus}}
   <option value="{{id}}">{{libellecampus}}</option>

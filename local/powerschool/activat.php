@@ -39,7 +39,7 @@ $PAGE->set_context(\context_system::instance());
 $PAGE->set_title("Activation");
 $PAGE->set_heading("Activer soit Année ou Etablissement");
 
-$PAGE->navbar->add(get_string('configurationminini', 'local_powerschool'),  new moodle_url('/local/powerschool/configurationmini.php'));
+// $PAGE->navbar->add(get_string('configurationminini', 'local_powerschool'),  new moodle_url('/local/powerschool/configurationmini.php'));
 $PAGE->navbar->add(get_string('activat', 'local_powerschool'), $managementurl);
 // $PAGE->requires->js_call_amd('local_powerschool/confirmsupp');
 // $PAGE->requires->js_call_amd('local_powerschool/confirmsupp');
