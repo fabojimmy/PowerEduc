@@ -2148,7 +2148,7 @@ function get_default_role_archetype_allows($type, $archetype) {
 
     $defaults = array(
         'assign' => array(
-            'manager'        => array('manager', 'coursecreator', 'editingteacher', 'teacher', 'student'),
+            'manager'        => array('manager', 'coursecreator', 'editingteacher', 'teacher', 'student','chauffeur','serveur'),
             'coursecreator'  => array(),
             'editingteacher' => array('teacher', 'student'),
             'teacher'        => array(),
@@ -2156,9 +2156,11 @@ function get_default_role_archetype_allows($type, $archetype) {
             'guest'          => array(),
             'user'           => array(),
             'frontpage'      => array(),
+            'chauffeur'      => array(),
+            'serveur'      => array(),
         ),
         'override' => array(
-            'manager'        => array('manager', 'coursecreator', 'editingteacher', 'teacher', 'student', 'guest', 'user', 'frontpage'),
+            'manager'        => array('manager', 'coursecreator', 'editingteacher', 'teacher', 'student', 'guest', 'user', 'frontpage','chauffeur','serveur'),
             'coursecreator'  => array(),
             'editingteacher' => array('teacher', 'student', 'guest'),
             'teacher'        => array(),
@@ -2166,6 +2168,8 @@ function get_default_role_archetype_allows($type, $archetype) {
             'guest'          => array(),
             'user'           => array(),
             'frontpage'      => array(),
+            'chauffeur'      => array(),
+            'serveur'      => array(),
         ),
         'switch' => array(
             'manager'        => array('editingteacher', 'teacher', 'student', 'guest'),
@@ -2176,6 +2180,8 @@ function get_default_role_archetype_allows($type, $archetype) {
             'guest'          => array(),
             'user'           => array(),
             'frontpage'      => array(),
+            'chauffeur'      => array(),
+            'serveur'      => array(),
         ),
         'view' => array(
             'manager'        => array('manager', 'coursecreator', 'editingteacher', 'teacher', 'student', 'guest', 'user', 'frontpage'),
@@ -2186,6 +2192,8 @@ function get_default_role_archetype_allows($type, $archetype) {
             'guest'          => array(),
             'user'           => array(),
             'frontpage'      => array(),
+            'chauffeur'      => array(),
+            'serveur'      => array(),
         ),
     );
 

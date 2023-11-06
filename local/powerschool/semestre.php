@@ -33,12 +33,12 @@ require_login();
 $context = context_system::instance();
 // require_capability('local/message:managemessages', $context);
 
-$PAGE->set_url(new moodle_url('/local/powerschool/semestre.php'));
+$PAGE->set_url($CFG->wwwroot.'/local/powerschool/semestre.php');
 $PAGE->set_context(\context_system::instance());
 $PAGE->set_title('Enregistrer les differentes parties de l\'année scolaire');
 $PAGE->set_heading('Enregistrer les differentes parties de l\'année scolaire');
 
-$PAGE->navbar->add(get_string('reglages', 'local_powerschool'),  new moodle_url('/local/powerschool/reglages.php'));
+$PAGE->navbar->add(get_string('reglages', 'local_powerschool'),  $CFG->wwwroot.'/local/powerschool/reglages.php');
 $PAGE->navbar->add(get_string('semestre', 'local_powerschool'), $managementurl);
 // $PAGE->requires->js_call_amd('local_powerschool/confirmsupp');
 // $PAGE->requires->js_call_amd('local_powerschool/confirmsupp');
@@ -60,57 +60,66 @@ $recordtoinsert = $fromform;
 
     // var_dump($fromform);
     // die;
-     if (!$mform->verifisemestre($fromform->libellesemestre) ) {
-            if (!$mform->verifientreannee($fromform->datedebutsemestre,$fromform->datefinsemestre)) {
-                $trueDe=$DB->get_records_sql("SELECT MAX(id), datefinsemestre FROM {semestre}");
-                $trueDA=$DB->get_records_sql("SELECT MAX(id), datefin FROM {anneescolaire}");
-                // var_dump($trueDe);die;
+ $campuss=$DB->get_records("campus");
+  if($campuss)
+  {
 
-                foreach($trueDe as $key=>$value)
-                {
+      if (!$mform->verifisemestre($fromform->libellesemestre) ) {
+             if (!$mform->verifientreannee($fromform->datedebutsemestre,$fromform->datefinsemestre)) {
+                 $trueDe=$DB->get_records_sql("SELECT MAX(id), datefinsemestre FROM {semestre}");
+                 $trueDA=$DB->get_records_sql("SELECT MAX(id), datefin FROM {anneescolaire}");
+                 // var_dump($trueDe);die;
+ 
+                 foreach($trueDe as $key=>$value)
+                 {
+ 
+                 }
+                 foreach($trueDA as $key=>$value1)
+                 {
+ 
+                 }
+                 date("Y-m-d",$value->datefinsemestre);
+                 date("Y-m-d",$value1->datefin);
+                 // var_dump(date("Y-m-d",$value1->datefin),$value->datefinsemestre,$value1->datefin);
+                 // var_dump(date("Y-m-d",$value->datefinsemestre),date("Y-m-d",$value1->datefin),date("Y-m-d",$fromform->datedebutsemestre));
+                 // die;
+                 
+                 if(($value->datefinsemestre<=$fromform->datedebutsemestre && $fromform->datedebutsemestre<=$value1->datefin))
+                 {  
+                     
+                     $DB->insert_record('semestre', $recordtoinsert);
+                     redirect($CFG->wwwroot . '/local/powerschool/semestre.php', 'Enregistrement effectué'); 
+                 }else{
+                     \core\notification::add('Mettez la date du prochaine Semestre a la suite de la precedante', \core\output\notification::NOTIFY_ERROR);
+                     // redirect($CFG->wwwroot . '/local/powerschool/semestre.php');
+                 }
+ 
+             }else{
+                 // redirect($CFG->wwwroot . '/local/powerschool/semestre.php', ' -Soit votre date de debut et de date de fin est egale..<br/>
+                 
+                 // -Soit vos dates que vous avez entrés n\'est pas dans l\'année scolaire...<br/>
+                 // -Soit vos dates existent...<br/>
+                 // -Soit vos etes de l\'année scolaire...<br/> ');
+                 \core\notification::add(' -Soit votre date de debut et de date de fin est egale..<br/>
+                 
+                 -Soit vos dates que vous avez entrés n\'est pas dans l\'année scolaire...<br/>
+                 -Soit vos dates existent...<br/>
+                 -Soit vos etes de l\'année scolaire...<br/> ', \core\output\notification::NOTIFY_ERROR);
+ 
+             }
+         // exit;
+      } 
+      else {
+         // redirect($CFG->wwwroot . '/local/powerschool/semestre.php', 'Ce semestre execite déjà');
+         \core\notification::add('Ce semestre execite déjà', \core\output\notification::NOTIFY_ERROR);
+ 
+      }
+  }
+  else {
+    // redirect($CFG->wwwroot . '/local/powerschool/semestre.php', 'Ce semestre execite déjà');
+    \core\notification::add('Enregistrer un Etablissement', \core\output\notification::NOTIFY_ERROR);
 
-                }
-                foreach($trueDA as $key=>$value1)
-                {
-
-                }
-                date("Y-m-d",$value->datefinsemestre);
-                date("Y-m-d",$value1->datefin);
-                // var_dump(date("Y-m-d",$value1->datefin),$value->datefinsemestre,$value1->datefin);
-                // var_dump(date("Y-m-d",$value->datefinsemestre),date("Y-m-d",$value1->datefin),date("Y-m-d",$fromform->datedebutsemestre));
-                // die;
-                
-                if(($value->datefinsemestre<=$fromform->datedebutsemestre && $fromform->datedebutsemestre<=$value1->datefin))
-                {  
-                    
-                    $DB->insert_record('semestre', $recordtoinsert);
-                    redirect($CFG->wwwroot . '/local/powerschool/semestre.php', 'Enregistrement effectué'); 
-                }else{
-                    \core\notification::add('Mettez la date du prochaine Semestre a la suite de la precedante', \core\output\notification::NOTIFY_ERROR);
-                    // redirect($CFG->wwwroot . '/local/powerschool/semestre.php');
-                }
-
-            }else{
-                // redirect($CFG->wwwroot . '/local/powerschool/semestre.php', ' -Soit votre date de debut et de date de fin est egale..<br/>
-                
-                // -Soit vos dates que vous avez entrés n\'est pas dans l\'année scolaire...<br/>
-                // -Soit vos dates existent...<br/>
-                // -Soit vos etes de l\'année scolaire...<br/> ');
-                \core\notification::add(' -Soit votre date de debut et de date de fin est egale..<br/>
-                
-                -Soit vos dates que vous avez entrés n\'est pas dans l\'année scolaire...<br/>
-                -Soit vos dates existent...<br/>
-                -Soit vos etes de l\'année scolaire...<br/> ', \core\output\notification::NOTIFY_ERROR);
-
-            }
-        // exit;
-     } 
-     else {
-        // redirect($CFG->wwwroot . '/local/powerschool/semestre.php', 'Ce semestre execite déjà');
-        \core\notification::add('Ce semestre execite déjà', \core\output\notification::NOTIFY_ERROR);
-
-     }
-     
+ } 
         
         
 }
@@ -158,38 +167,38 @@ $templatecontext = (object)[
     'semestre' => array_values($semestres),
     // 'datedebutsem' => $datedebut,
     // 'datefinsem' => $datefin,
-    'semestreedit' => new moodle_url('/local/powerschool/semestreedit.php'),
-    'semestresupp'=> new moodle_url('/local/powerschool/semestre.php'),
-    'campus' => new moodle_url('/local/powerschool/campus.php'),
+    'semestreedit' => $CFG->wwwroot.'/local/powerschool/semestreedit.php',
+    'semestresupp'=> $CFG->wwwroot.'/local/powerschool/semestre.php',
+    'campus' => $CFG->wwwroot.'/local/powerschool/campus.php',
 ];
 
 // $menu = (object)[
-//     'annee' => new moodle_url('/local/powerschool/anneescolaire.php'),
-//     'campus' => new moodle_url('/local/powerschool/campus.php'),
-//     'semestre' => new moodle_url('/local/powerschool/semestre.php'),
-//     'salle' => new moodle_url('/local/powerschool/salle.php'),
-//     'filiere' => new moodle_url('/local/powerschool/filiere.php'),
-//     'cycle' => new moodle_url('/local/powerschool/cycle.php'),
-//     'modepayement' => new moodle_url('/local/powerschool/modepayement.php'),
-//     'matiere' => new moodle_url('/local/powerschool/matiere.php'),
-//     'seance' => new moodle_url('/local/powerschool/seance.php'),
-//     'inscription' => new moodle_url('/local/powerschool/inscription.php'),
-//     'enseigner' => new moodle_url('/local/powerschool/enseigner.php'),
-//     'paiement' => new moodle_url('/local/powerschool/paiement.php'),
+//     'annee' => $CFG->wwwroot.'/local/powerschool/anneescolaire.php'),
+//     'campus' => $CFG->wwwroot.'/local/powerschool/campus.php'),
+//     'semestre' => $CFG->wwwroot.'/local/powerschool/semestre.php'),
+//     'salle' => $CFG->wwwroot.'/local/powerschool/salle.php'),
+//     'filiere' => $CFG->wwwroot.'/local/powerschool/filiere.php'),
+//     'cycle' => $CFG->wwwroot.'/local/powerschool/cycle.php'),
+//     'modepayement' => $CFG->wwwroot.'/local/powerschool/modepayement.php'),
+//     'matiere' => $CFG->wwwroot.'/local/powerschool/matiere.php'),
+//     'seance' => $CFG->wwwroot.'/local/powerschool/seance.php'),
+//     'inscription' => $CFG->wwwroot.'/local/powerschool/inscription.php'),
+//     'enseigner' => $CFG->wwwroot.'/local/powerschool/enseigner.php'),
+//     'paiement' => $CFG->wwwroot.'/local/powerschool/paiement.php'),
 // ];
 
 $menu = (object)[
-    'statistique' => new moodle_url('/local/powerschool/statistique.php'),
-    'reglage' => new moodle_url('/local/powerschool/reglages.php'),
-    // 'matiere' => new moodle_url('/local/powerschool/matiere.php'),
-    'seance' => new moodle_url('/local/powerschool/seance.php'),
-    'programme' => new moodle_url('/local/powerschool/programme.php'),
+    'statistique' => $CFG->wwwroot.'/local/powerschool/statistique.php',
+    'reglage' => $CFG->wwwroot.'/local/powerschool/reglages.php',
+    // 'matiere' => $CFG->wwwroot.'/local/powerschool/matiere.php'),
+    'seance' => $CFG->wwwroot.'/local/powerschool/seance.php',
+    'programme' => $CFG->wwwroot.'/local/powerschool/programme.php',
 
-    'inscription' => new moodle_url('/local/powerschool/inscription.php'),
-    // 'notes' => new moodle_url('/local/powerschool/note.php'),
-    'bulletin' => new moodle_url('/local/powerschool/bulletin.php'),
-    'configurermini' => new moodle_url('/local/powerschool/configurationmini.php'),
-    // 'gerer' => new moodle_url('/local/powerschool/gerer.php'),
+    'inscription' => $CFG->wwwroot.'/local/powerschool/inscription.php',
+    // 'notes' => $CFG->wwwroot.'/local/powerschool/note.php'),
+    'bulletin' => $CFG->wwwroot.'/local/powerschool/bulletin.php',
+    'configurermini' => $CFG->wwwroot.'/local/powerschool/configurationmini.php',
+    // 'gerer' => $CFG->wwwroot.'/local/powerschool/gerer.php'),
 
 ];
 

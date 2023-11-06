@@ -120,10 +120,24 @@ echo $OUTPUT->header();
 
 
 // echo $OUTPUT->render_from_template('local_powerschool/navbar', $menu);
-$mform->display();
 
+$vv=$DB->get_records_sql("SELECT libelletype FROM {campus} c,{typecampus} t WHERE c.idtypecampus=t.id AND c.id='".ChangerSchoolUser($USER->id)."'");
 
-echo $OUTPUT->render_from_template('local_powerschool/configurationnote', $templatecontext);
+// var_dump($vv,ChangerSchoolUser($USER->id));
+// die;
+foreach ($vv as $row)
+{}
+if($row->libelletype=="universite")
+{
+    $mform->display();
+
+    echo $OUTPUT->render_from_template('local_powerschool/configurationnote', $templatecontext);
+}
+else
+{
+    \core\notification::add('Cette interface est reservée aux ecoles supperieur', \core\output\notification::NOTIFY_ERROR);
+
+}
 
 
 echo $OUTPUT->footer();

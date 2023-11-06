@@ -178,16 +178,40 @@ if($_GET['id']) {
 }
 
 
-$sql = "SELECT cs.id,cy.id as idcy,s.id as idsp,f.idcampus,libellespecialite,libellecycle,credit,abreviationspecialite,cy.nombreannee,libellesemestre,cs.idspecialite,css.idsemestre,idfiliere,nombreheure,credit FROM {specialite} s, {cycle} cy,{coursspecialite} cs,{filiere} f,{courssemestre} css,{semestre} see
-        WHERE see.id=css.idsemestre AND s.idfiliere=f.id AND css.idcoursspecialite=cs.id AND cs.idcycle = cy.id AND cs.idspecialite = s.id AND f.idcampus='".$iddetablisse."' AND idcourses NOT IN(SELECT id FROM {course})";
-// $sql = "SELECT cs.id,fullname,libellespecialite,libellecycle,credit,shortname,abreviationspecialite,cy.nombreannee FROM {course} c, {specialite} s, {cycle} cy,{coursspecialite} cs,{filiere} f
-//         WHERE s.idfiliere=f.id AND cs.idcycle = cy.id AND cs.idspecialite = s.id AND cs.idcourses = c.id AND f.idcampus='".$_GET["idca"]."'";
+// if(has_capability("local/powerschool:activation",$modulecontext,$USER->id) )
+// {
 
-$sql1 = "SELECT cs.id,cy.id as idcy,s.id as idsp,f.idcampus,libellespecialite,libellecycle,abreviationspecialite,cs.idspecialite,credit FROM {specialite} s, {cycle} cy,{coursspecialite} cs,{filiere} f
-        WHERE s.idfiliere=f.id AND cs.idcycle = cy.id AND cs.idspecialite = s.id AND f.idcampus='".$iddetablisse."' AND cs.id NOT IN (SELECT idcoursspecialite FROM {courssemestre})";
+    $sql = "SELECT cs.id,cy.id as idcy,s.id as idsp,f.idcampus,libellespecialite,libellecycle,credit,abreviationspecialite,cy.nombreannee,libellesemestre,cs.idspecialite,css.idsemestre,idfiliere,nombreheure,credit FROM {specialite} s, {cycle} cy,{coursspecialite} cs,{filiere} f,{courssemestre} css,{semestre} see
+            WHERE see.id=css.idsemestre AND s.idfiliere=f.id AND css.idcoursspecialite=cs.id AND cs.idcycle = cy.id AND cs.idspecialite = s.id AND f.idcampus='".ChangerSchoolUser($USER->id)."' AND idcourses NOT IN(SELECT id FROM {course})";
+    // $sql = "SELECT cs.id,fullname,libellespecialite,libellecycle,credit,shortname,abreviationspecialite,cy.nombreannee FROM {course} c, {specialite} s, {cycle} cy,{coursspecialite} cs,{filiere} f
+    //         WHERE s.idfiliere=f.id AND cs.idcycle = cy.id AND cs.idspecialite = s.id AND cs.idcourses = c.id AND f.idcampus='".$_GET["idca"]."'";
 
-$sql2 = "SELECT cs.id,nombreannee,cy.id as idcy,s.id as idsp,f.idcampus,libellespecialite,libellecycle,abreviationspecialite,cs.idspecialite,fullname,shortname,libellesemestre,nombreheure,credit FROM {specialite} s, {cycle} cy,{coursspecialite} cs,{filiere} f,{course} c,{courssemestre} css,{semestre} sem
-         WHERE sem.id=css.idsemestre AND cs.id=css.idcoursspecialite AND c.id =cs.idcourses AND s.idfiliere=f.id AND cs.idcycle = cy.id AND cs.idspecialite = s.id AND f.idcampus='".$iddetablisse."'";
+    $sql1 = "SELECT cs.id,cy.id as idcy,s.id as idsp,f.idcampus,libellespecialite,libellecycle,abreviationspecialite,cs.idspecialite,credit FROM {specialite} s, {cycle} cy,{coursspecialite} cs,{filiere} f
+            WHERE s.idfiliere=f.id AND cs.idcycle = cy.id AND cs.idspecialite = s.id AND f.idcampus='".ChangerSchoolUser($USER->id)."' AND cs.id NOT IN (SELECT idcoursspecialite FROM {courssemestre})";
+
+    $sql2 = "SELECT cs.id,nombreannee,cy.id as idcy,s.id as idsp,f.idcampus,libellespecialite,libellecycle,abreviationspecialite,cs.idspecialite,fullname,shortname,libellesemestre,nombreheure,credit FROM {specialite} s, {cycle} cy,{coursspecialite} cs,{filiere} f,{course} c,{courssemestre} css,{semestre} sem
+            WHERE sem.id=css.idsemestre AND cs.id=css.idcoursspecialite AND c.id =cs.idcourses AND s.idfiliere=f.id AND cs.idcycle = cy.id AND cs.idspecialite = s.id AND f.idcampus='".ChangerSchoolUser($USER->id)."'";
+// }
+// else{
+//     $gg=$DB->get_records("user",array("id"=>$USER->id));
+    
+//             foreach($gg as $kk)
+//             {}
+            
+//             // $camp=$DB->get_records("campus",array("id"=>$kk->idcampuser));
+//     $sql = "SELECT cs.id,cy.id as idcy,s.id as idsp,f.idcampus,libellespecialite,libellecycle,credit,abreviationspecialite,cy.nombreannee,libellesemestre,cs.idspecialite,css.idsemestre,idfiliere,nombreheure,credit FROM {specialite} s, {cycle} cy,{coursspecialite} cs,{filiere} f,{courssemestre} css,{semestre} see
+//             WHERE see.id=css.idsemestre AND s.idfiliere=f.id AND css.idcoursspecialite=cs.id AND cs.idcycle = cy.id AND cs.idspecialite = s.id AND f.idcampus='".$kk->idcampuser."' AND idcourses NOT IN(SELECT id FROM {course})";
+//     // $sql = "SELECT cs.id,fullname,libellespecialite,libellecycle,credit,shortname,abreviationspecialite,cy.nombreannee FROM {course} c, {specialite} s, {cycle} cy,{coursspecialite} cs,{filiere} f
+//     //         WHERE s.idfiliere=f.id AND cs.idcycle = cy.id AND cs.idspecialite = s.id AND cs.idcourses = c.id AND f.idcampus='".$_GET["idca"]."'";
+
+//     $sql1 = "SELECT cs.id,cy.id as idcy,s.id as idsp,f.idcampus,libellespecialite,libellecycle,abreviationspecialite,cs.idspecialite,credit FROM {specialite} s, {cycle} cy,{coursspecialite} cs,{filiere} f
+//             WHERE s.idfiliere=f.id AND cs.idcycle = cy.id AND cs.idspecialite = s.id AND f.idcampus='".$kk->idcampuser."' AND cs.id NOT IN (SELECT idcoursspecialite FROM {courssemestre})";
+
+//     $sql2 = "SELECT cs.id,nombreannee,cy.id as idcy,s.id as idsp,f.idcampus,libellespecialite,libellecycle,abreviationspecialite,cs.idspecialite,fullname,shortname,libellesemestre,nombreheure,credit FROM {specialite} s, {cycle} cy,{coursspecialite} cs,{filiere} f,{course} c,{courssemestre} css,{semestre} sem
+//             WHERE sem.id=css.idsemestre AND cs.id=css.idcoursspecialite AND c.id =cs.idcourses AND s.idfiliere=f.id AND cs.idcycle = cy.id AND cs.idspecialite = s.id AND f.idcampus='".$kk->idcampuser."'";
+// //  die;
+
+// }
 // $sql = "SELECT cs.id,fullname,libellespecialite,libellecycle,credit,shortname,abreviationspecialite,nombreannee FROM {course} c, {specialite} s, {cycle} cy , {coursspecialite} cs,{filiere} f
 //         WHERE s.idfiliere=f.id AND cs.idcycle = cy.id AND cs.idspecialite = s.id AND cs.idcourses = c.id AND idcampus='".$_GET["idca"]."'";
 

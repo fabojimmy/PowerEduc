@@ -26,7 +26,8 @@ use moodleform;
 use stdClass;
 
 
-require_once("$CFG->libdir/formslib.php");
+require_once($CFG->libdir.'/formslib.php');
+// require_once(__DIR__ . '/idetablisse.php');
 
 class tranche extends moodleform {
 
@@ -54,17 +55,21 @@ class tranche extends moodleform {
 
         $mform->addElement('hidden', 'id');
         $mform->setType('id', PARAM_INT);
-
+        $mform->addElement('hidden', 'action');
+        $mform->setDefault('action', $_GET["action"]);
+        
         $mform->addElement('text', 'libelletranche', 'Libellé Tranche'); // Add elements to your form
         $mform->setType('libelletranche', PARAM_TEXT);                   //Set type of element
         $mform->setDefault('libelletranche', '');        //Default value
         $mform->addRule('libelletranche', 'Libelle specialite', 'required', null, 'client');
         $mform->addHelpButton('libelletranche', 'specialite');
         
+        // var_dump(ChangerSchoolUser($USER->id),__DIR__);die;
         
         $mform->addElement('hidden', 'idcampus' ); // Add elements to your form
         $mform->setType('idcampus', PARAM_INT);                   //Set type of element
-        $mform->setDefault('idcampus', $iddetablisse);        //Default value
+        $mform->setDefault('idcampus', ChangerSchoolUser($USER->id));        //Default value
+        // die;
       
         // $mform->addElement('select', 'idcampus', 'Campus', $selectcampus ); // Add elements to your form
         // $mform->setType('idcampus', PARAM_TEXT);                   //Set type of element
@@ -79,7 +84,7 @@ class tranche extends moodleform {
         $mform->setType('idanneescolaire', PARAM_INT);                   //Set type of element
         $mform->setDefault('idanneescolaire', $value->id);        //Default value
 
-
+        // die;
         $this->add_action_buttons();
     }
     //Custom validation should be added here
@@ -108,7 +113,7 @@ class tranche extends moodleform {
      * @param int $anneeid l'id de l'année selectionné .
      */
 
-    public function get_tranche(int $specialiteid)
+    public function get_tranche($specialiteid)
     {
         global $DB;
         return $DB->get_record('tranche', ['id' => $specialiteid]);

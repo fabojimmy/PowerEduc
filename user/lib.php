@@ -213,10 +213,13 @@ function user_update_user($user, $updatepassword = true, $triggerevent = true) {
     foreach($get as $key1){}
 
     // var_dump($user->id,$user->role,$key1->id);die;
-    $rolrassup->id=$key1->id;
-    $rolrassup->roleid=$user->role;
-    $rolrassup->userid=$user->id;
-    $DB->update_record('role_assignments',$rolrassup);
+    if($key1->id!=0)
+    {
+        $rolrassup->id=$key1->id;
+        $rolrassup->roleid=$user->role;
+        $rolrassup->userid=$user->id;
+        $DB->update_record('role_assignments',$rolrassup);
+    }
 
     if ($updatepassword) {
         // Get full user record.

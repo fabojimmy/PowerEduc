@@ -29,7 +29,7 @@ use moodleform;
 use stdClass;
 
 
-require_once("$CFG->libdir/formslib.php");
+require_once($CFG->libdir.'/formslib.php');
 
 
 class Month {

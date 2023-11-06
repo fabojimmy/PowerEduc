@@ -26,7 +26,7 @@ use moodleform;
 use stdClass;
 
 
-require_once("$CFG->libdir/formslib.php");
+require_once($CFG->libdir.'/formslib.php');
 
 class cycle extends moodleform {
 
@@ -36,7 +36,7 @@ class cycle extends moodleform {
         
         global $USER;
         $mform = $this->_form; // Don't forget the underscore!
-        $rolecasql="SELECT * FROM {campus} c,{typecampus} t WHERE c.idtypecampus=t.id AND c.id='".$iddetablisse."'";
+        $rolecasql="SELECT * FROM {campus} c,{typecampus} t WHERE c.idtypecampus=t.id AND c.id='".ChangerSchoolUser($USER->id)."'";
         $campus=$DB->get_records_sql($rolecasql);
 
         
@@ -50,7 +50,7 @@ class cycle extends moodleform {
        
         $mform->addElement('hidden', 'idcampus');
         $mform->setType('idcampus', PARAM_INT);
-        $mform->setDefault('idcampus', $iddetablisse);
+        $mform->setDefault('idcampus', ChangerSchoolUser($USER->id));
 
         $mform->addElement('text', 'libellecycle', 'Libellé cycle'); // Add elements to your form
         $mform->setType('libellecycle', PARAM_TEXT);                   //Set type of element

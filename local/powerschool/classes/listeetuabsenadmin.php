@@ -2,9 +2,9 @@
    require_once(__DIR__ . '/../../../config.php');
    global $DB;
    if ($_POST["cycle"] && $_POST["specialite"]) {
-    $sql="SELECT sbet.id,firstname,lastname,a.datedebut,a.datefin,sbet.idprof,fullname
+    $sql="SELECT sbet.id,firstname,lastname,a.datedebut,a.datefin,sbet.idprof,fullname,sbet.heuredebutcours,sbet.nombreheure,sbet.timecreated,sbet.idcampus
     FROM {absenceetu} sbet,{user} u,{anneescolaire} a,{course} c,{coursspecialite} cs,{courssemestre} css
-    WHERE u.id=sbet.idetudiant AND c.id=sbet.idcourses AND a.id=sbet.idanneescolaire AND sbet.idspecialite='".$_POST["specialite"]."' 
+    WHERE u.id=sbet.idetudiant AND c.id=sbet.idcourses AND a.id=sbet.idanneescolaire AND sbet.idspecialite='".$_POST["specialite"]."' AND sbet.id NOT IN (SELECT idabsenceetu FROM {absencejustifier}) 
     AND sbet.idcycle='".$_POST["cycle"]."' AND cs.idcourses=c.id AND cs.id=css.idcoursspecialite AND css.idsemestre='".$_POST["semestre"]."' AND c.id='".$_POST["cours"]."'";
     // $sql="SELECT *
     // FROM {user} u,{specialite} s,{campus} c,{cycle} cy,{absenceetu} sbet,{salle} sa,{course} cous,{coursspecialite} cs,{courssemestre} css,{semestre} see
@@ -30,6 +30,9 @@
               <td>'.$vauser->firstname.'</td>
               <td>'.$value1->fullname.'</td>
               <td>'.date("Y",$value1->datedebut).'-'.date("Y",$value1->datefin).'</td>
+              <td>'.$value1->heuredebutcours.' h</td>
+              <td>'.$value1->nombreheure.' h</td>
+              <td><a class="btn btn-warning" href='.new moodle_url("/local/powerschool/absencejustifier.php?idabse=$value1->id&idcampus=$value1->idcampus").'>Justifier Heure</a></td>
             </tr>';
  }
    }

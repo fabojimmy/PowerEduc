@@ -52,10 +52,10 @@ $PAGE->navbar->add(get_string('absenceetu', 'local_powerschool'), $managementurl
 
 //absence
 
-$sql="SELECT sbet.id,firstname,lastname,a.datedebut,a.datefin,sbet.idprof,fullname,sbet.timecreated
+$sql="SELECT sbet.id,firstname,lastname,a.datedebut,a.datefin,sbet.idprof,fullname,sbet.timecreated,sbet.heuredebutcours,sbet.nombreheure
 FROM {absenceetu} sbet,{user} u,{anneescolaire} a,{course} c,{coursspecialite} cs,{courssemestre} css,{cycle} cy,{specialite} sp
 WHERE u.id=sbet.idetudiant AND c.id=sbet.idcourses AND a.id=sbet.idanneescolaire AND sbet.idspecialite=sp.id AND sbet.idetudiant='".$USER->id."'
-AND sbet.idcycle=cy.id AND cs.idcourses=c.id AND cs.id=css.idcoursspecialite AND css.idsemestre='".$_GET["idsem"]."'";
+AND sbet.idcycle=cy.id AND cs.idcourses=c.id AND cs.id=css.idcoursspecialite AND css.idsemestre='".$_GET["idsem"]."' AND sbet.id NOT IN (SELECT idabsenceetu FROM {absencejustifier})";
 $cours=$DB->get_records_sql($sql);
 
 foreach ($cours as $key => $value1) {

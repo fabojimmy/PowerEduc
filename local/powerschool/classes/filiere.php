@@ -22,11 +22,13 @@
  */
 
 namespace local_powerschool;
+
+use context_system;
 use moodleform;
 use stdClass;
 
 
-require_once("$CFG->libdir/formslib.php");
+require_once($CFG->libdir.'/formslib.php');
 
 class filiere extends moodleform {
 
@@ -77,6 +79,9 @@ class filiere extends moodleform {
 
         $mform->addElement('hidden', 'id');
         $mform->setType('id', PARAM_INT);
+       
+        $mform->addElement('hidden', 'action');
+        $mform->setDefault('action', $_GET["action"]);
 
         $mform->addElement('text', 'libellefiliere', 'Libellé filiere'); // Add elements to your form
         $mform->setType('libellefiliere', PARAM_TEXT);                   //Set type of element
@@ -98,7 +103,22 @@ class filiere extends moodleform {
         // die;
         $mform->addElement('hidden', 'idcampus'); // Add elements to your form
         $mform->setType('idcampus', PARAM_INT);                   //Set type of element
-        $mform->setDefault('idcampus', $iddetablisse);        //Default value
+        // if(has_capability("local/powerschool:activation",context_system::instance(),$USER->id))
+        // {
+            // die;
+            // var_dump(ChangerSchoolUser($USER->id));die;
+            $mform->setDefault('idcampus', ChangerSchoolUser($USER->id));  
+            
+        // }
+        // else{
+        //     $gg=$DB->get_records("user",array("id"=>$USER->id));
+            
+        //     foreach($gg as $kk)
+        //     {}
+        //     $mform->setDefault('idcampus', $kk->idcampuser);  
+            
+        // }
+             //Default value
 
         // $mform->addElement('select', 'idcampus', 'Campus', $selectcamp ); // Add elements to your form
         // $mform->setType('idcampus', PARAM_TEXT);                   //Set type of element

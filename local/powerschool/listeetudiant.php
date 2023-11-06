@@ -35,7 +35,7 @@ require_login();
 $context = context_system::instance();
 // require_capability('local/message:managemessages', $context);
 
-$PAGE->set_url(new moodle_url('/local/powerschool/inscription.php'));
+$PAGE->set_url($CFG->wwwroot.'/local/powerschool/inscription.php');
 $PAGE->set_context(\context_system::instance());
 $PAGE->set_title('Liste des Apprenants');
 $PAGE->set_heading('Liste des Apprenants Et affectation de cours');
@@ -109,11 +109,11 @@ foreach($annee as $key => $ab)
 $templatecontext = (object)[
     'inscription' => array_values($inscription),
     // 'nb'=>array_values($tab),
-    'inscriptionedit' => new moodle_url('/local/powerschool/inscriptionedit.php'),
-    'inscriptionpayer'=> new moodle_url('/local/powerschool/paiement.php'),
-    'affectercours'=> new moodle_url('/local/powerschool/inscription.php'),
-    'suppins'=> new moodle_url('/local/powerschool/inscription.php'),
-    // 'imprimer' => new moodle_url('/local/powerschool/imp.php'),
+    'inscriptionedit' => $CFG->wwwroot.'/local/powerschool/inscriptionedit.php',
+    'inscriptionpayer'=> $CFG->wwwroot.'/local/powerschool/paiement.php',
+    'affectercours'=> $CFG->wwwroot.'/local/powerschool/inscription.php',
+    'suppins'=> $CFG->wwwroot.'/local/powerschool/inscription.php',
+    // 'imprimer' => $CFG->wwwroot.'/local/powerschool/imp.php'),
     'anneee'=>array_values($annee),
     'roote'=>$CFG->wwwroot,
     'campus1' => array_values($campus),
@@ -125,40 +125,42 @@ $templatecontext = (object)[
 ];
 
 // $menu = (object)[
-//     'annee' => new moodle_url('/local/powerschool/anneescolaire.php'),
-//     'campus' => new moodle_url('/local/powerschool/campus.php'),
-//     'semestre' => new moodle_url('/local/powerschool/semestre.php'),
-//     'salle' => new moodle_url('/local/powerschool/salle.php'),
-//     'filiere' => new moodle_url('/local/powerschool/filiere.php'),
-//     'cycle' => new moodle_url('/local/powerschool/cycle.php'),
-//     'modepayement' => new moodle_url('/local/powerschool/modepayement.php'),
-//     'matiere' => new moodle_url('/local/powerschool/matiere.php'),
-//     'seance' => new moodle_url('/local/powerschool/seance.php'),
-//     'inscription' => new moodle_url('/local/powerschool/inscription.php'),
-//     'enseigner' => new moodle_url('/local/powerschool/enseigner.php'),
-//     'paiement' => new moodle_url('/local/powerschool/paiement.php'),
-//     'programme' => new moodle_url('/local/powerschool/programme.php'),
-//     // 'notes' => new moodle_url('/local/powerschool/note.php'),
-//     'bulletin' => new moodle_url('/local/powerschool/bulletin.php'),
-//     'configurermini' => new moodle_url('/local/powerschool/configurationmini.php'),
-//     'gerer' => new moodle_url('/local/powerschool/gerer.php'),
-//     'modepaie' => new moodle_url('/local/powerschool/modepaiement.php'),
-//     'statistique' => new moodle_url('/local/powerschool/statistique.php'),
+//     'annee' => $CFG->wwwroot.'/local/powerschool/anneescolaire.php'),
+//     'campus' => $CFG->wwwroot.'/local/powerschool/campus.php'),
+//     'semestre' => $CFG->wwwroot.'/local/powerschool/semestre.php'),
+//     'salle' => $CFG->wwwroot.'/local/powerschool/salle.php'),
+//     'filiere' => $CFG->wwwroot.'/local/powerschool/filiere.php'),
+//     'cycle' => $CFG->wwwroot.'/local/powerschool/cycle.php'),
+//     'modepayement' => $CFG->wwwroot.'/local/powerschool/modepayement.php'),
+//     'matiere' => $CFG->wwwroot.'/local/powerschool/matiere.php'),
+//     'seance' => $CFG->wwwroot.'/local/powerschool/seance.php'),
+//     'inscription' => $CFG->wwwroot.'/local/powerschool/inscription.php'),
+//     'enseigner' => $CFG->wwwroot.'/local/powerschool/enseigner.php'),
+//     'paiement' => $CFG->wwwroot.'/local/powerschool/paiement.php'),
+//     'programme' => $CFG->wwwroot.'/local/powerschool/programme.php'),
+//     // 'notes' => $CFG->wwwroot.'/local/powerschool/note.php'),
+//     'bulletin' => $CFG->wwwroot.'/local/powerschool/bulletin.php'),
+//     'configurermini' => $CFG->wwwroot.'/local/powerschool/configurationmini.php'),
+//     'gerer' => $CFG->wwwroot.'/local/powerschool/gerer.php'),
+//     'modepaie' => $CFG->wwwroot.'/local/powerschool/modepaiement.php'),
+//     'statistique' => $CFG->wwwroot.'/local/powerschool/statistique.php'),
 
 // ];
 $menu = (object)[
-    'statistique' => new moodle_url('/local/powerschool/statistique.php'),
-    'reglage' => new moodle_url('/local/powerschool/reglages.php'),
-    // 'matiere' => new moodle_url('/local/powerschool/matiere.php'),
-    'seance' => new moodle_url('/local/powerschool/seance.php'),
-    'programme' => new moodle_url('/local/powerschool/programme.php'),
+    'statistique' =>  $CFG->wwwroot.'/local/powerschool/statistique.php',
+    'reglage' =>  $CFG->wwwroot.'/local/powerschool/reglages.php',
+    // 'matiere' => $CFG->wwwroot.'/local/powerschool/matiere.php'),
+    'seance' =>  $CFG->wwwroot.'/local/powerschool/seance.php',
+    'programme' =>  $CFG->wwwroot.'/local/powerschool/programme.php',
 
-    'inscription' => new moodle_url('/local/powerschool/inscription.php'),
-    // 'notes' => new moodle_url('/local/powerschool/note.php'),
-    'bulletin' => new moodle_url('/local/powerschool/bulletin.php'),
-    'configurermini' => new moodle_url('/local/powerschool/configurationmini.php'),
-    'listeetudiant' => new moodle_url('/local/powerschool/listeetudiant.php'),
-    // 'gerer' => new moodle_url('/local/powerschool/gerer.php'),
+    'inscription' =>  $CFG->wwwroot.'/local/powerschool/inscription.php',
+    // 'notes' => $CFG->wwwroot.'/local/powerschool/note.php'),
+    'bulletin' =>  $CFG->wwwroot.'/local/powerschool/bulletin.php',
+    'configurermini' =>  $CFG->wwwroot.'/local/powerschool/configurationmini.php',
+    'listeetudiant' =>  $CFG->wwwroot.'/local/powerschool/listeetudiant.php',
+    // 'activer' => $CFG->wwwroot.'/local/powerschool/activat.php',
+    // 'activat' => get_string('activat', 'local_powerschool'),
+    // 'gerer' => $CFG->wwwroot.'/local/powerschool/gerer.php'),
 
     //navbar
     'statistiquenavr'=>get_string('statistique', 'local_powerschool'),

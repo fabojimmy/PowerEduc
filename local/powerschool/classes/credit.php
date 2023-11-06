@@ -25,9 +25,10 @@ namespace local_powerschool;
 use stdClass;
 use moodleform;
 use local_powerschool\campus;
+// use local_powerschool\id;
 
 
-require_once("$CFG->libdir/formslib.php");
+require_once($CFG->libdir.'/formslib.php');
 
 class credit extends moodleform {
 
@@ -65,7 +66,7 @@ class credit extends moodleform {
 
         $mform->addElement('hidden', 'idcampus', 'date de modification'); // Add elements to your form
         $mform->setType('idcampus', PARAM_INT);                   //Set type of element
-        $mform->setDefault('idcampus',$iddetablisse);        //Default value
+        $mform->setDefault('idcampus',ChangerSchoolUser($USER->id));        //Default value
 
        
 

@@ -108,7 +108,7 @@ echo $OUTPUT->header();
 if(has_capability("local/powerschool:configurationminimal",context_system::instance(),$USER->id))
 {
 
-    echo $OUTPUT->render_from_template('local_powerschool/configurationmini', $templatecontext);
+    echo $OUTPUT->render_from_template('local_powerschool/Configurationmini', $templatecontext);
 }
 else{
     \core\notification::add("Vous avez pas autorisation", \core\output\notification::NOTIFY_ERROR);

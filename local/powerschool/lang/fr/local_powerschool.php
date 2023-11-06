@@ -64,7 +64,11 @@ $string['groupsalle'] = 'Groupe de salle';
 $string['importationimpo'] = 'Importation';
 $string['exportation'] = 'Exportation inscription';
 $string['activat'] = 'Activation';
+$string['transport'] = 'Transport';
+$string['cantine'] = 'Cantine';
+$string['souscantine'] = 'Sous Cantine';
+$string['affectercantine'] = 'Affecter les serveurs aux Cantines';
 $string['local_powerschool:createfiliere'] = 'Vous avez pas la capacité de créer une filiere';
-
+$string['listeabsencejustifier'] = 'Liste absences justifiées';
 
 ?>

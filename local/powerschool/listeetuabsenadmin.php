@@ -166,15 +166,26 @@ $campuss=(object)[
     ];
 echo $OUTPUT->header();
 
-// echo $OUTPUT->render_from_template('local_powerschool/navbarconfiguration', $menumini);
-echo '<div style="margin-top:20px";><wxcvbn</div>';
-echo "<div class='mx-6 px-2'>".$OUTPUT->render_from_template('local_powerschool/campustou', $campuss)."</div>";
-// echo $OUTPUT->render_from_template('local_powerschool/navbar', $menu);
-// $mform->display();
 
-// echo $OUTPUT->render_from_template('local_powerschool/navbarconfiguration', $menumini);
+// var_dump(has_capability("listeabsenceetudiantmanager",context_system::instance(),$USER->id));
+// die;
 
-echo $OUTPUT->render_from_template('local_powerschool/listeetuabsenadmin', $templatecontext);
+if(has_capability("local/powerschool:listeabsenceetudiantmanager",context_system::instance(),$USER->id))
+{
+
+    // echo $OUTPUT->render_from_template('local_powerschool/navbarconfiguration', $menumini);
+    echo '<div style="margin-top:20px";><wxcvbn</div>';
+    echo "<div class='mx-6 px-2'>".$OUTPUT->render_from_template('local_powerschool/campustou', $campuss)."</div>";
+    // echo $OUTPUT->render_from_template('local_powerschool/navbar', $menu);
+    // $mform->display();
+    
+    // echo $OUTPUT->render_from_template('local_powerschool/navbarconfiguration', $menumini);
+    
+    echo $OUTPUT->render_from_template('local_powerschool/listeetuabsenadmin', $templatecontext);
+}
+else{
+    \core\notification::add(("Vous avez pas autorisation"),\core\output\notification::NOTIFY_ERROR);
+}
 
 
 echo $OUTPUT->footer();

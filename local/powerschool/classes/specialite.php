@@ -26,7 +26,7 @@ use moodleform;
 use stdClass;
 
 
-require_once("$CFG->libdir/formslib.php");
+require_once($CFG->libdir.'/formslib.php');
 
 class specialite extends moodleform {
 
@@ -37,7 +37,7 @@ class specialite extends moodleform {
         global $USER,$DB,$iddetablisse;
 
 
-        // var_dump($iddetablisse);die;
+        // var_dump(ChangerSchoolUser($USER->id));die;
         $sqlspec="SELECT * FROM {specialite} WHERE id='".$_GET["id"]."'";
         $speccat=$DB->get_records_sql($sqlspec);
         foreach($speccat as $key =>$vaspelca)
@@ -90,7 +90,7 @@ class specialite extends moodleform {
 
         $reqq = new campus();
         $annee = array();
-        $sql = "SELECT * FROM {filiere} WHERE idcampus='".$iddetablisse."'";
+        $sql = "SELECT * FROM {filiere} WHERE idcampus='".ChangerSchoolUser($USER->id)."'";
         $filiere = $reqq->select($sql);
         
         $mform = $this->_form; // Don't forget the underscore!
@@ -99,10 +99,13 @@ class specialite extends moodleform {
 
         $mform->addElement('hidden', 'id');
         $mform->setType('id', PARAM_INT);
+        
+        $mform->addElement('hidden', 'action');
+        $mform->setDefault('action', $_GET["action"]);
 
         $mform->addElement('hidden', 'idcampus');
         $mform->setType('idcampus', PARAM_INT);
-        $mform->setDefault('idcampus', $iddetablisse);        //Default value
+        $mform->setDefault('idcampus', ChangerSchoolUser($USER->id));        //Default value
 
         $mform->addElement('text', 'libellespecialite', 'Libellé specialite'); // Add elements to your form
         $mform->setType('libellespecialite', PARAM_TEXT);                   //Set type of element

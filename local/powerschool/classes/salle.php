@@ -28,7 +28,7 @@ use local_powerschool\campus;
 use local_powerschool\lib;
 
 
-require_once("$CFG->libdir/formslib.php");
+require_once($CFG->libdir.'/formslib.php');
 require_once($CFG->dirroot.'/local/powerschool/classes/campus.php');
 require_once($CFG->dirroot.'/local/powerschool/idetablisse.php');
 
@@ -37,14 +37,14 @@ class salle extends moodleform {
     //Add elements to form
     public function definition() {
         global $CFG,$iddetablisse;
-        // global $iddetablisse;
+        // global ChangerSchoolUser($USER->id);
         global $USER;
         $campus = new campus();
         $camp = array();
         $sql = "SELECT * FROM {campus} ";
         $camp = $campus->select($sql);
         
-        // var_dump($iddetablisse);die;
+        // var_dump(ChangerSchoolUser($USER->id));die;
         $mform = $this->_form; // Don't forget the underscore!
 
         $mform->addElement('header','Salle', 'Salle');
@@ -82,11 +82,11 @@ class salle extends moodleform {
         {
             $selectcamp[$key] = $val->libellecampus;
         }
-        // var_dump($iddetablisse); 
+        // var_dump(ChangerSchoolUser($USER->id)); 
         // die;
         $mform->addElement('hidden', 'idcampus' ); // Add elements to your form
         $mform->setType('idcampus', PARAM_INT);                   //Set type of element
-        $mform->setDefault('idcampus', $iddetablisse);        //Default value
+        $mform->setDefault('idcampus', ChangerSchoolUser($USER->id));        //Default value
         // $mform->addRule('idcampus', 'Choix du Campus', 'required', null, 'client');
         // $mform->addHelpButton('idcampus', 'campus');
         

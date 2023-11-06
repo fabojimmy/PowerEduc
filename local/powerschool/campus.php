@@ -72,35 +72,45 @@ if ($mform->is_cancelled()) {
     // die;
         //  file_put_contents($destination_path, $file_content);
         // $recordtoinsert->logocampus=$destination_path;
-        if(!$mform->veri_Campus($recordtoinsert->libellecampus))
-        {   
-            // var_dump($recordtoinsert);die;
-            $DB->insert_record('campus', $recordtoinsert);
-            // die;
+    $annnee=$DB->get_records("anneescolaire");
 
-            // $recordcampus=new stdClass();
+    if($annnee)
+    {
 
-            // $recordcampus->name=$recordtoinsert->libellecampus;
-            // $recordcampus->descriptionformat=1;
-            // $recordcampus->visible=1;
-            // $recordcampus->visibleold=1;
-            // $recordcampus->timemodified=time();
-            // $recordcampus->depth=1;
-            // $idd=$DB->insert_record('course_categories',$recordcampus);
-            
-            // $recordcampusmod=new stdClass();
-            // $recordcampusmod->id=$idd;
-            // $recordcampusmod->path="/".$idd;
-            
-            // $DB->update_record('course_categories',$recordcampusmod);
-            redirect($CFG->wwwroot . '/course/editcategory.php?parent=0&campus='.$recordtoinsert->libellecampus.'');
-        }
-        else{
+            if(!$mform->veri_Campus($recordtoinsert->libellecampus))
+            {   
+                // var_dump($recordtoinsert);die;
+                $DB->insert_record('campus', $recordtoinsert);
+                // die;
 
-            \core\notification::add('Ce campus execite déjà', \core\output\notification::NOTIFY_ERROR);
-        }
+                // $recordcampus=new stdClass();
 
-        // exit;
+                // $recordcampus->name=$recordtoinsert->libellecampus;
+                // $recordcampus->descriptionformat=1;
+                // $recordcampus->visible=1;
+                // $recordcampus->visibleold=1;
+                // $recordcampus->timemodified=time();
+                // $recordcampus->depth=1;
+                // $idd=$DB->insert_record('course_categories',$recordcampus);
+                
+                // $recordcampusmod=new stdClass();
+                // $recordcampusmod->id=$idd;
+                // $recordcampusmod->path="/".$idd;
+                
+                // $DB->update_record('course_categories',$recordcampusmod);
+                redirect($CFG->wwwroot . '/course/editcategory.php?parent=0&campus='.$recordtoinsert->libellecampus.'');
+            }
+            else{
+
+                \core\notification::add('Ce campus execite déjà', \core\output\notification::NOTIFY_ERROR);
+            }
+
+            // exit;
+    }
+    else{
+
+        \core\notification::add('Remplisez d\'année academie', \core\output\notification::NOTIFY_ERROR);
+    }
 }
 
 if($_GET['id']) {

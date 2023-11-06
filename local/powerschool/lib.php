@@ -52,7 +52,10 @@ function  local_powerschool_extend_navigation (global_navigation $navigation  ){
          $nodefoo->add("Gérer les absences", new \moodle_url('/local/powerschool/absenceetu.php'),null,null,'Professeur',null);
          $nodefoo->add("Liste des apprenants absences", new \moodle_url('/local/powerschool/listeetuabsenprof.php'),null,null,'Professeur',null);
        }
-   
+       if(has_capability("local/powerschool:reglageetablissement",context_system::instance(),$USER->id)&&!is_siteadmin()){
+        $nodefoo->add("Réglages d'etablissement", new \moodle_url('/local/powerschool/statistique.php'),null, null, 'notes',null);
+
+    }
    if(is_siteadmin())
    {
 

@@ -260,6 +260,9 @@ function xmldb_main_install() {
     $guestrole          = create_role('', 'guest', '', 'guest');
     $userrole           = create_role('', 'user', '', 'user');
     $frontpagerole      = create_role('', 'frontpage', '', 'frontpage');
+    $chauffeur      = create_role('', 'chauffeur', '', 'chauffeur');
+    $serveur      = create_role('', 'serveur/se', '', 'serveur/se');
+    $parent      = create_role('', 'parent', '', 'parent');
 
     // Now is the correct moment to install capabilities - after creation of legacy roles, but before assigning of roles
     update_capabilities('moodle');
@@ -284,6 +287,9 @@ function xmldb_main_install() {
     set_role_contextlevels($studentrole,        get_default_contextlevels('student'));
     set_role_contextlevels($guestrole,          get_default_contextlevels('guest'));
     set_role_contextlevels($userrole,           get_default_contextlevels('user'));
+    set_role_contextlevels($chauffeur,           get_default_contextlevels('chauffeur'));
+    set_role_contextlevels($serveur,           get_default_contextlevels('serveur'));
+    set_role_contextlevels($parent,           get_default_contextlevels('parent'));
 
     // Init theme, JS and template revisions.
     set_config('themerev', time());

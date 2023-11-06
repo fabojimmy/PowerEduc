@@ -35,12 +35,12 @@ require_login();
 $context = context_system::instance();
 // require_capability('local/message:managemessages', $context);
 
-$PAGE->set_url(new moodle_url('/local/powerschool/message.php'));
+$PAGE->set_url($CFG->wwwroot.'/local/powerschool/message.php');
 $PAGE->set_context(\context_system::instance());
 $PAGE->set_title(get_string('message', 'local_powerschool'));
 $PAGE->set_heading(get_string('message', 'local_powerschool'));
 
-$PAGE->navbar->add(get_string('configurationminini', 'local_powerschool'),  new moodle_url('/local/powerschool/configurationmini.php'));
+$PAGE->navbar->add(get_string('configurationminini', 'local_powerschool'),  $CFG->wwwroot.'/local/powerschool/configurationmini.php');
 $PAGE->navbar->add(get_string('message', 'local_powerschool'), $managementurl);
 // $PAGE->requires->js_call_amd('local_powerschool/confirmsupp');
 // $PAGE->requires->js_call_amd('local_powerschool/confirmsupp');
@@ -111,26 +111,26 @@ $message=$DB->get_records("messagesstocke",array("idcampus"=>$_GET["idca"]));
 $templatecontext = (object)[
     'message' => array_values($message),
     // 'nb'=>array_values($tab),
-    'messagesc' => new moodle_url('/local/powerschool/PHPMailer/email.php'),
-    'inscriptionpayer'=> new moodle_url('/local/powerschool/paiement.php'),
-    'affectercours'=> new moodle_url('/local/powerschool/inscription.php'),
+    'messagesc' => $CFG->wwwroot.'/local/powerschool/PHPMailer/email.php',
+    'inscriptionpayer'=> $CFG->wwwroot.'/local/powerschool/paiement.php',
+    'affectercours'=> $CFG->wwwroot.'/local/powerschool/inscription.php',
     'idca'=>$_GET["idca"]
-    // 'imprimer' => new moodle_url('/local/powerschool/imp.php'),
+    // 'imprimer' => $CFG->wwwroot.'/local/powerschool/imp.php'),
 ];
 // $campus=$DB->get_records('campus');
 // $campuss=(object)[
 //         'campus'=>array_values($campus),
-//         'confpaie'=>new moodle_url('/local/powerschool/affecterprof.php'),
+//         'confpaie'=>$CFG->wwwroot.'/local/powerschool/affecterprof.php'),
 //     ];
 $menumini = (object)[
-    'affecterprof' => new moodle_url('/local/powerschool/affecterprof.php'),
-    'configurerpaie' => new moodle_url('/local/powerschool/configurerpaiement.php'),
-    'coursspecialite' => new moodle_url('/local/powerschool/coursspecialite.php'),
-    'semestre' => new moodle_url('/local/powerschool/semestre.php'),
-    'salleele' => new moodle_url('/local/powerschool/salleele.php'),
-    'message' => new moodle_url('/local/powerschool/message.php'),
-    'logo' => new moodle_url('/local/powerschool/logo.php'),
-    'confinot' => new moodle_url('/local/powerschool/configurationnote.php'),
+    'affecterprof' => $CFG->wwwroot.'/local/powerschool/affecterprof.php',
+    'configurerpaie' => $CFG->wwwroot.'/local/powerschool/configurerpaiement.php',
+    'coursspecialite' => $CFG->wwwroot.'/local/powerschool/coursspecialite.php',
+    'semestre' => $CFG->wwwroot.'/local/powerschool/semestre.php',
+    'salleele' => $CFG->wwwroot.'/local/powerschool/salleele.php',
+    'message' => $CFG->wwwroot.'/local/powerschool/message.php',
+    'logo' => $CFG->wwwroot.'/local/powerschool/logo.php',
+    'confinot' => $CFG->wwwroot.'/local/powerschool/configurationnote.php',
 
 
 ];
@@ -138,7 +138,7 @@ $menumini = (object)[
 $campus=$DB->get_records("campus");
 $campuss=(object)[
     'campus'=>array_values($campus),
-    'confpaie'=>new moodle_url('/local/powerschool/message.php'),
+    'confpaie'=>$CFG->wwwroot.'/local/powerschool/message.php',
 ];
 
 echo $OUTPUT->header();

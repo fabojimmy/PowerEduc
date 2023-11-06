@@ -49,8 +49,8 @@
                     <th scope="row">{{id}} </th>
                     <td>{{libelletranche}} </td>
                     <td>
-                        <input type="button" class="btn btn-primary" value="modifier" onclick="location.href='{{trancheedit}}?id={{id}}'">
-                        <input type="button" class="btn btn-danger local_annee_delete_button" value="supprimer" onclick="location.href='{{tranchesupp}}?id={{id}}'">
+                        <input type="button" class="btn btn-primary" value="modifier" onclick="location.href='{{trancheedit}}?id={{id}}&&action=edit'">
+                        <input type="button" class="btn btn-danger local_annee_delete_button" value="supprimer" onclick="location.href='{{tranchesupp}}?id={{id}}&&action=delete'">
                     </td>
                 </tr>
             </tbody>

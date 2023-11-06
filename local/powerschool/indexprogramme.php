@@ -313,7 +313,7 @@ for($i = 0 ; $i < $getWeeks; $i++){
         .$heuredebut.'h -'.$heurefin.'h :   '.'<a>'.$eventday.' '.$specialitecy.' '.$salle.'</a>
         </div>';
       }
-      //.$heuredebut.'h -'.$heurefin.'h :   '.'<a href="/moodle1/local/powerschool/programmeedit.php?id='.$event->id.'&idca='.$iddetablisse.'">'.$eventday.' '.$specialitecy.' '.$salle.'</a>
+      //.$heuredebut.'h -'.$heurefin.'h :   '.'<a href="/moodle1/local/powerschool/programmeedit.php?id='.$event->id.'&idca='.ChangerSchoolUser($USER->id).'">'.$eventday.' '.$specialitecy.' '.$salle.'</a>
        '</td>';
     }
     echo '</tr>';

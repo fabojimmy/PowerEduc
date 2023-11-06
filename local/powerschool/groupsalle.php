@@ -61,7 +61,7 @@ $PAGE->navbar->add(get_string('groupsalle', 'local_powerschool'), $managementurl
 //cours
 
 //filiere
-$sql="SELECT * FROM {filiere} WHERE idcampus='".$iddetablisse."'";
+$sql="SELECT * FROM {filiere} WHERE idcampus='".ChangerSchoolUser($USER->id)."'";
 // $sql1="SELECT * FROM {salle}";
 $filiere=$DB->get_records_sql($sql);
 $sql2="SELECT * FROM {campus}";
@@ -69,6 +69,7 @@ $sql2="SELECT * FROM {campus}";
 // $salle=$DB->get_records_sql($sql1);
 $campus=$DB->get_records_sql($sql2);
 
+// var_dump($CFG->wwwroot);die;
 $templatecontext = (object)[
     'filiere'=>array_values($filiere),
     'campus'=>array_values($campus),
@@ -80,7 +81,7 @@ $templatecontext = (object)[
     'root'=>$CFG->wwwroot,
     'salleele' => new moodle_url('/local/powerschool/salleele.php'),
     'salleeleretirer' => new moodle_url('/local/powerschool/groupsalle.php'),
-    'idca'=>$_GET["idca"]
+    'idca'=>$_GET["idca"],
 
  ];
 

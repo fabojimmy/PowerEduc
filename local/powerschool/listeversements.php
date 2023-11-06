@@ -34,12 +34,12 @@ require_login();
 $context = context_system::instance();
 // require_capability('local/powerschool:managepages', $context);
 
-$PAGE->set_url(new moodle_url('/local/powerschool/periode.php'));
+$PAGE->set_url($CFG->wwwroot.'/local/powerschool/periode.php');
 $PAGE->set_context(\context_system::instance());
 $PAGE->set_title('Enregistrer un periode');
 $PAGE->set_heading('Liste des differents versements');
 
-// $PAGE->navbar->add('Administration du Site',  new moodle_url('/local/powerschool/index.php'));
+// $PAGE->navbar->add('Administration du Site',  $CFG->wwwroot.'/local/powerschool/index.php'));
 // $PAGE->navbar->add(get_string('periode', 'local_powerschool'), $managementurl);
 // $PAGE->requires->js_call_amd('local_powerschool/confirmsupp');
 // $PAGE->requires->js_call_amd('local_powerschool/confirmsupp');
@@ -74,10 +74,10 @@ foreach($sommesss as $key=>$valll)
 // var_dump($etudiant,$_GET["idcy"],$_GET["idsp"],$_GET["idan"]);die;
 $templatecontext = (object)[
     'etudiant' => array_values($etudiant),
-    'periodeedit' => new moodle_url('/local/powerschool/periodeedit.php'),
-    'periodesupp'=> new moodle_url('/local/powerschool/periode.php'),
-    'coursspecialite'=> new moodle_url('/local/powerschool/coursspecialite.php'),
-    'programme' => new moodle_url('/local/powerschool/programme.php'),
+    'periodeedit' => $CFG->wwwroot.'/local/powerschool/periodeedit.php',
+    'periodesupp'=> $CFG->wwwroot.'/local/powerschool/periode.php',
+    'coursspecialite'=> $CFG->wwwroot.'/local/powerschool/coursspecialite.php',
+    'programme' => $CFG->wwwroot.'/local/powerschool/programme.php',
     'sommeapayer'=>$valll->somme
 ];
 

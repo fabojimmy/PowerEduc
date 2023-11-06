@@ -22,12 +22,14 @@
  */
 
 namespace local_powerschool;
+
+use context_system;
 use stdClass;
 use moodleform;
 use local_powerschool\campus;
 
 
-require_once("$CFG->libdir/formslib.php");
+require_once($CFG->libdir.'/formslib.php');
 
 class inscription extends moodleform {
 
@@ -37,9 +39,26 @@ class inscription extends moodleform {
         
         global $USER,$DB,$iddetablisse;
 
-        // var_dump($iddetablisse);die;
+        // var_dump(ChangerSchoolUser($USER->id));die;
+
+        // if(has_)
         $tarspecialcat=array();
-        $camp=$DB->get_records("campus",array("id"=>$iddetablisse));
+        $modulecontext=context_system::instance();
+        // if(has_capability("local/powerschool:activation",$modulecontext,$USER->id))
+        // {
+            // die;
+            // var_dump(ChangerSchoolUser($USER->id));die;
+            $camp=$DB->get_records("campus",array("id"=>ChangerSchoolUser($USER->id)));
+        // }
+        // else{
+        //     $gg=$DB->get_records("user",array("id"=>$USER->id));
+    
+        //     foreach($gg as $kk)
+        //     {}
+            
+        //     $camp=$DB->get_records("campus",array("id"=>$kk->idcampuser));
+        // }
+
         foreach ($camp as $key => $value) {
             # code...
         }
@@ -74,17 +93,33 @@ class inscription extends moodleform {
         $stringspecialitecat=implode("','",$tarspecialcat);
         // die;
         
-        $sql8 = "SELECT s.id,libellespecialite,libellefiliere,abreviationspecialite FROM {filiere} f, {specialite} s WHERE s.idfiliere = f.id AND idcampus='".$iddetablisse."' AND libellespecialite IN ('$stringspecialitecat')";
+        $sql8 = "SELECT s.id,libellespecialite,libellefiliere,abreviationspecialite FROM {filiere} f, {specialite} s WHERE s.idfiliere = f.id AND idcampus='".ChangerSchoolUser($USER->id)."' AND libellespecialite IN ('$stringspecialitecat')";
         
         $campus = new campus();
         $etudiant = $anneescolaire = $ecole = $specialite = $cycle =  array();
-        $sql1 = "SELECT u.id as userid,firstname,lastname FROM {user} u,{role_assignments} ro WHERE u.id=userid AND roleid=5 AND u.idcampuser='".$iddetablisse."'";
+
+        //
+        // if(has_capability("local/powerschool:activation",$modulecontext,$USER->id) )
+        // {
+            // die;
+            // var_dump(ChangerSchoolUser($USER->id));die;
+            $sql1 = "SELECT u.id as userid,firstname,lastname FROM {user} u,{role_assignments} ro WHERE u.id=userid AND roleid=5 AND u.idcampuser=".ChangerSchoolUser($USER->id)."";
+            
+            // }
+            // else{
+                // //  die;
+                //     $sql1 = "SELECT u.id as userid,firstname,lastname FROM {user} u,{role_assignments} ro WHERE u.id=userid AND roleid=5 AND u.idcampuser=".$kk->idcampuser."";
+                
+                // }
+                $etudiant = $DB->get_records_sql($sql1);
+                // var_dump($etudiant);die;
         $sql2 = "SELECT * FROM {anneescolaire} ";
         $sql3 = "SELECT * FROM {campus} ";
         // $sql4 = "SELECT * FROM {specialite} ";
-        $sql5 = "SELECT * FROM {cycle} WHERE idcampus='".$iddetablisse."'";
+        $sql5 = "SELECT * FROM {cycle} WHERE idcampus='".ChangerSchoolUser($USER->id)."'";
 
-        $etudiant = $campus->select($sql1);
+
+        // var_dump($etudiant,$sql1);die;
         $anneescolaire = $campus->select($sql2);
         $ecole = $campus->select($sql3);
         $specialite = $campus->select($sql8);
@@ -154,7 +189,7 @@ class inscription extends moodleform {
         // $mform->addRule('idcampus', 'Choix du campus', 'required', null, 'client');
         // $mform->addHelpButton('idcampus', 'specialite');
         $mform->addElement('hidden','idcampus');
-        $mform->setDefault('idcampus',$iddetablisse);
+        $mform->setDefault('idcampus',ChangerSchoolUser($USER->id));
 
         $mform->addElement('select', 'idspecialite', 'Specialite/Classes', $selectspecialite ); // Add elements to your form
         $mform->setType('idspecialite', PARAM_TEXT);                   //Set type of element
@@ -245,7 +280,7 @@ class inscription extends moodleform {
         $object->id = $id;
         $object->idetudiant = $idetudiant ;
         $object->idanneescolaire = $idanneescolaire ;
-        $object->idcampus = $$iddetablisse ;
+        $object->idcampus = ChangerSchoolUser($USER->id) ;
         $object->idspecialite = $idspecialite ;
         $object->idcycle = $idcycle ;
         $object->nomsparent = $nomsparent ;

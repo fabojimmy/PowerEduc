@@ -99,7 +99,7 @@ class primary extends view {
                 $this->add("Ajouter le cours dans une classe/specialite", new \moodle_url('/local/powerschool/coursspecialite.php'), self::TYPE_ROOTNODE, null, 'notes');
                 # code...
             }
-            if($role&& isloggedin())
+            if($role && isloggedin())
             {
                 $this->add("Notes", new \moodle_url('/local/powerschool/note.php'), self::TYPE_ROOTNODE, null, 'notes');
 
@@ -122,7 +122,11 @@ class primary extends view {
 
                 $this->add("Liste des absences", new \moodle_url('/local/powerschool/listeetuabsenadmin.php'), self::TYPE_ROOTNODE, null, 'notes');
             }
-           
+            if(has_capability("local/powerschool:abscencejustifie",$modulecontext,$USER->id)){
+
+                $this->add("Liste des absences justifiées", new \moodle_url('/local/powerschool/listeabsencejustifier.php'), self::TYPE_ROOTNODE, null, 'notes');
+            }
+            
           
             }
         
