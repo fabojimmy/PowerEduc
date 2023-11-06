@@ -138,6 +138,12 @@ class primary extends view {
 
                $this->add("Profit Apprenant", new \moodle_url('/local/powerschool/gerer.php'), self::TYPE_ROOTNODE, null, 'notes');
            }
+          $role=$DB->get_records("role_assignments",array("userid"=>$USER->id,"roleid"=>11));
+           if($role)
+           {
+
+               $this->add("Profit de vos apprenants", new \moodle_url('/local/powerschool/gererparent.php'), self::TYPE_ROOTNODE, null, 'notes');
+           }
         }
 
         // Search and set the active node.

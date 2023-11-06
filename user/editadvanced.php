@@ -202,8 +202,13 @@ if ($userform->is_cancelled()) {
         } else {
             $usernew->password = AUTH_PASSWORD_NOT_CACHED;
         }
-        // var_dump($usernew->password);die;
+        // var_dump($usernew->idcampuser);die;
+        // if($usernew->role!=5)
+        // {
+        //     $usernew->idparent=0;
+        // }
         $usernew->id = user_create_user($usernew, false, false);
+        // die;
 
         if (!$authplugin->is_internal() and $authplugin->can_change_password() and !empty($usernew->newpassword)) {
             if (!$authplugin->user_update_password($usernew, $usernew->newpassword)) {

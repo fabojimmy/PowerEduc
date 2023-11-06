@@ -121,6 +121,7 @@ class user_editadvanced_form extends moodleform {
 
         global $DB;
         $rolesql=$DB->get_records("role");
+        $roleparentsql=$DB->get_records_sql("SELECT u.id ,u.firstname,u.lastname FROM {user} u,{role_assignments} r WHERE u.id=r.userid AND r.roleid=11");
         $campussql=$DB->get_records("campus");
         // $roles=array();
 
@@ -130,14 +131,23 @@ class user_editadvanced_form extends moodleform {
         foreach ($campussql as $key1 => $value1) {
             $campus[$key1]=$value1->libellecampus;
         }
-    // var_dump($roles);
+        foreach ($roleparentsql as $key2 => $value2) {
+            $parent[$key2]=$value2->firstname."-".$value2->lastname;
+        }
+    // var_dump($key2);
     // die;
         $mform->addElement('select', 'role', "Role", $roles);
         $mform->addHelpButton('role', 'username', 'auth');
         $mform->setType('role', PARAM_RAW);
+        
         $mform->addElement('select', 'idcampuser', "Campus", $campus);
         $mform->addHelpButton('idcampuser', 'campus', 'auth');
         $mform->setType('idcampuser', PARAM_RAW);
+        
+        $mform->addElement('select', 'idparent', "Parent Apprenant", $parent);
+        $mform->addHelpButton('idparent', 'Selectionner le parent de l\'apprenant', 'auth');
+        $mform->setType('idparent', PARAM_RAW);
+       
 
         $purpose = user_edit_map_field_purpose($userid, 'password');
 
