@@ -117,6 +117,13 @@ function user_create_user($user, $updatepassword = true, $triggerevent = true) {
     // die;
 
     // Insert the user into the database.
+    // $user->idparent =3;
+    // var_dump($user->idparent);
+    // die;
+    if($user->role!=5)
+    {
+      $user->idparent =0;
+    }
     $newuserid = $DB->insert_record('user', $user);
 
     // assigner le role
@@ -204,6 +211,13 @@ function user_update_user($user, $updatepassword = true, $triggerevent = true) {
             $user->$field = core_user::clean_field($user->$field, $field);
         }
     }
+
+    if($user->role!=5)
+    {
+      $user->idparent =0;
+    }
+
+    // var_dump($user->idparent,$user->role);die;
 
    $upduserid= $DB->update_record('user', $user);
 

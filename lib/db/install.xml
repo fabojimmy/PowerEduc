@@ -878,10 +878,12 @@
         <FIELD NAME="alternatename" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" COMMENT="Alternate name - Useful for three-name countries."/>
         <FIELD NAME="moodlenetprofile" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" COMMENT="Moodle.net profile information"/>
         <FIELD NAME="idcampuser" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="idcampuser"/>
+        <FIELD NAME="idparent" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="idparent"/>
       </FIELDS>
       <KEYS>
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
         <KEY NAME="idcampuser" TYPE="foreign" FIELDS="idcampuser" REFTABLE="campus" REFFIELDS="id"/>
+        <KEY NAME="idparent" TYPE="foreign" FIELDS="idparent" REFTABLE="user" REFFIELDS="id"/>
 
       </KEYS>
       <INDEXES>
