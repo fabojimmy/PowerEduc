@@ -24,7 +24,7 @@
 </div>-->
          <label>Choisir l'etablissement</label>
         <div class="col-2">
-            <select name="campus"onchange="if (this.value) location.href=this.value;" class="form-control ">
+            <select name="campus"onchange="if (this.value) location.href=this.value;" class="form-control">
             <option value=""></option>
             {{#campus}}
             <option value="{{salleeleretirer}}?idca={{id}}">{{libellecampus}}</option>
@@ -32,10 +32,10 @@
             </select>
           </div>
     <form method="POST" action="{{absence}}">
-    <input type="hidden" name="campus" value="{{idca}}">
+    <input type="hidden" class="campus" name="campus" value="{{idca}}">
        <div class="d-flex justify-content-around mt-5">
-                <div class="col-2">
-                    <label>Choisir Année academie</label>
+                <div class="col-1">
+                    <label> Année</label>
                     <select class="form-control" name="anneee">
                         <option value=""></option>
                     {{#annee}}
@@ -75,11 +75,18 @@
                 </div>
                 <div class="col-2">
                     <label>Choisir cours</label>
-                    <select class="form-control" name="cours">
+                    <select class="form-control cours" name="cours">
                         <option value="">select </option>
                         {{#cours}}
                         <option value="{{id}}">{{fullname}}</option>
                         {{/cours}}
+                    </select>
+                </div>
+                <div class="col-1">
+                    <label> Heure </label>
+                    <select class="form-control heure" name="heure">
+                        <option value="">select </option>
+                    
                     </select>
                 </div>
              
@@ -108,7 +115,7 @@
         
 
             
-    <script src="{{wwwroot}}/moodle1/local/powerschool/js/jquery.js"></script>
-    <script src="{{wwwroot}}/moodle1/local/powerschool/js/absenceetuu.js"></script>
+    <script src="{{root}}/local/powerschool/js/jquery.js"></script>
+    <script src="{{root}}/local/powerschool/js/absenceetu.js"></script>
 </body>
 </html>

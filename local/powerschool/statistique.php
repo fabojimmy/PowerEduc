@@ -47,7 +47,7 @@ $PAGE->navbar->add(get_string('statistique', 'local_powerschool'));
 
 $mform=new statistique();
 
-// var_dump($iddetablisse);die;
+// var_dump($CFG->wwwroot);die;
 //fonction pour extraire les mois dans une année
 function extractMonths($startTimestamp, $endTimestamp) {
     $startDateObj = new DateTime();
@@ -943,8 +943,11 @@ foreach($hhfiliere as $key => $filll)
                     
                 }else
                 {
-                    $moyenne=$sommenote/$i;
-                    $vvallno->moyenne_semestre=round($moyenne,2);
+                    if($i!=0)
+                    {
+                        $moyenne=$sommenote/$i;
+                        $vvallno->moyenne_semestre=round($moyenne,2);
+                    }
 
                 }
                 
@@ -1121,8 +1124,12 @@ foreach($cyclesql as $keyy){
                                 
                             }else
                             {
-                                $moyennenotesp=$sommenote/$i;
-                                $vvallno->moyenne_semestre=round($moyennenotesp,2);
+                                if($i!=0)
+                                {
+
+                                    $moyennenotesp=$sommenote/$i;
+                                    $vvallno->moyenne_semestre=round($moyennenotesp,2);
+                                }
 
                             }
                         
@@ -1154,6 +1161,7 @@ foreach($cyclesql as $keyy){
                 }
             }
 }
+// die();
   //connaissant la filiere et le cycle
 
   $noteefilierecy=array();
@@ -1248,8 +1256,11 @@ foreach($specialsql as $keyy){
                                         
                                     }else
                                     {
-                                        $moyennenotecy=$sommenote/$i;
-                                        $vvallno->moyenne_semestre=round($moyennenotecy,2);
+                                        if($i!=0)
+                                        {
+                                            $moyennenotecy=$sommenote/$i;
+                                            $vvallno->moyenne_semestre=round($moyennenotecy,2);
+                                        }
 
                                     }
                         
@@ -1370,8 +1381,13 @@ $specialsqlcyspsal=$DB->get_records_sql("SELECT sp.id,libellespecialite FROM {sp
                                         
                                     }else
                                     {
-                                        $moyennenotecyspsal=$sommenote/$i;
-                                        $vvallno->moyenne_semestre=round($moyennenotecyspsal,2);
+                                        if($i!=0)
+                                        {
+
+                                            $moyennenotecyspsal=$sommenote/$i;
+                                            $vvallno->moyenne_semestre=round($moyennenotecyspsal,2);
+                                        }
+                                      
 
                                     }
                                 
@@ -1513,8 +1529,9 @@ if($vericcc)
 // var_dump(json_encode($tanoteefiliere));die;
 $semestre=$DB->get_records("semestre");
 
-// var_dump($CFG->libdir);
+// var_dump(ChangerSchoolUser($USER->id));
 // die;
+
 $templatecontext = (object)[
     'htmlcyetdet'=>$htmlcyetdet,
     'anneee'=>array_values($annee),
@@ -1626,18 +1643,18 @@ $templatecontext = (object)[
 // ];
 
 $menu = (object)[
-    'statistique' => new moodle_url('/local/powerschool/statistique.php'),
-    'reglage' => new moodle_url('/local/powerschool/reglages.php'),
+    'statistique' =>  $CFG->wwwroot.'/local/powerschool/statistique.php',
+    'reglage' =>  $CFG->wwwroot.'/local/powerschool/reglages.php',
     // 'matiere' => new moodle_url('/local/powerschool/matiere.php'),
-    'seance' => new moodle_url('/local/powerschool/seance.php'),
-    'programme' => new moodle_url('/local/powerschool/programme.php'),
+    'seance' =>  $CFG->wwwroot.'/local/powerschool/seance.php',
+    'programme' =>  $CFG->wwwroot.'/local/powerschool/programme.php',
 
-    'inscription' => new moodle_url('/local/powerschool/inscription.php'),
+    'inscription' =>  $CFG->wwwroot.'/local/powerschool/inscription.php',
     // 'notes' => new moodle_url('/local/powerschool/note.php'),
-    'bulletin' => new moodle_url('/local/powerschool/bulletin.php'),
-    'configurermini' => new moodle_url('/local/powerschool/configurationmini.php'),
-    'listeetudiant' => new moodle_url('/local/powerschool/listeetudiant.php'),
-    'activer' => new moodle_url('/local/powerschool/activat.php'),
+    'bulletin' =>  $CFG->wwwroot.'/local/powerschool/bulletin.php',
+    'configurermini' =>  $CFG->wwwroot.'/local/powerschool/configurationmini.php',
+    'listeetudiant' =>  $CFG->wwwroot.'/local/powerschool/listeetudiant.php',
+    'activer' => $CFG->wwwroot.'/local/powerschool/activat.php',
     'activat' => get_string('activat', 'local_powerschool'),
     // 'gerer' => new moodle_url('/local/powerschool/gerer.php'),
 
@@ -1654,7 +1671,7 @@ $menu = (object)[
 
 echo $OUTPUT->header();
 
-
+// var_dump($CFG->wwwroot.'/local/powerschool/activat.php',new moodle_url($CFG->wwwwroot.'/local/powerschool/activat.php'));die;
 echo $OUTPUT->render_from_template('local_powerschool/navbar', $menu);
 
 // $mform->display();

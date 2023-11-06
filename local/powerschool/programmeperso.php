@@ -35,12 +35,12 @@ require_login();
 $context = context_system::instance();
 // require_capability('local/message:managemessages', $context);
 
-$PAGE->set_url(new moodle_url('/local/powerschool/rentrernote.php'));
+$PAGE->set_url($CFG->wwwroot.'/local/powerschool/rentrernote.php');
 $PAGE->set_context(\context_system::instance());
 // $PAGE->set_title('Entrer les '.$_GET['libelcou'].'');
 $PAGE->set_heading('Votre Programme');
 
-// $PAGE->navbar->add('Administration du Site',  new moodle_url('/local/powerschool/index.php'));
+// $PAGE->navbar->add('Administration du Site',  $CFG->wwwroot.'/local/powerschool/index.php'));
 // $PAGE->navbar->add(get_string('inscription', 'local_powerschool'), $managementurl);
 // $PAGE->requires->js_call_amd('local_powerschool/confirmsupp');
 // $PAGE->requires->js_call_amd('local_powerschool/confirmsupp');
@@ -143,10 +143,10 @@ $progr='
    </table>
 </div>';
 $menu = (object)[
-    'programme' => new moodle_url('/local/powerschool/programmeperso.php'),
-    'paiement' => new moodle_url('/local/powerschool/paiementperso.php'),
-    'note' => new moodle_url('/local/powerschool/bulletinnoteperso.php'),
-    'absence' => new moodle_url('/local/powerschool/listeetuabsenetu.php'),
+    'programme' => $CFG->wwwroot.'/local/powerschool/programmeperso.php',
+    'paiement' => $CFG->wwwroot.'/local/powerschool/paiementperso.php',
+    'note' => $CFG->wwwroot.'/local/powerschool/bulletinnoteperso.php',
+    'absence' => $CFG->wwwroot.'/local/powerschool/listeetuabsenetu.php',
 
 ];
 $semestre=$DB->get_records("semestre");
@@ -156,7 +156,7 @@ $semestre=$DB->get_records("semestre");
 $templatecontext=[
     "programme"=>$progr,
     "semestre"=>array_values($semestre),
-    "courssemestre"=>new moodle_url('/local/powerschool/programmeperso.php')
+    "courssemestre"=>$CFG->wwwroot.'/local/powerschool/programmeperso.php'
 ];
 echo $OUTPUT->header();
 

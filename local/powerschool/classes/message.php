@@ -27,7 +27,7 @@ use moodleform;
 use local_powerschool\campus;
 
 
-require_once("$CFG->libdir/formslib.php");
+require_once($CFG->libdir.'/formslib.php');
 
 class message extends moodleform {
 

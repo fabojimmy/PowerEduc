@@ -40,7 +40,7 @@ $PAGE->set_context(\context_system::instance());
 $PAGE->set_title('Enregistrer une partie de l\'année scolaire à cette configuration ');
 $PAGE->set_heading('Enregistrer une partie de l\'année scolaire à cette configuration');
 
-$PAGE->navbar->add(get_string('coursspecialite', 'local_powerschool'),  new moodle_url('/local/powerschool/coursspecialite.php?idca='.$iddetablisse.''));
+$PAGE->navbar->add(get_string('coursspecialite', 'local_powerschool'),  new moodle_url('/local/powerschool/coursspecialite.php?idca='.ChangerSchoolUser($USER->id).''));
 $PAGE->navbar->add(get_string('courssemestre', 'local_powerschool'), $managementurl);
 // $PAGE->requires->js_call_amd('local_powerschool/confirmsupp');
 // $PAGE->requires->js_call_amd('local_powerschool/confirmsupp');

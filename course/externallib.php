@@ -574,9 +574,9 @@ class core_course_external extends external_api {
         //retrieve courses
         if (!array_key_exists('ids', $params['options'])
                 or empty($params['options']['ids'])) {
-            $courses = $DB->get_records('course');
+            // $courses = $DB->get_records('course');
         } else {
-            $courses = $DB->get_records_list('course', 'id', $params['options']['ids']);
+            // $courses = $DB->get_records_list('course', 'id', $params['options']['ids']);
         }
 
         //create return value

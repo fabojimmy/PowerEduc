@@ -35,12 +35,12 @@ require_login();
 $context = context_system::instance();
 // require_capability('local/message:managemessages', $context);
 
-$PAGE->set_url(new moodle_url('/local/powerschool/inscription.php'));
+$PAGE->set_url($CFG->wwwroot.'/local/powerschool/inscription.php');
 $PAGE->set_context(\context_system::instance());
 $PAGE->set_title('Configuration Bulletin');
 $PAGE->set_heading('Configuration Bulletin');
 
-// $PAGE->navbar->add('Administration du Site',  new moodle_url('/local/powerschool/index.php'));
+// $PAGE->navbar->add('Administration du Site',  $CFG->wwwroot.'/local/powerschool/index.php'));
 $PAGE->navbar->add(get_string('inscription', 'local_powerschool'), $managementurl);
 // $PAGE->requires->js_call_amd('local_powerschool/confirmsupp');
 // $PAGE->requires->js_call_amd('local_powerschool/confirmsupp');
@@ -169,33 +169,33 @@ foreach ($inscriptionss as $key=> $value){
 $campus=$DB->get_records("campus");
 $campuss=(object)[
     'campus'=>array_values($campus),
-    'confpaie'=>new moodle_url('/local/powerschool/note.php'),
+    'confpaie'=>$CFG->wwwroot.'/local/powerschool/note.php',
 ];
 $templatecontext = (object)[
     'inscription' => array_values($inscription),
     // 'nb'=>array_values($tab),
-    'inscriptionedit' => new moodle_url('/local/powerschool/inscriptionedit.php'),
-    'inscriptionsupp'=> new moodle_url('/local/powerschool/inscription.php'),
-    'note'=> new moodle_url('/local/powerschool/entrernote.php'),
-    // 'imprimer' => new moodle_url('/local/powerschool/imp.php'),
+    'inscriptionedit' => $CFG->wwwroot.'/local/powerschool/inscriptionedit.php',
+    'inscriptionsupp'=> $CFG->wwwroot.'/local/powerschool/inscription.php',
+    'note'=> $CFG->wwwroot.'/local/powerschool/entrernote.php',
+    // 'imprimer' => $CFG->wwwroot.'/local/powerschool/imp.php'),
 ];
 
 $menu = (object)[
-    'annee' => new moodle_url('/local/powerschool/anneescolaire.php'),
-    'campus' => new moodle_url('/local/powerschool/campus.php'),
-    'semestre' => new moodle_url('/local/powerschool/semestre.php'),
-    'salle' => new moodle_url('/local/powerschool/salle.php'),
-    'seance' => new moodle_url('/local/powerschool/seance.php'),
-    'filiere' => new moodle_url('/local/powerschool/filiere.php'),
-    'cycle' => new moodle_url('/local/powerschool/cycle.php'),
-    'modepayement' => new moodle_url('/local/powerschool/modepayement.php'),
-    'matiere' => new moodle_url('/local/powerschool/matiere.php'),
-    'specialite' => new moodle_url('/local/powerschool/specialite.php'),
-    'inscription' => new moodle_url('/local/powerschool/inscription.php'),
-    'enseigner' => new moodle_url('/local/powerschool/enseigner.php'),
-    'paiement' => new moodle_url('/local/powerschool/paiement.php'),
-    'programme' => new moodle_url('/local/powerschool/programme.php'),
-    'notes' => new moodle_url('/local/powerschool/note.php'),
+    'annee' => $CFG->wwwroot.'/local/powerschool/anneescolaire.php',
+    'campus' => $CFG->wwwroot.'/local/powerschool/campus.php',
+    'semestre' => $CFG->wwwroot.'/local/powerschool/semestre.php',
+    'salle' => $CFG->wwwroot.'/local/powerschool/salle.php',
+    'seance' => $CFG->wwwroot.'/local/powerschool/seance.php',
+    'filiere' => $CFG->wwwroot.'/local/powerschool/filiere.php',
+    'cycle' => $CFG->wwwroot.'/local/powerschool/cycle.php',
+    'modepayement' => $CFG->wwwroot.'/local/powerschool/modepayement.php',
+    'matiere' => $CFG->wwwroot.'/local/powerschool/matiere.php',
+    'specialite' => $CFG->wwwroot.'/local/powerschool/specialite.php',
+    'inscription' => $CFG->wwwroot.'/local/powerschool/inscription.php',
+    'enseigner' => $CFG->wwwroot.'/local/powerschool/enseigner.php',
+    'paiement' => $CFG->wwwroot.'/local/powerschool/paiement.php',
+    'programme' => $CFG->wwwroot.'/local/powerschool/programme.php',
+    'notes' => $CFG->wwwroot.'/local/powerschool/note.php',
 
 ];
 

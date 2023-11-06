@@ -27,7 +27,7 @@ use moodleform;
 use local_powerschool\campus;
 
 
-require_once("$CFG->libdir/formslib.php");
+require_once($CFG->libdir.'/formslib.php');
 
 class configurerpaiement extends moodleform {
 
@@ -39,12 +39,12 @@ class configurerpaiement extends moodleform {
         $mform = $this->_form; // Don't forget the underscore!
         $campus = new campus();
         $tarspecialcat=array();
-        $camp=$DB->get_records("campus",array("id"=>$iddetablisse));
+        $camp=$DB->get_records("campus",array("id"=>ChangerSchoolUser($USER->id)));
         foreach ($camp as $key => $value) {
             # code...
         }
 
-        // var_dump($iddetablisse);die;
+        // var_dump(ChangerSchoolUser($USER->id));die;
         $categ=$DB->get_records("course_categories",array("name"=>$value->libellecampus));
         foreach ($categ as $key => $value1categ) {
             # code...
@@ -76,14 +76,16 @@ class configurerpaiement extends moodleform {
         $stringspecialitecat=implode("','",$tarspecialcat);
         // die;
         
-        $sql8 = "SELECT s.id,libellespecialite,libellefiliere,abreviationspecialite FROM {filiere} f, {specialite} s WHERE s.idfiliere = f.id AND idcampus='".$iddetablisse."' AND libellespecialite IN ('$stringspecialitecat')";
+        // var_dump(ChangerSchoolUser($USER->id));
+        // die;
+        $sql8 = "SELECT s.id,libellespecialite,libellefiliere,abreviationspecialite FROM {filiere} f, {specialite} s WHERE s.idfiliere = f.id AND idcampus='".ChangerSchoolUser($USER->id)."' AND libellespecialite IN ('$stringspecialitecat')";
         $cours = $specialite = $cycle =  array();
-        $sql1 = "SELECT id,libellefiliere FROM {filiere} WHERE idcampus='".$iddetablisse."'";
-        $sql3 = "SELECT * FROM {tranche} WHERE idcampus='".$iddetablisse."'";
-        $sql6 = "SELECT sp.id as spid,libellespecialite FROM {specialite} sp,{filiere} fi WHERE sp.idfiliere=fi.id AND idcampus='".$iddetablisse."'";
+        $sql1 = "SELECT id,libellefiliere FROM {filiere} WHERE idcampus='".ChangerSchoolUser($USER->id)."'";
+        $sql3 = "SELECT * FROM {tranche} WHERE idcampus='".ChangerSchoolUser($USER->id)."'";
+        $sql6 = "SELECT sp.id as spid,libellespecialite FROM {specialite} sp,{filiere} fi WHERE sp.idfiliere=fi.id AND idcampus='".ChangerSchoolUser($USER->id)."'";
         $sql4 = "SELECT cy.id as cyid,libellecycle FROM {cycle} cy
-                 WHERE idcampus='".$iddetablisse."'";
-        $sql5 = "SELECT * FROM {campus} c,{typecampus} t WHERE c.idtypecampus=t.id AND c.id='".$iddetablisse."'";
+                 WHERE idcampus='".ChangerSchoolUser($USER->id)."'";
+        $sql5 = "SELECT * FROM {campus} c,{typecampus} t WHERE c.idtypecampus=t.id AND c.id='".ChangerSchoolUser($USER->id)."'";
 
         $campuss = $DB->get_recordset_sql($sql5);
         $filiere = $DB->get_recordset_sql($sql1);
@@ -102,8 +104,8 @@ class configurerpaiement extends moodleform {
 
         $mform->addElement('header','configuration', 'Configuration');
 
-        // $mform->addElement('hidden', 'id');
-        // $mform->setType('id', PARAM_INT);
+        $mform->addElement('hidden', 'id');
+        $mform->setType('id', PARAM_INT);
     
         foreach ($filiere as $key1 => $val1)
         {
@@ -156,7 +158,7 @@ class configurerpaiement extends moodleform {
       
         $mform->addElement('hidden', 'idcampus'); // Add elements to your form
         // $mform->setType('idcycle', PARAM_TEXT);                   //Set type of element
-        $mform->setDefault('idcampus', $iddetablisse);        //Default value
+        $mform->setDefault('idcampus', ChangerSchoolUser($USER->id));        //Default value
         $mform->addRule('idcampus', 'Choix du cycle', 'required', null, 'client');
         $mform->addHelpButton('idcampus', 'specialite');
       

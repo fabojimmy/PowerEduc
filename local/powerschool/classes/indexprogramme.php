@@ -30,7 +30,7 @@ use stdClass;
 use local_powerschool\campus;
 
 
-require_once("$CFG->libdir/formslib.php");
+require_once($CFG->libdir.'/formslib.php');
 
 class indexprogramme extends moodleform {
 
@@ -49,10 +49,10 @@ class indexprogramme extends moodleform {
         
         
         $sql1 = "SELECT * FROM {course} ";
-        $sql6 = "SELECT * FROM {salle} WHERE idcampus='".$iddetablisse."'";
+        $sql6 = "SELECT * FROM {salle} WHERE idcampus='".ChangerSchoolUser($USER->id)."'";
         $sql2 = "SELECT * FROM {semestre} ";
-        $sql3 = "SELECT s.id,libellespecialite FROM {specialite} s,{filiere} f WHERE s.idfiliere=f.id AND idcampus='".$iddetablisse."'";
-        $sql4 = "SELECT * FROM {cycle} WHERE idcampus='".$iddetablisse."'";
+        $sql3 = "SELECT s.id,libellespecialite FROM {specialite} s,{filiere} f WHERE s.idfiliere=f.id AND idcampus='".ChangerSchoolUser($USER->id)."'";
+        $sql4 = "SELECT * FROM {cycle} WHERE idcampus='".ChangerSchoolUser($USER->id)."'";
         $sql5 = "SELECT * FROM {anneescolaire} ";
 
         $cours = $campus->select($sql1);
@@ -112,7 +112,7 @@ class indexprogramme extends moodleform {
 
         $mform->addElement('hidden', 'idcampus' ); // Add elements to your form
         $mform->setType('idcampus', PARAM_TEXT);                   //Set type of element
-        $mform->setDefault('idcampus', $iddetablisse);        //Default value
+        $mform->setDefault('idcampus', ChangerSchoolUser($USER->id));        //Default value
 
         // $mform->addElement('select', 'idcourses', 'Cours', $selectcours ); // Add elements to your form
         // $mform->setType('idcourses', PARAM_TEXT);                   //Set type of element

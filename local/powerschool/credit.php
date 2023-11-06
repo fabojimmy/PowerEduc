@@ -25,7 +25,7 @@ use local_powerschool\credit;
 
 require_once(__DIR__ . '/../../config.php');
 require_once(__DIR__ . '/lib.php');
-
+require_once(__DIR__ . '/idetablisse.php');
 require_once($CFG->dirroot.'/local/powerschool/classes/credit.php');
 
 global $DB;
@@ -72,7 +72,7 @@ $vericam=$DB->get_records_sql("SELECT * FROM {campus} c,{typecampus} t WHERE c.i
 
 foreach($vericam as $key)
 {}
-if($key->libelletype=="universite")
+if($key->libelletype=="universite" || $key->libelletype=="lycee" || $key->libelletype=="college")
 {
 
     $mform->display();

@@ -50,14 +50,18 @@ $PAGE->navbar->add(get_string('absenceetu', 'local_powerschool'), $managementurl
 
 if($_POST["cours"] && $_POST["campus"] && $_POST["abseuser"] && $_POST["cycle"] && $_POST["specialite"] && $_POST["salle"])
 {
-    $dddd=$DB->get_records_sql("SELECT datecours FROM {programme} WHERE idprof='".$USER->id."' AND idcourses='".$_POST["cours"]."'");
-    // var_dump($dddd);
-    // die;
+    $dddd=$DB->get_recordset_sql("SELECT datecours,heuredebutcours,heurefincours FROM {programme} WHERE idprof='".$USER->id."' AND idcourses='".$_POST["cours"]."' AND DATE_FORMAT(FROM_UNIXTIME(datecours),'%Y-%c-%d')= CURDATE() AND heuredebutcours='".$_POST["heure"]."'");
+    
     $vericousp=$DB->get_records_sql("SELECT * FROM {coursspecialite} cs,{courssemestre} css,{affecterprof} af,{course} cou
                                      WHERE css.idcoursspecialite=cs.id AND af.idcourssemestre=css.id AND cs.idspecialite='".$_POST["specialite"]."' 
                                      AND cou.id=cs.idcourses AND cs.idcycle='".$_POST["cycle"]."' AND af.idprof='".$USER->id."' AND af.idsalle='".$_POST["salle"]."'");
-        //  var_dump($_POST["abseuser"]);
+        //  var_dump($dddd);
         //         die;
+
+        // foreach ($dddd as $ddddn){
+        //     var_dump($ddddn->datecours,$ddddn->heuredebutcours,$ddddn->heurefincours,"<br/>");
+        // }
+        // die;
     if($vericousp)
     {
         $tardat=array();
@@ -65,29 +69,42 @@ if($_POST["cours"] && $_POST["campus"] && $_POST["abseuser"] && $_POST["cycle"] 
          {
             $datecours=date("d-m-Y",$valu->datecours);
             $now=date("d-m-Y");
-            // var_dump($datecours,$now);
+            // var_dump($valu->bb==$now);
+            // die;
             if($datecours==$now)
             {
                 // var_dump("Bravo");
                 $abseusers=$_POST["abseuser"];
                foreach($abseusers as $key => $valabs)
                {
-                $absence=new stdClass();
-                $absence->idspecialite=$_POST["specialite"];
-                $absence->idcycle=$_POST["cycle"];
-                $absence->idcourses=$_POST["cours"];
-                $absence->idetudiant=$valabs;
-                $absence->idprof=$USER->id;
-                $absence->idcampus=$_POST["campus"];
-                $absence->idanneescolaire=$_POST["anneee"];
-                $absence->absence=1;
-                $absence->timecreated=time();
-                $absence->timemodified=time();
+        
+                    $absence=new stdClass();
+                    $absence->idspecialite=$_POST["specialite"];
+                    $absence->idcycle=$_POST["cycle"];
+                    $absence->idcourses=$_POST["cours"];
+                    $absence->idetudiant=$valabs;
+                    $absence->idprof=$USER->id;
+                    $absence->idcampus=$_POST["campus"];
+                    $absence->idanneescolaire=$_POST["anneee"];
+                    $absence->absence=1;
+                    $absence->timecreated=time();
+                    $absence->timemodified=time();
+                    $absence->heuredebutcours=intval($_POST['heure']);
+                    $absence->nombreheure=$valu->heurefincours-$valu->heuredebutcours;
 
-                $DB->insert_record("absenceetu",$absence);
-                
-                array_push($tardat,$datecours);
-            }
+                    $etuu=$DB->get_recordset_sql("SELECT * FROM {absenceetu} WHERE idetudiant='".$valabs."' AND idprof='".$USER->id."' AND idcourses='".$_POST["cours"]."' AND DATE_FORMAT(FROM_UNIXTIME(timecreated),'%Y-%c-%d')= CURDATE() AND heuredebutcours='".intval($_POST['heure'])."'");
+                    // var_dump($etuu);
+                    // die;
+
+                    foreach ($etuu as $v)
+                    {}
+                    if($v->id==0)
+                    {
+                        $DB->insert_record("absenceetu",$absence);
+                        array_push($tardat,$datecours);
+                    }
+                    
+                }
             \core\notification::add('Les apprenants absents a votre matiere sont enregistrés', \core\output\notification::NOTIFY_SUCCESS);
             redirect($CFG->wwwroot . '/local/powerschool/absenceetu.php?idca='.$_POST["campus"].'');
             }
@@ -111,6 +128,7 @@ if($_POST["cours"] && $_POST["campus"] && $_POST["abseuser"] && $_POST["cycle"] 
     }
 
 }
+
 
 
 
@@ -195,8 +213,14 @@ echo $OUTPUT->header();
 // $mform->display();
 
 // echo $OUTPUT->render_from_template('local_powerschool/navbarconfiguration', $menumini);
+// if(has_capability("listeabsenceetudiantmanager",context_system::instance(),$USER->id))
+// {
 
-echo $OUTPUT->render_from_template('local_powerschool/absenceetu', $templatecontext);
-
+    echo $OUTPUT->render_from_template('local_powerschool/absenceetu', $templatecontext);
+// }
+// else
+// {
+//     \core\notification::add("Vous avez pas autorisation",\core\output\notification::NOTIFY_ERROR);
+// }
 
 echo $OUTPUT->footer();

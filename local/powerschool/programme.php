@@ -192,7 +192,7 @@ if($_GET['id']) {
 }
 
 $sql = "SELECT * FROM {course} c, {semestre} s,{specialite} sp,{cycle} cy, {programme} p WHERE p.idcourses = c.id AND p.idsemestre =s.id AND p.idspecialite = sp.id
-        AND p.idcycle = cy.id  AND cy.idcampus='".$iddetablisse."'";
+        AND p.idcycle = cy.id  AND cy.idcampus='".ChangerSchoolUser($USER->id)."'";
 
     $programmes = $DB->get_records_sql($sql);
 
@@ -225,7 +225,7 @@ $templatecontext = (object)[
     'programmesupp'=> new moodle_url('/local/powerschool/programme.php'),
     'affecter' => new moodle_url('/local/powerschool/affecter.php'),
     'periode' => new moodle_url('/local/powerschool/periode.php'),
-    'idca' =>$iddetablisse,
+    'idca' =>ChangerSchoolUser($USER->id),
 ];
 
 // $menu = (object)[
@@ -251,17 +251,17 @@ $templatecontext = (object)[
 
 // ];
 $menu = (object)[
-    'statistique' => new moodle_url('/local/powerschool/statistique.php'),
-    'reglage' => new moodle_url('/local/powerschool/reglages.php'),
+    'statistique' =>  $CFG->wwwroot.'/local/powerschool/statistique.php',
+    'reglage' =>  $CFG->wwwroot.'/local/powerschool/reglages.php',
     // 'matiere' => new moodle_url('/local/powerschool/matiere.php'),
-    'seance' => new moodle_url('/local/powerschool/seance.php'),
-    'programme' => new moodle_url('/local/powerschool/programme.php'),
+    'seance' =>  $CFG->wwwroot.'/local/powerschool/seance.php',
+    'programme' =>  $CFG->wwwroot.'/local/powerschool/programme.php',
 
-    'inscription' => new moodle_url('/local/powerschool/inscription.php'),
+    'inscription' =>  $CFG->wwwroot.'/local/powerschool/inscription.php',
     // 'notes' => new moodle_url('/local/powerschool/note.php'),
-    'bulletin' => new moodle_url('/local/powerschool/bulletin.php'),
-    'configurermini' => new moodle_url('/local/powerschool/configurationmini.php'),
-    'listeetudiant' => new moodle_url('/local/powerschool/listeetudiant.php'),
+    'bulletin' =>  $CFG->wwwroot.'/local/powerschool/bulletin.php',
+    'configurermini' =>  $CFG->wwwroot.'/local/powerschool/configurationmini.php',
+    'listeetudiant' =>  $CFG->wwwroot.'/local/powerschool/listeetudiant.php',
     // 'gerer' => new moodle_url('/local/powerschool/gerer.php'),
 
     //navbar

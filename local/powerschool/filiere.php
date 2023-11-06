@@ -62,56 +62,79 @@ $recordtoinsert = $fromform;
 
     // var_dump($fromform);
     // die;
- if (!$mform->verifiliere($recordtoinsert->libellefiliere,$recordtoinsert->idcampus)) {
-    # code...
-    
-    // $recordcampus=new stdClass();
 
-    //         $recordcampus->name=$recordtoinsert->libellefiliere;
-    //         $recordcampus->descriptionformat=1;
-    //         $recordcampus->visible=1;
-    //         $recordcampus->visibleold=1;
-    //         $recordcampus->timemodified=time();
-    //         $recordcampus->depth=2;
-    //         $idd=$DB->insert_record('course_categories',$recordcampus);
-            
-    //         $recordcampusmod=new stdClass();
-    //         $recordcampusmod->id=$idd;
-    //         $recordcampusmod->path= "/".$recordtoinsert->idcampus."/".$idd;
-            
-    //         $DB->update_record('course_categories',$recordcampusmod);
-    $camp=$DB->get_records("campus",array("id"=>$recordtoinsert->idcampus));
-    foreach ($camp as $key => $value) {
-        # code...
+    if($recordtoinsert->id&&$recordtoinsert->action=="edit") {
+
+        $mform->update_filiere($fromform->id, $fromform->libellefiliere,$fromform->abreviationfiliere,$fromform->idcampus,$fromform->idcatfil);
+        redirect($CFG->wwwroot . '/local/powerschool/filiere.php?idca='.$fromform->idcampus.'', 'Bien modifier');
+        
     }
-    $categ=$DB->get_records("course_categories",array("name"=>$value->libellecampus));
-    foreach ($categ as $key => $value1) {
-        # code...
+    else
+    {
+        if (!$mform->verifiliere($recordtoinsert->libellefiliere,$recordtoinsert->idcampus)) {
+            # code...
+            
+            // $recordcampus=new stdClass();
+        
+            //         $recordcampus->name=$recordtoinsert->libellefiliere;
+            //         $recordcampus->descriptionformat=1;
+            //         $recordcampus->visible=1;
+            //         $recordcampus->visibleold=1;
+            //         $recordcampus->timemodified=time();
+            //         $recordcampus->depth=2;
+            //         $idd=$DB->insert_record('course_categories',$recordcampus);
+                    
+            //         $recordcampusmod=new stdClass();
+            //         $recordcampusmod->id=$idd;
+            //         $recordcampusmod->path= "/".$recordtoinsert->idcampus."/".$idd;
+                    
+            //         $DB->update_record('course_categories',$recordcampusmod);
+            $camp=$DB->get_records("campus",array("id"=>$recordtoinsert->idcampus));
+            foreach ($camp as $key => $value) {
+                # code...
+            }
+            $categ=$DB->get_records("course_categories",array("name"=>$value->libellecampus));
+            foreach ($categ as $key => $value1) {
+                # code...
+            }
+            // get_string("local_powerschool:createfiliere");
+            // $fffff=context::instance_by_id(CONTEXT_MODULE,70);
+            // var_dump($fffff);die;
+            // role_assign()
+            // if(has_capability('local_powerschool:createfiliere',$fffff)) {
+        
+                $DB->insert_record('filiere', $recordtoinsert);
+                redirect($CFG->wwwroot . '/course/editcategory.php?parent='.$value1->id.'&filiere='.$recordtoinsert->libellefiliere.'&idca='.$_POST["idcampus"].'', 'Enregistrement effectué');
+            // }
+           
+            exit;
+        
+            
+        } else {
+            //  redirect($CFG->wwwroot . '/local/powerschool/filiere.php', 'Cette filiere excite');
+            \core\notification::add('Cette filiere existe', \core\output\notification::NOTIFY_ERROR);
+        
+         }
     }
-    // get_string("local_powerschool:createfiliere");
-    // $fffff=context::instance_by_id(CONTEXT_MODULE,70);
-    // var_dump($fffff);die;
-    // role_assign()
-    // if(has_capability('local_powerschool:createfiliere',$fffff)) {
-
-        $DB->insert_record('filiere', $recordtoinsert);
-        redirect($CFG->wwwroot . '/course/editcategory.php?parent='.$value1->id.'&filiere='.$recordtoinsert->libellefiliere.'&idca='.$_POST["idcampus"].'', 'Enregistrement effectué');
-    // }
-   
-    exit;
-} else {
-    //  redirect($CFG->wwwroot . '/local/powerschool/filiere.php', 'Cette filiere excite');
-    \core\notification::add('Cette filiere existe', \core\output\notification::NOTIFY_ERROR);
-
- }
  
 }
 
-if($_GET['id'] && $_GET['idca']) {
+if($_GET['id'] && $_GET["action"]=="delete") {
 
     $mform->supp_filiere($_GET['id'],$_GET['idca'],$_GET['libelle']);
     redirect($CFG->wwwroot . '/local/powerschool/filiere.php?idca='.$_GET['idca'].'', 'Information Bien supprimée');
         
+}
+else if($_GET['id']  && $_GET["action"]=="edit")
+{
+    global $DB;
+    $newfiliere = new filiere();
+    $filiere = $newfiliere->get_filiere($_GET['id']);
+    // die;
+    if (!$filiere) {
+        throw new invalid_parameter_exception('Message not found');
+    }
+    $mform->set_data($filiere);
 }
 
 // http://127.0.0.1/moodle1/local/powerschool/filiere.php
@@ -146,50 +169,97 @@ $filiere = $DB->get_records('filiere', array("idcampus"=>$_GET["idca"]));
 // die;
 $tarfilierecat=array();
 
-// var_dump($iddetablisse);
+// var_dump(ChangerSchoolUser($USER->id));
 // die;
 
-if($iddetablisse)
-{
-    // $_GET["idca"]
-    // die;
-   
-    $catfill=$DB->get_records_sql("SELECT * FROM {course_categories} WHERE depth=2");
-    foreach($catfill as $key => $valfil)
+// if(has_capability("local/powerschool:activation",context_system::instance(),$USER->id))
+// {
+    if(ChangerSchoolUser($USER->id))
     {
-        $fff=explode("/",$valfil->path);
-        $idca=array_search($value1categ->id,$fff);
-      if($idca!==false)
-      {
-
-        array_push($tarfilierecat,$valfil->name);
+        // $_GET["idca"]
+        // die;
+       
+        $catfill=$DB->get_records_sql("SELECT * FROM {course_categories} WHERE depth=2");
+        foreach($catfill as $key => $valfil)
+        {
+            $fff=explode("/",$valfil->path);
+            $idca=array_search($value1categ->id,$fff);
+          if($idca!==false)
+          {
+    
+            array_push($tarfilierecat,$valfil->name);
+        }
+        
     }
+        $stringfilierecat=implode("','",$tarfilierecat);
+        // var_dump($stringfilierecat);
+        // die;
+        $filierecat = $DB->get_records_sql("SELECT * FROM {filiere} WHERE idcampus ='".ChangerSchoolUser($USER->id)."' AND libellefiliere NOT IN ('$stringfilierecat')");
+        // var_dump($filierecat);
+        // die;
+        
+        $filierecat1 = $DB->get_records_sql("SELECT * FROM {filiere} WHERE idcampus ='".ChangerSchoolUser($USER->id)."' AND libellefiliere IN ('$stringfilierecat')");
+    }else
+    {
+        $filierecat[]="";
+        $filierecat1[]="";
+        // $tarfilierecat[]="";
+        // $tarfilierecat1[]="";
+    }
+// }
+// else
+// {
+//     $gg=$DB->get_records("user",array("id"=>$USER->id));
+//     foreach($gg as $kk)
+//     {}
+
+//     $catfill=$DB->get_records_sql("SELECT * FROM {course_categories} WHERE depth=2");
+//     foreach($catfill as $key => $valfil)
+//     {
+//         $fff=explode("/",$valfil->path);
+//         $idca=array_search($value1categ->id,$fff);
+//       if($idca!==false)
+//       {
+
+//         array_push($tarfilierecat,$valfil->name);
+//     }
     
-}
-    $stringfilierecat=implode("','",$tarfilierecat);
-    // var_dump($stringfilierecat);
-    // die;
-    $filierecat = $DB->get_records_sql("SELECT * FROM {filiere} WHERE idcampus ='".$iddetablisse."' AND libellefiliere NOT IN ('$stringfilierecat')");
-    // var_dump($filierecat);
-    // die;
+// }
+//     $stringfilierecat=implode("','",$tarfilierecat);
+//     // var_dump($stringfilierecat);
+//     // die;
+//     $filierecat = $DB->get_records_sql("SELECT * FROM {filiere} WHERE idcampus ='".$kk->idcampuser."' AND libellefiliere NOT IN ('$stringfilierecat')");
+//     // var_dump($filierecat);
+//     // die;
     
-    $filierecat1 = $DB->get_records_sql("SELECT * FROM {filiere} WHERE idcampus ='".$iddetablisse."' AND libellefiliere IN ('$stringfilierecat')");
-}else
-{
-    $filierecat[]="";
-    $filierecat1[]="";
-    // $tarfilierecat[]="";
-    // $tarfilierecat1[]="";
-}
-// var_dump($iddetablisse);die;
+//     $filierecat1 = $DB->get_records_sql("SELECT * FROM {filiere} WHERE idcampus ='".$kk->idcampuser."' AND libellefiliere IN ('$stringfilierecat')");
+
+    
+// }
+// var_dump(ChangerSchoolUser($USER->id));die;
 $campus=$DB->get_records("campus");
-$vericam=$DB->get_records_sql("SELECT * FROM {campus} c,{typecampus} t
-                                WHERE t.id=c.idtypecampus AND c.id='".$iddetablisse."'");    
+if(has_capability("local/powerschool:activation",context_system::instance(),$USER->id))
+{
+        $vericam=$DB->get_records_sql("SELECT * FROM {campus} c,{typecampus} t
+                 WHERE t.id=c.idtypecampus AND c.id='".ChangerSchoolUser($USER->id)."'");  
+}
+else{
+    $gg=$DB->get_records("user",array("id"=>$USER->id));
+    foreach($gg as $kk)
+    {}
+    $vericam=$DB->get_records_sql("SELECT * FROM {campus} c,{typecampus} t
+                   WHERE t.id=c.idtypecampus AND c.id='".$kk->idcampuser."'");  
+    // var_dump($kk->idcampuser,$vericam);die;
+    
+}
+
+
+$vertyp=array();  
             foreach($vericam as $key => $ver)
             { 
                 if($ver->libelletype=="college"|| $ver->libelletype=="lycee")
                 {
-
+                   $vertyp= $DB->get_records("typecampus",array("id"=>ChangerSchoolUser($USER->id)));
                     $table='
                     <input type="checkbox" class="toutpr">
                     <tr>
@@ -200,6 +270,8 @@ $vericam=$DB->get_records_sql("SELECT * FROM {campus} c,{typecampus} t
                     </tr>';
                 }else if($ver->libelletype=="primaire")
                 {
+                    $vertyp= $DB->get_records("typecampus",array("id"=>ChangerSchoolUser($USER->id)));
+
 
                     $table='
                     <input type="checkbox" class="toutpr">
@@ -212,16 +284,17 @@ $vericam=$DB->get_records_sql("SELECT * FROM {campus} c,{typecampus} t
 $templatecontext = (object)[
     'filiere' => array_values($filierecat1),
     'filierecat' => array_values($filierecat),
+    'vertyp'=>array_values($vertyp),
     'campus' => array_values($campus),
     'table' => $table,
-    'filiereedit' => new moodle_url('/local/powerschool/filiereedit.php'),
+    'filiereedit' => new moodle_url('/local/powerschool/filiere.php'),
     'filieresupp'=> new moodle_url('/local/powerschool/filiere.php'),
     'specialite' => new moodle_url('/local/powerschool/specialite.php'),
     'specialiteexe' => new moodle_url('/local/powerschool/specialiteexe.php'),
     'catfiliere' => new moodle_url('/course/editcategory.php'),
     'cattfiliere' => new moodle_url('/local/powerschool/filiere.php'),
     'root'=>$CFG->wwwroot,
-    'idca'=>$iddetablisse,
+    'idca'=>ChangerSchoolUser($USER->id),
     'filiereca'=>urlencode($_GET["filiere"]),
     'category'=>$value1categ->id,
     'categorychoi'=>"la categorie choisie est ".$_GET["filiere"]."",

@@ -35,12 +35,12 @@ require_login();
 $context = context_system::instance();
 // require_capability('local/powerschool:managepages', $context);
 
-$PAGE->set_url(new moodle_url('/local/powerschool/tranche.php'));
+$PAGE->set_url($CFG->wwwroot.'/local/powerschool/tranche.php');
 $PAGE->set_context(\context_system::instance());
 $PAGE->set_title('Enregistrer une '.get_string('tranche', 'local_powerschool'));
 $PAGE->set_heading('Enregistrer une '.get_string('tranche', 'local_powerschool'));
 
-$PAGE->navbar->add(get_string('configurationminini', 'local_powerschool'),  new moodle_url('/local/powerschool/configurationmini.php'));
+$PAGE->navbar->add(get_string('configurationminini', 'local_powerschool'),  $CFG->wwwroot.'/local/powerschool/configurationmini.php');
 $PAGE->navbar->add(get_string('tranche', 'local_powerschool'), $managementurl);
 // $PAGE->requires->js_call_amd('local_powerschool/confirmsupp');
 // $PAGE->requires->js_call_amd('local_powerschool/confirmsupp');
@@ -62,21 +62,39 @@ $recordtoinsert = $fromform;
 
     // var_dump($fromform);
     // die;
- 
+    if($recordtoinsert->id&&$recordtoinsert->action=="edit") {
+
+        $mform->update_tranche($recordtoinsert->id,$recordtoinsert->libelletranche);
+        redirect($CFG->wwwroot . '/local/powerschool/tranche.php', 'Bien modifier');
+        
+    }
+    else
+    {
         $DB->insert_record('tranche', $recordtoinsert);
         redirect($CFG->wwwroot . '/local/powerschool/tranche.php', 'Enregistrement effectué');
         exit;
+    }
 }
 
-if($_GET['id']) {
+if($_GET['id']&&$_GET["action"]=="delete") {
 
     $mform->supp_tranche($_GET['id']);
     redirect($CFG->wwwroot . '/local/powerschool/tranche.php', 'Information Bien supprimée');
         
 }
+if ($_GET['id']&&$_GET['action']=="edit") {
+    // Add extra data to the form.
+    global $DB;
+    $newspecialite = new tranche();
+    $specialite = $newspecialite->get_tranche($_GET['id']);
+    if (!$specialite) {
+        throw new invalid_parameter_exception('Message not found');
+    }
+    $mform->set_data($specialite);
+}
 
 
-$sql = "SELECT * FROM {tranche} WHERE idcampus='".$iddetablisse."'";
+$sql = "SELECT * FROM {tranche} WHERE idcampus='".ChangerSchoolUser($USER->id)."'";
 
 $tranche = $DB->get_records_sql($sql);
 
@@ -87,21 +105,21 @@ $tranche = $DB->get_records_sql($sql);
 
 $templatecontext = (object)[
     'tranche' => array_values($tranche),
-    'trancheedit' => new moodle_url('/local/powerschool/trancheedit.php'),
-    'tranchesupp'=> new moodle_url('/local/powerschool/tranche.php'),
-    'cycle' => new moodle_url('/local/powerschool/cycle.php'),
+    'trancheedit' => $CFG->wwwroot.'/local/powerschool/tranche.php',
+    'tranchesupp'=> $CFG->wwwroot.'/local/powerschool/tranche.php',
+    'cycle' => $CFG->wwwroot.'/local/powerschool/cycle.php',
 ];
 
 $menumini = (object)[
-    'affecterprof' => new moodle_url('/local/powerschool/affecterprof.php'),
-    'configurerpaie' => new moodle_url('/local/powerschool/configurerpaiement.php'),
-    'coursspecialite' => new moodle_url('/local/powerschool/coursspecialite.php'),
-    'salleele' => new moodle_url('/local/powerschool/salleele.php'),
-    'tranche' => new moodle_url('/local/powerschool/tranche.php'),
-    'confinot' => new moodle_url('/local/powerschool/configurationnote.php'),
-    'logo' => new moodle_url('/local/powerschool/logo.php'),
-    'message' => new moodle_url('/local/powerschool/message.php'),
-    'materiell' => new moodle_url('/local/powerschool/materiels.php'),
+    'affecterprof' => $CFG->wwwroot.'/local/powerschool/affecterprof.php',
+    'configurerpaie' => $CFG->wwwroot.'/local/powerschool/configurerpaiement.php',
+    'coursspecialite' => $CFG->wwwroot.'/local/powerschool/coursspecialite.php',
+    'salleele' => $CFG->wwwroot.'/local/powerschool/salleele.php',
+    'tranche' => $CFG->wwwroot.'/local/powerschool/tranche.php',
+    'confinot' => $CFG->wwwroot.'/local/powerschool/configurationnote.php',
+    'logo' => $CFG->wwwroot.'/local/powerschool/logo.php',
+    'message' => $CFG->wwwroot.'/local/powerschool/message.php',
+    'materiell' => $CFG->wwwroot.'/local/powerschool/materiels.php',
 
 
 
@@ -109,30 +127,33 @@ $menumini = (object)[
 
 
 // $menu = (object)[
-//     'annee' => new moodle_url('/local/powerschool/anneescolaire.php'),
-//     'campus' => new moodle_url('/local/powerschool/campus.php'),
-//     'semestre' => new moodle_url('/local/powerschool/semestre.php'),
-//     'salle' => new moodle_url('/local/powerschool/salle.php'),
-//     'filiere' => new moodle_url('/local/powerschool/filiere.php'),
-//     'specialite' => new moodle_url('/local/powerschool/specialite.php'),
-//     'cycle' => new moodle_url('/local/powerschool/cycle.php'),
-//     'modepayement' => new moodle_url('/local/powerschool/modepayement.php'),
-//     'matiere' => new moodle_url('/local/powerschool/matiere.php'),
-//     'seance' => new moodle_url('/local/powerschool/seance.php'),
-//     'inscription' => new moodle_url('/local/powerschool/inscription.php'),
-//     'enseigner' => new moodle_url('/local/powerschool/enseigner.php'),
-//     'paiement' => new moodle_url('/local/powerschool/paiement.php'),
-//     'bulletin' => new moodle_url('/local/powerschool/bulletin.php'),
+//     'annee' => $CFG->wwwroot.'/local/powerschool/anneescolaire.php'),
+//     'campus' => $CFG->wwwroot.'/local/powerschool/campus.php'),
+//     'semestre' => $CFG->wwwroot.'/local/powerschool/semestre.php'),
+//     'salle' => $CFG->wwwroot.'/local/powerschool/salle.php'),
+//     'filiere' => $CFG->wwwroot.'/local/powerschool/filiere.php'),
+//     'specialite' => $CFG->wwwroot.'/local/powerschool/specialite.php'),
+//     'cycle' => $CFG->wwwroot.'/local/powerschool/cycle.php'),
+//     'modepayement' => $CFG->wwwroot.'/local/powerschool/modepayement.php'),
+//     'matiere' => $CFG->wwwroot.'/local/powerschool/matiere.php'),
+//     'seance' => $CFG->wwwroot.'/local/powerschool/seance.php'),
+//     'inscription' => $CFG->wwwroot.'/local/powerschool/inscription.php'),
+//     'enseigner' => $CFG->wwwroot.'/local/powerschool/enseigner.php'),
+//     'paiement' => $CFG->wwwroot.'/local/powerschool/paiement.php'),
+//     'bulletin' => $CFG->wwwroot.'/local/powerschool/bulletin.php'),
 // ];
 
 
 
 echo $OUTPUT->header();
 
-echo $OUTPUT->render_from_template('local_powerschool/navbarconfiguration', $menumini);
+if (!$_GET['id']&&!$_GET['action']=="edit") {
+
+    echo $OUTPUT->render_from_template('local_powerschool/navbarconfiguration', $menumini);
+    echo html_writer::start_tag("div",array("style"=>"margin-top:80px"));
+    echo html_writer::end_tag("div");
+}
 // echo $OUTPUT->render_from_template('local_powerschool/navbar', $menu);
-echo html_writer::start_tag("div",array("style"=>"margin-top:80px"));
-echo html_writer::end_tag("div");
 $mform->display();
 
 

@@ -55,7 +55,7 @@ class group_form extends moodleform {
         
         // var_dump($_GET["idca"]);die;        
         $mform->addElement('hidden','campus');
-        $mform->setDefault('campus', $iddetablisse);
+        $mform->setDefault('campus', ChangerSchoolUser($USER->id));
         
         $mform->addElement('hidden','idsalle');
         $mform->setDefault('idsalle', $_GET["idsalle"]);

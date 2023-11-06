@@ -34,12 +34,12 @@ require_login();
 $context = context_system::instance();
 // require_capability('local/message:managemessages', $context);
 
-$PAGE->set_url(new moodle_url('/local/powerschool/paiement.php'));
+$PAGE->set_url($CFG->wwwroot.'/local/powerschool/paiement.php');
 $PAGE->set_context(\context_system::instance());
 $PAGE->set_title('Enregistrer une paiement');
 $PAGE->set_heading('Enregistrer une paiement');
 
-$PAGE->navbar->add(get_string('inscription', 'local_powerschool'),  new moodle_url('/local/powerschool/inscription.php?idca='.$_GET["idca"].''));
+$PAGE->navbar->add(get_string('inscription', 'local_powerschool'),  $CFG->wwwroot.'/local/powerschool/inscription.php?idca='.$_GET["idca"].'');
 $PAGE->navbar->add(get_string('paiement', 'local_powerschool'), $managementurl);
 // $PAGE->requires->js_call_amd('local_powerschool/confirmsupp');
 // $PAGE->requires->js_call_amd('local_powerschool/confirmsupp');
@@ -184,27 +184,27 @@ foreach ($rs as $record) {
 // die;
 $templatecontext = (object)[
     'paiement' => array_values($paiement),
-    'paiementedit' => new moodle_url('/local/powerschool/paiementedit.php'),
-    'paiementsupp'=> new moodle_url('/local/powerschool/paiement.php'),
-    'filiere' => new moodle_url('/local/powerschool/filiere.php'),
-    'recu' => new moodle_url('/local/powerschool/recu/facture/recu.php'),
+    'paiementedit' => $CFG->wwwroot.'/local/powerschool/paiementedit.php',
+    'paiementsupp'=> $CFG->wwwroot.'/local/powerschool/paiement.php',
+    'filiere' => $CFG->wwwroot.'/local/powerschool/filiere.php',
+    'recu' => $CFG->wwwroot.'/local/powerschool/recu/facture/recu.php',
     'idins'=>$_GET["idins"],
     'idfi'=>$_GET["idfi"],
 ];
 
 $menu = (object)[
-    'annee' => new moodle_url('/local/powerschool/anneescolaire.php'),
-    'campus' => new moodle_url('/local/powerschool/campus.php'),
-    'semestre' => new moodle_url('/local/powerschool/semestre.php'),
-    'paiement' => new moodle_url('/local/powerschool/paiement.php'),
-    'filiere' => new moodle_url('/local/powerschool/filiere.php'),
-    'cycle' => new moodle_url('/local/powerschool/cycle.php'),
-    'modepayement' => new moodle_url('/local/powerschool/modepayement.php'),
-    'matiere' => new moodle_url('/local/powerschool/matiere.php'),
-    'seance' => new moodle_url('/local/powerschool/seance.php'),
-    'inscription' => new moodle_url('/local/powerschool/inscription.php'),
-    'enseigner' => new moodle_url('/local/powerschool/enseigner.php'),
-    'paiement' => new moodle_url('/local/powerschool/paiement.php'),
+    'annee' => $CFG->wwwroot.'/local/powerschool/anneescolaire.php',
+    'campus' => $CFG->wwwroot.'/local/powerschool/campus.php',
+    'semestre' => $CFG->wwwroot.'/local/powerschool/semestre.php',
+    'paiement' => $CFG->wwwroot.'/local/powerschool/paiement.php',
+    'filiere' => $CFG->wwwroot.'/local/powerschool/filiere.php',
+    'cycle' => $CFG->wwwroot.'/local/powerschool/cycle.php',
+    'modepayement' => $CFG->wwwroot.'/local/powerschool/modepayement.php',
+    'matiere' => $CFG->wwwroot.'/local/powerschool/matiere.php',
+    'seance' => $CFG->wwwroot.'/local/powerschool/seance.php',
+    'inscription' => $CFG->wwwroot.'/local/powerschool/inscription.php',
+    'enseigner' => $CFG->wwwroot.'/local/powerschool/enseigner.php',
+    'paiement' => $CFG->wwwroot.'/local/powerschool/paiement.php',
 ];
 
 

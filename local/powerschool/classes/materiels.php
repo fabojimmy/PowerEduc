@@ -27,7 +27,7 @@ use moodleform;
 use local_powerschool\campus;
 
 
-require_once("$CFG->libdir/formslib.php");
+require_once($CFG->libdir.'/formslib.php');
 
 class materiels extends moodleform {
 
@@ -51,7 +51,7 @@ class materiels extends moodleform {
         $mform->setType('id', PARAM_INT);
        
         $mform->addElement('hidden', 'idcampus');
-        $mform->setDefault('idcampus', $iddetablisse);
+        $mform->setDefault('idcampus', ChangerSchoolUser($USER->id));
         $mform->addElement('hidden', 'usermodified');
         $mform->setDefault('usermodified', $USER->id);
         $mform->addElement('hidden', 'timecreated');

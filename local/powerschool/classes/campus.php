@@ -28,8 +28,8 @@ use moodleform;
 use stdClass;
 
 
-require_once("$CFG->libdir/formslib.php");
-require_once("$CFG->dirroot ./lib/classes/string_manager.php");
+require_once($CFG->libdir.'/formslib.php');
+require_once($CFG->dirroot .'/lib/classes/string_manager.php');
 
 class campus extends moodleform {
 

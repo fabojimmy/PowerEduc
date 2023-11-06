@@ -27,7 +27,7 @@ use moodleform;
 use local_powerschool\campus;
 
 
-require_once("$CFG->libdir/formslib.php");
+require_once($CFG->libdir.'/formslib.php');
 
 class coursspecialite extends moodleform {
 
@@ -37,9 +37,9 @@ class coursspecialite extends moodleform {
         
         global $USER,$DB,$iddetablisse;
 
-        // var_dump($iddetablisse);die;
+        // var_dump(ChangerSchoolUser($USER->id));die;
         $tarspecialcat=array();
-        $camp=$DB->get_records("campus",array("id"=>$iddetablisse));
+        $camp=$DB->get_records("campus",array("id"=>ChangerSchoolUser($USER->id)));
         foreach ($camp as $key => $value) {
             # code...
         }
@@ -74,14 +74,14 @@ class coursspecialite extends moodleform {
         $stringspecialitecat=implode("','",$tarspecialcat);
         // die;
         
-        $sql8 = "SELECT s.id,libellespecialite,libellefiliere,abreviationspecialite FROM {filiere} f, {specialite} s WHERE s.idfiliere = f.id AND idcampus='".$iddetablisse."' AND libellespecialite IN ('$stringspecialitecat')";
+        $sql8 = "SELECT s.id,libellespecialite,libellefiliere,abreviationspecialite FROM {filiere} f, {specialite} s WHERE s.idfiliere = f.id AND idcampus='".ChangerSchoolUser($USER->id)."' AND libellespecialite IN ('$stringspecialitecat')";
         
         $campus = new campus();
         $cours = $specialite = $cycle =  array();
         $sql1 = "SELECT * FROM {course} ";
-        $sql2 = "SELECT sp.id,libellespecialite FROM {specialite} sp,{filiere} f WHERE sp.idfiliere=f.id AND idcampus='".$iddetablisse."' ";
+        $sql2 = "SELECT sp.id,libellespecialite FROM {specialite} sp,{filiere} f WHERE sp.idfiliere=f.id AND idcampus='".ChangerSchoolUser($USER->id)."' ";
 
-        $sql4="SELECT * FROM {campus} c ,{typecampus} t WHERE c.idtypecampus=t.id AND c.id='".$iddetablisse."'";
+        $sql4="SELECT * FROM {campus} c ,{typecampus} t WHERE c.idtypecampus=t.id AND c.id='".ChangerSchoolUser($USER->id)."'";
         
         
         $cours = $campus->select($sql1);
@@ -92,7 +92,7 @@ class coursspecialite extends moodleform {
         {}
         
         
-            $sql3 = "SELECT id,libellecycle FROM {cycle} WHERE idcampus='".$iddetablisse."'";
+            $sql3 = "SELECT id,libellecycle FROM {cycle} WHERE idcampus='".ChangerSchoolUser($USER->id)."'";
         
         $cycle = $campus->select($sql3);
 
@@ -170,7 +170,7 @@ class coursspecialite extends moodleform {
 
         $mform->addElement('hidden', 'idcampus', 'date de modification'); // Add elements to your form
         $mform->setType('idcampus', PARAM_INT);                   //Set type of element
-        $mform->setDefault('idcampus',$iddetablisse);        //Default value
+        $mform->setDefault('idcampus',ChangerSchoolUser($USER->id));        //Default value
 
        
 

@@ -34,12 +34,12 @@ require_login();
 $context = context_system::instance();
 // require_capability('local/powerschool:managepages', $context);
 
-$PAGE->set_url(new moodle_url('/local/powerschool/specialite.php'));
+$PAGE->set_url($CFG->wwwroot.'/local/powerschool/specialite.php');
 $PAGE->set_context(\context_system::instance());
 $PAGE->set_title('Enregistrer une specialite');
 $PAGE->set_heading('Enregistrer une specialite');
 
-$PAGE->navbar->add(get_string('reglages', 'local_powerschool'),  new moodle_url('/local/powerschool/reglages.php'));
+$PAGE->navbar->add(get_string('reglages', 'local_powerschool'),  $CFG->wwwroot.'/local/powerschool/reglages.php');
 $PAGE->navbar->add(get_string('specialite', 'local_powerschool'), $managementurl);
 // $PAGE->requires->js_call_amd('local_powerschool/confirmsupp');
 // $PAGE->requires->js_call_amd('local_powerschool/confirmsupp');
@@ -62,7 +62,20 @@ $recordtoinsert = $fromform;
 $recordtoinsert->idfiliere=$_POST["idfiliere"];
 // var_dump($recordtoinsert->idcampus);
 // die;
-      if(!$mform->verispecialite($_POST["libellespecialite"],$_POST["idfiliere"],1))
+      
+
+    if($recordtoinsert->id&&$recordtoinsert->action=="edit") 
+    {
+
+        // die;
+        $mform->update_specialite($recordtoinsert->id, $recordtoinsert->libellespecialite,$recordtoinsert->abreviationspecialite,$_POST["idfiliere"],$_POST["idcatspe"]);
+        redirect($CFG->wwwroot . '/local/powerschool/specialite.php?idca='.$_POST["idcampus"].'', 'Bien modifier');
+        
+    }
+    else
+    {
+    
+        if(!$mform->verispecialite($_POST["libellespecialite"],$_POST["idfiliere"],1))
       {
 
           $filiecat=$DB->get_records("filiere",array("id"=>$_POST["idfiliere"]));
@@ -94,17 +107,28 @@ $recordtoinsert->idfiliere=$_POST["idfiliere"];
           \core\notification::add('Cette Specialite existe dans ce campus', \core\output\notification::NOTIFY_ERROR);
 
       }
+    }
 }
 
-if($_GET['id']) {
+if($_GET['id'] && $_GET['action']=="delete") {
 
     $mform->supp_specialite($_GET['id']);
-    redirect($CFG->wwwroot . '/local/powerschool/specialite.php?idca='.$iidetablisse.'', 'Information Bien supprimée');
+    redirect($CFG->wwwroot . '/local/powerschool/specialite.php?idca='.ChangerSchoolUser($USER->id).'', 'Information Bien supprimée');
         
+}
+if ($_GET['id'] && $_GET['action']=="edit") {
+    // Add extra data to the form.
+    global $DB;
+    $newspecialite = new specialite();
+    $specialite = $newspecialite->get_specialite($_GET['id']);
+    if (!$specialite) {
+        throw new invalid_parameter_exception('Message not found');
+    }
+    $mform->set_data($specialite);
 }
 
 $tarspecialcat=array();
-$camp=$DB->get_records("campus",array("id"=>$iddetablisse));
+$camp=$DB->get_records("campus",array("id"=>ChangerSchoolUser($USER->id)));
 foreach ($camp as $key => $value) {
     # code...
 }
@@ -139,11 +163,11 @@ foreach($catfill as $key => $valfil)
 $stringspecialitecat=implode("','",$tarspecialcat);
 // die;
 
-$sql = "SELECT s.id,libellespecialite,libellefiliere,abreviationspecialite FROM {filiere} f, {specialite} s WHERE s.idfiliere = f.id AND idcampus='".$iddetablisse."' AND libellespecialite IN ('$stringspecialitecat')";
+$sql = "SELECT s.id,libellespecialite,libellefiliere,abreviationspecialite FROM {filiere} f, {specialite} s WHERE s.idfiliere = f.id AND idcampus='".ChangerSchoolUser($USER->id)."' AND libellespecialite IN ('$stringspecialitecat')";
 
 $specialites = $DB->get_records_sql($sql);
 
-$sqlcat = "SELECT s.id as idsp,libellefiliere,libellespecialite,f.id as idfi FROM {filiere} f, {specialite} s WHERE s.idfiliere = f.id AND idcampus='".$iddetablisse."' AND libellespecialite NOT IN ('$stringspecialitecat')";
+$sqlcat = "SELECT s.id as idsp,libellefiliere,libellespecialite,f.id as idfi FROM {filiere} f, {specialite} s WHERE s.idfiliere = f.id AND idcampus='".ChangerSchoolUser($USER->id)."' AND libellespecialite NOT IN ('$stringspecialitecat')";
 
 $specialitescat = $DB->get_records_sql($sqlcat);
 
@@ -157,13 +181,15 @@ $verif2=[];
 $campus=$DB->get_records('campus');
 
 // $campus=$DB->get_records("campus");
-$sql_fil="SELECT * FROM {filiere} WHERE idcampus='".$iddetablisse."'";
+$sql_fil="SELECT * FROM {filiere} WHERE idcampus='".ChangerSchoolUser($USER->id)."'";
 $filiere=$DB->get_records_sql($sql_fil);
 $vericam=$DB->get_records_sql("SELECT * FROM {campus} c,{typecampus} t
-                                WHERE t.id=c.idtypecampus AND c.id='".$iddetablisse."'");    
+                                WHERE t.id=c.idtypecampus AND c.id='".ChangerSchoolUser($USER->id)."'"); 
+$vertyp=array();   
             foreach($vericam as $key => $ver)
             {
                 if ($ver->libelletype=="primaire") {
+                    $vertyp= $DB->get_records("typecampus",array("id"=>ChangerSchoolUser($USER->id)));
                     $table1='
                 <input type="checkbox" class="toutpr">
                 <tr>
@@ -177,6 +203,7 @@ $vericam=$DB->get_records_sql("SELECT * FROM {campus} c,{typecampus} t
                     <td><input type="checkbox" name="specia[]" class="checkboxItem" value="CM2">CM2</td>
                 </tr>';
                 } else if($ver->libelletype=="lycee" || $ver->libelletype=="college"){
+                    $vertyp= $DB->get_records("typecampus",array("id"=>ChangerSchoolUser($USER->id)));
                   $table2='
                   <input type="checkbox" class="toutly">
                     <tr>
@@ -213,24 +240,25 @@ $vericam=$DB->get_records_sql("SELECT * FROM {campus} c,{typecampus} t
             // var_dump($value->libellefiliere);die;
 $campuss=(object)[
     'campus'=>array_values($campus),
-    'confpaie'=>new moodle_url('/local/powerschool/specialite.php'),
+    'confpaie'=>$CFG->wwwroot.'/local/powerschool/specialite.php',
             ]; 
 $templatecontext = (object)[
     'specialite' => array_values($specialites),
     'specialitecat' => array_values($specialitescat),
     'filiere' => array_values($filiere),
+    'vertyp' => array_values($vertyp),
     // 'campus' => array_values($campus),
     'table2' => $table2,
     'table1' => $table1,
     // 'verif1' => array_values($verif1),
     // 'verif2' => array_values($verif2),
-    'specialiteedit' => new moodle_url('/local/powerschool/specialiteedit.php'),
-    'specialiteex' => new moodle_url('/local/powerschool/specialite.php'),
-    'specialitecate' => new moodle_url('/local/powerschool/specialite.php'),
-    'catspecialite' => new moodle_url('/course/editcategory.php'),
-    'specialitesupp'=> new moodle_url('/local/powerschool/specialite.php'),
-    'cycle' => new moodle_url('/local/powerschool/cycle.php'),
-    'idca'=>$iddetablisse,
+    'specialiteedit' => $CFG->wwwroot.'/local/powerschool/specialite.php',
+    'specialiteex' => $CFG->wwwroot.'/local/powerschool/specialite.php',
+    'specialitecate' => $CFG->wwwroot.'/local/powerschool/specialite.php',
+    'catspecialite' => $CFG->wwwroot.'/course/editcategory.php',
+    'specialitesupp'=> $CFG->wwwroot.'/local/powerschool/specialite.php',
+    'cycle' => $CFG->wwwroot.'/local/powerschool/cycle.php',
+    'idca'=>ChangerSchoolUser($USER->id),
     'root'=>$CFG->wwwroot,
     'specialiteca'=>urlencode($_GET["specialite"]),
     'specialitec'=>$_GET["specialite"],
@@ -239,40 +267,40 @@ $templatecontext = (object)[
 ];
 
 // $menu = (object)[
-//     'annee' => new moodle_url('/local/powerschool/anneescolaire.php'),
-//     'campus' => new moodle_url('/local/powerschool/campus.php'),
-//     'semestre' => new moodle_url('/local/powerschool/semestre.php'),
-//     'salle' => new moodle_url('/local/powerschool/salle.php'),
-//     'filiere' => new moodle_url('/local/powerschool/filiere.php'),
-//     'cycle' => new moodle_url('/local/powerschool/cycle.php'),
-//     'modepayement' => new moodle_url('/local/powerschool/modepayement.php'),
-//     'matiere' => new moodle_url('/local/powerschool/matiere.php'),
-//     'seance' => new moodle_url('/local/powerschool/seance.php'),
-//     'inscription' => new moodle_url('/local/powerschool/inscription.php'),
-//     'enseigner' => new moodle_url('/local/powerschool/enseigner.php'),
-//     'paiement' => new moodle_url('/local/powerschool/paiement.php'),
-//     'programme' => new moodle_url('/local/powerschool/programme.php'),
-//     // 'notes' => new moodle_url('/local/powerschool/note.php'),
-//     'bulletin' => new moodle_url('/local/powerschool/bulletin.php'),
-//     'configurermini' => new moodle_url('/local/powerschool/configurationmini.php'),
-//     'gerer' => new moodle_url('/local/powerschool/gerer.php'),
-//     'modepaie' => new moodle_url('/local/powerschool/modepaiement.php'),
-//     'statistique' => new moodle_url('/local/powerschool/statistique.php'),
+//     'annee' => $CFG->wwwroot.'/local/powerschool/anneescolaire.php'),
+//     'campus' => $CFG->wwwroot.'/local/powerschool/campus.php'),
+//     'semestre' => $CFG->wwwroot.'/local/powerschool/semestre.php'),
+//     'salle' => $CFG->wwwroot.'/local/powerschool/salle.php'),
+//     'filiere' => $CFG->wwwroot.'/local/powerschool/filiere.php'),
+//     'cycle' => $CFG->wwwroot.'/local/powerschool/cycle.php'),
+//     'modepayement' => $CFG->wwwroot.'/local/powerschool/modepayement.php'),
+//     'matiere' => $CFG->wwwroot.'/local/powerschool/matiere.php'),
+//     'seance' => $CFG->wwwroot.'/local/powerschool/seance.php'),
+//     'inscription' => $CFG->wwwroot.'/local/powerschool/inscription.php'),
+//     'enseigner' => $CFG->wwwroot.'/local/powerschool/enseigner.php'),
+//     'paiement' => $CFG->wwwroot.'/local/powerschool/paiement.php'),
+//     'programme' => $CFG->wwwroot.'/local/powerschool/programme.php'),
+//     // 'notes' => $CFG->wwwroot.'/local/powerschool/note.php'),
+//     'bulletin' => $CFG->wwwroot.'/local/powerschool/bulletin.php'),
+//     'configurermini' => $CFG->wwwroot.'/local/powerschool/configurationmini.php'),
+//     'gerer' => $CFG->wwwroot.'/local/powerschool/gerer.php'),
+//     'modepaie' => $CFG->wwwroot.'/local/powerschool/modepaiement.php'),
+//     'statistique' => $CFG->wwwroot.'/local/powerschool/statistique.php'),
 
 // ];
 
 $menu = (object)[
-    'statistique' => new moodle_url('/local/powerschool/statistique.php'),
-    'reglage' => new moodle_url('/local/powerschool/reglages.php'),
-    // 'matiere' => new moodle_url('/local/powerschool/matiere.php'),
-    'seance' => new moodle_url('/local/powerschool/seance.php'),
-    'programme' => new moodle_url('/local/powerschool/programme.php'),
+    'statistique' => $CFG->wwwroot.'/local/powerschool/statistique.php',
+    'reglage' => $CFG->wwwroot.'/local/powerschool/reglages.php',
+    // 'matiere' => $CFG->wwwroot.'/local/powerschool/matiere.php'),
+    'seance' => $CFG->wwwroot.'/local/powerschool/seance.php',
+    'programme' => $CFG->wwwroot.'/local/powerschool/programme.php',
 
-    'inscription' => new moodle_url('/local/powerschool/inscription.php'),
-    // 'notes' => new moodle_url('/local/powerschool/note.php'),
-    'bulletin' => new moodle_url('/local/powerschool/bulletin.php'),
-    'configurermini' => new moodle_url('/local/powerschool/configurationmini.php'),
-    // 'gerer' => new moodle_url('/local/powerschool/gerer.php'),
+    'inscription' => $CFG->wwwroot.'/local/powerschool/inscription.php',
+    // 'notes' => $CFG->wwwroot.'/local/powerschool/note.php'),
+    'bulletin' => $CFG->wwwroot.'/local/powerschool/bulletin.php',
+    'configurermini' => $CFG->wwwroot.'/local/powerschool/configurationmini.php',
+    // 'gerer' => $CFG->wwwroot.'/local/powerschool/gerer.php'),
 
 ];
 

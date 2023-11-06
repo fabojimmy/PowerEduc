@@ -93,7 +93,7 @@ if($_GET['id']) {
 
 // var_dump($mform->selectcycle());
 // die;
-$cycle = $DB->get_records('cycle',array("idcampus"=>$iddetablisse));
+$cycle = $DB->get_records('cycle',array("idcampus"=>ChangerSchoolUser($USER->id)));
 $campus = $DB->get_records('campus');
 
 $campuss=(object)[
@@ -101,7 +101,7 @@ $campuss=(object)[
     'confpaie'=>new moodle_url('/local/powerschool/cycle.php'),
             ]; 
 
-            $rolecasql="SELECT * FROM {campus} c,{typecampus} t WHERE c.idtypecampus=t.id AND c.id='".$iddetablisse."'";
+            $rolecasql="SELECT * FROM {campus} c,{typecampus} t WHERE c.idtypecampus=t.id AND c.id='".ChangerSchoolUser($USER->id)."'";
             $campusr=$DB->get_records_sql($rolecasql);
             foreach($campusr as $key=>$campu)
             {}
@@ -123,7 +123,7 @@ $templatecontext = (object)[
     'coursspecialite'=> new moodle_url('/local/powerschool/coursspecialite.php'),
     'programme' => new moodle_url('/local/powerschool/programme.php'),
     'root' => $CFG->wwwroot,
-    'idca' => $iddetablisse,
+    'idca' => ChangerSchoolUser($USER->id),
 ];
 
 // $menu = (object)[

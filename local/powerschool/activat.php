@@ -37,7 +37,7 @@ $context = context_system::instance();
 $PAGE->set_url(new moodle_url('/local/powerschool/activat.php'));
 $PAGE->set_context(\context_system::instance());
 $PAGE->set_title("Activation");
-$PAGE->set_heading("Activer soit Année ou Etablissement");
+$PAGE->set_heading("Activer Etablissement");
 
 // $PAGE->navbar->add(get_string('configurationminini', 'local_powerschool'),  new moodle_url('/local/powerschool/configurationmini.php'));
 $PAGE->navbar->add(get_string('activat', 'local_powerschool'), $managementurl);
@@ -51,57 +51,17 @@ $PAGE->navbar->add(get_string('activat', 'local_powerschool'), $managementurl);
 // var_dump($etablisse,$gloannee);
 // die;
 if ($_GET["idca"] && $_GET["libel"]="campus") {
-    $idcampus=$DB->get_records("campus", array("activerca"=>1));
-    if($idcampus)
-    foreach ($idcampus as $key => $value) {
-        // var_dump($idcampus);
-        // die;
-        $DB->update_record("campus", array(
-            "id"=>$value->id,
-            "activerca"=>0
-        ));
-    } 
-   $iid= $DB->update_record("campus", array(
-        "id"=>$_GET["idca"],
-        "activerca"=>1
-    ));
-
-//     var_dump($iid);die;
-//   if($iid)
-  {
-      redirect($CFG->wwwroot . '/local/powerschool/activat.php', 'L\'etablissement choisi');
-  }
+   
+    $DB->insert_record("changerschooluser",array("idcampus" => $_GET["idca"], 
+                                                 "usermodified" => $USER->id,
+                                                "activer"=>1,
+                                                "timecreated" =>time(),
+                                                "timemodified" =>time()));
+    
+    redirect(new moodle_url("/local/powerschool/activat.php"),"Etabissement a été bien activée");
     
 } 
-if ($_GET["idan"] && $_GET["libel"]="anneee")
-{
-    // var_dump('dfghjk');
-    // die;
-    $idannee=$DB->get_records("anneescolaire", array("activeran"=>1));
-    if($idannee)
-    {
-        foreach ($idannee as $key => $value) 
-        {
-            
-            $DB->update_record("anneescolaire", array(
-                "id"=>$value->id,
-                "activeran"=>0
-            ));
-        } 
-    }
-    
-    //   var_dump($_GET["id"]);die;
-    $iid=$DB->update_record("anneescolaire", array(
-        "id"=>$_GET["idan"],
-        "activeran"=>1
-    ));
-    # code...
-    if($iid)
-    {
 
-        redirect($CFG->wwwroot . '/local/powerschool/activat.php', 'L\'année scolaire choisie');
-    }
-}
 
 // die;
 $campus=$DB->get_records_sql("SELECT * FROM {campus}");
@@ -149,9 +109,17 @@ echo $OUTPUT->header();
 echo html_writer::start_tag("div",array("style"=>"margin-top:40px"));
 echo html_writer::end_tag("div");
 // $mform->display();
+$modulecontext=context_system::instance();
+if(has_capability("local/powerschool:activation",$modulecontext,$USER->id))
+{
+    echo $OUTPUT->render_from_template('local_powerschool/activat', $templatecontext);
+}else
+{
+    
+    \core\notification::add('Vous avez pas ce cours aujourd\'hui.. ', \core\output\notification::NOTIFY_ERROR);
 
+}
 
-echo $OUTPUT->render_from_template('local_powerschool/activat', $templatecontext);
 
 
 echo $OUTPUT->footer();

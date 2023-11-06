@@ -373,6 +373,60 @@ $capabilities = array
                 ),
                 'clonepermissionsform'=>'moodle1/my:manageblocks'
             ),
+            'local/powerschool:activation' => array(
+                'riskbitmask' => RISK_SPAM, 
+                'captype' => 'write', 
+                'contextlevel' =>CONTEXT_SYSTEM, 
+                'archetypes' => array(
+                    'manager' => CAP_ALLOW,
+                ),
+                'clonepermissionsform'=>'moodle1/my:manageblocks'
+            ),
+            'local/powerschool:anneecreated' => array(
+                'riskbitmask' => RISK_SPAM, 
+                'captype' => 'write', 
+                'contextlevel' =>CONTEXT_SYSTEM, 
+                'archetypes' => array(
+                    'manager' => CAP_ALLOW,
+                ),
+                'clonepermissionsform'=>'moodle1/my:manageblocks'
+            ),
+            'local/powerschool:transportcreated' => array(
+                'riskbitmask' => RISK_SPAM, 
+                'captype' => 'write', 
+                'contextlevel' =>CONTEXT_SYSTEM, 
+                'archetypes' => array(
+                    'manager' => CAP_ALLOW,
+                ),
+                'clonepermissionsform'=>'moodle1/my:manageblocks'
+            ),
+            'local/powerschool:cantine' => array(
+                'riskbitmask' => RISK_SPAM, 
+                'captype' => 'write', 
+                'contextlevel' =>CONTEXT_SYSTEM, 
+                'archetypes' => array(
+                    'manager' => CAP_ALLOW,
+                ),
+                'clonepermissionsform'=>'moodle1/my:manageblocks'
+            ),
+            'local/powerschool:sallecreated' => array(
+                'riskbitmask' => RISK_SPAM, 
+                'captype' => 'write', 
+                'contextlevel' =>CONTEXT_SYSTEM, 
+                'archetypes' => array(
+                    'manager' => CAP_ALLOW,
+                ),
+                'clonepermissionsform'=>'moodle1/my:manageblocks'
+            ),
+            'local/powerschool:abscencejustifie' => array(
+                'riskbitmask' => RISK_SPAM, 
+                'captype' => 'write', 
+                'contextlevel' =>CONTEXT_SYSTEM, 
+                'archetypes' => array(
+                    'manager' => CAP_ALLOW,
+                ),
+                'clonepermissionsform'=>'moodle1/my:manageblocks'
+            ),
     
         );
 
