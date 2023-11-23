@@ -38,7 +38,7 @@ $context = context_system::instance();
 $PAGE->set_url(new moodle_url('/local/powerschool/coursspecialite.php'));
 $PAGE->set_context(\context_system::instance());
 $PAGE->set_title(get_string('coursspecialite', 'local_powerschool'));
-$PAGE->set_heading(get_string('coursspecialite', 'local_powerschool'));
+// $PAGE->set_heading(get_string('coursspecialite', 'local_powerschool'));
 
 if(has_capability("local/powerschool:configurationminimal",context_system::instance(),$USER->id))
 {
@@ -366,8 +366,7 @@ $menumini = (object)[
     'message' => new moodle_url('/local/powerschool/message.php'),
     'materiell' => new moodle_url('/local/powerschool/materiels.php'),
     'groupe' => new moodle_url('/local/powerschool/groupsalle.php'),
-
-
+    'ressource' => new moodle_url('/local/powerschool/ressource.php'),
 
 ];
 $campus=$DB->get_records('campus');
@@ -379,15 +378,24 @@ echo $OUTPUT->header();
 
 if(has_capability("local/powerschool:configurationminimal",context_system::instance(),$USER->id))
 {
-
-    echo $OUTPUT->render_from_template('local_powerschool/navbarconfiguration', $menumini);
+     if($CFG->theme=="boost")
+        {
+            echo'<div class="" style="margin-top:110px;"></div>';
+        }
+        elseif ($CFG->theme == 'adaptable') {
+            // Changer la couleur en bleu
+            echo'<div class="" style="margin-top:50px;"></div>';
+            
+        }
+        echo $OUTPUT->render_from_template('local_powerschool/navbarconfiguration', $menumini);
+        echo'<div class="" style="margin-bottom:40px;"></div>';
 }
-echo'<div style="margin-top:50px"></div>';
 // echo $OUTPUT->render_from_template('local_powerschool/campustou', $campuss);
 if(has_capability("local/powerschool:coursspecialite",context_system::instance(),$USER->id))
 {
 
-    $mform->display();
+//    echo"<div class='mt-5'></div>";
+   echo'<div>'. $mform->display().'</div>';
     
     
     echo $OUTPUT->render_from_template('local_powerschool/coursspecialite', $templatecontext);

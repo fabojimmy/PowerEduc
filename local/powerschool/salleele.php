@@ -38,7 +38,7 @@ $context = context_system::instance();
 $PAGE->set_url($CFG->wwwroot.'/local/powerschool/salleele.php');
 $PAGE->set_context(\context_system::instance());
 $PAGE->set_title(get_string('sallele', 'local_powerschool'));
-$PAGE->set_heading(get_string('sallele', 'local_powerschool'));
+
 
 $PAGE->navbar->add(get_string('configurationminini', 'local_powerschool'),  $CFG->wwwroot.'/local/powerschool/configurationmini.php');
 $PAGE->navbar->add(get_string('sallele', 'local_powerschool'), $managementurl);
@@ -161,7 +161,7 @@ $templatecontext = (object)[
     'root'=>$CFG->wwwroot,
     'salleele' => $CFG->wwwroot.'/local/powerschool/salleele.php',
     'salleeleretirer' => $CFG->wwwroot.'/local/powerschool/salleeleretirer.php',
-
+    'title'=>get_string('sallele', 'local_powerschool')
  ];
 
  $menumini = (object)[
@@ -176,6 +176,8 @@ $templatecontext = (object)[
     'message' => $CFG->wwwroot.'/local/powerschool/message.php',
     'materiell' => $CFG->wwwroot.'/local/powerschool/materiels.php',
     'groupe' => $CFG->wwwroot.'/local/powerschool/groupsalle.php',
+    'groupapprenant' => new moodle_url('/local/powerschool/groupapprenant.php'),
+    'ressource' => new moodle_url('/local/powerschool/ressource.php'),
 
 
 
@@ -206,8 +208,17 @@ echo $OUTPUT->header();
 
 // echo $OUTPUT->render_from_template('local_powerschool/navbar', $menu);
 // $mform->display();
+// if($CFG->theme=="boost")
+//   {
+//       echo'<div class="" style="margin-top:110px;"></div>';
+//   }
+//    elseif ($CFG->theme == 'adaptable') 
+//     {
+//             // Changer la couleur en bleu
+//             echo'<div class="" style="margin-top:50px;"></div>';            
+//      }
 
-echo $OUTPUT->render_from_template('local_powerschool/navbarconfiguration', $menumini);
+// echo $OUTPUT->render_from_template('local_powerschool/navbarconfiguration', $menumini);
 
 echo $OUTPUT->render_from_template('local_powerschool/salleele', $templatecontext);
 

@@ -25,6 +25,7 @@ use local_powerschool\Date\Month;
 use local_powerschool\programme;
 
 require_once(__DIR__ . '/../../config.php');
+require_once($CFG->dirroot.'/calendar/lib.php');
 require_once($CFG->dirroot.'/local/powerschool/classes/programme.php');
 require_once($CFG->dirroot.'/local/powerschool/classes/date.php');
 require_once(__DIR__ . '/idetablisse.php');
@@ -46,8 +47,8 @@ $PAGE->navbar->add(get_string('programme', 'local_powerschool'), $managementurl)
 // $PAGE->requires->js_call_amd('local_powerschool/confirmsupp');
 // $PAGE->requires->js_call_amd('local_powerschool/confirmsupp');
 
+// die;
 $mform=new programme();
-
 
 
 if ($mform->is_cancelled()) {
@@ -78,6 +79,7 @@ $recordtoinsert = new stdClass();
         $recordtoinsert->idcycle=$_POST["idcycle"]; 
         $recordtoinsert->idsalle=$_POST["idsalle"]; 
         $recordtoinsert->idprof=$_POST["idprof"]; 
+        $recordtoinsert->idgroupapprenant=$_POST["idgroupapprenant"]; 
         $recordtoinsert->idanneescolaire=$_POST["idanneescolaire"]; 
         
         $recordtoinsert->usermodified=$USER->id; 
@@ -108,19 +110,23 @@ if(!$verappart){
     }
     else
     {
+        $tarr=array();
+        $tareven=array();
+        $even=new stdClass();
         for($i=0;$i<=$_POST["nobresemaine"];$i++)
         {
-            $datesea=$_POST["datecours"];
-            $recordtoinsert->datecours= strtotime($datesea["day"]."-".$datesea["month"]."-".$datesea["year"]);
+            // var_dump($i,$recordtoinsert);
+        //     $datesea=$_POST["datecours"];
+        //     $recordtoinsert->datecours= strtotime($datesea["day"]."-".$datesea["month"]."-".$datesea["year"]);
 
             // $date = $recordtoinsert->datecours ;
             $date =  $recordtoinsert->datecours + ($i * 604800);
             // var_dump(date("Y/m/d",$recordtoinsert->datecours));
-            $sem = $mform->definir_semestre($date,$_POST["idsemestre"]);
+            $semm = $mform->definir_semestre($date,$_POST["idsemestre"]);
 
-            $recordtoinsert->idsemestre = $sem;
-            // var_dump(date("Y/m/d",$date));
+            $recordtoinsert->idsemestre = $semm;
             $recordtoinsert->datecours=$date;
+        //     // var_dump( $recordtoinsert->idsemestre."---".$date."-sds-".$_POST["idsemestre"]);
         if($recordtoinsert->heuredebutcours==$recordtoinsert->heurefincours)
         {
             \core\notification::add('Heure de début et de fin sont pareil', \core\output\notification::NOTIFY_ERROR);
@@ -129,49 +135,86 @@ if(!$verappart){
         }
         else{
 
-            $veriprof=$DB->get_records_sql("SELECT * FROM {salleele} sa,{inscription} i WHERE sa.idsalle='".$_POST["idsalle"]."'
-            AND sa.idetudiant=i.idetudiant AND i.idspecialite='".$_POST["idspecialite"]."' AND i.idcycle='".$_POST["idcycle"]."'");
-                if($veriprof)
-                   {
-                     if($veriprofss)
-                      {
+            $even->name=$_POST["name"];
+            $even->description=$_POST["description"];
+            $even->eventtype=$_POST["eventtype"];
+            $even->timestart=$date;
+            $even->courseid=$_POST["idcourses"];
+            $even->groupid=$_POST["idgroupapprenant"];
 
-                          $DB->insert_record('programme', $recordtoinsert);
-                      }
-                      else
-                      {
+           array_push($tarr,$recordtoinsert);
+           
+            // var_dump($i,$tarr);
+            $veriEta=$DB->get_records_sql('SELECT * FROM {campus} c,{typecampus} t WHERE c.idtypecampus=t.id AND c.id='.ChangerSchoolUser($USER->id).'');
+                foreach($veriEta as $valueEt){}
+                    if($valueEt->libelletype=="universite")
+                    {
+                        if($veriprofss)
+                        {
+                            $DB->insert_records('programme', $tarr);
+                            $tarr=array();
+                            $event = new calendar_event($even);
+                            $event->update($even);
+                        }
+                        else
+                        {
+                            \core\notification::add('Soit cet enseignant n\'appartient pas à cette specialité
+                            <br> Soit il\'enseigne pas à ce cours', \core\output\notification::NOTIFY_ERROR);
+                            redirect($CFG->wwwroot . '/local/powerschool/programme.php?idca='.$_POST["idcampus"].'');
+                        }
 
-                          \core\notification::add('Soit cet enseignant n\'appartient pas à cette specialité
-                          <br> Soit il\'enseigne pas à ce cours', \core\output\notification::NOTIFY_ERROR);
-                          redirect($CFG->wwwroot . '/local/powerschool/programme.php?idca='.$_POST["idcampus"].'');
-                      
-                      }
-                   } 
-                else 
-                   {
-                    $speci=$DB->get_records_sql("SELECT * FROM {specialite} WHERE id='".$_POST["idspecialite"]."'");
-
-                    foreach ($speci as $key => $value) {
-                        # code...
                     }
-                    \core\notification::add('Cette salle n\'appertient pas à cette specialité '.$value->libellespecialite.'', \core\output\notification::NOTIFY_ERROR);
-                    redirect($CFG->wwwroot . '/local/powerschool/programme.php?idca='.$_POST["idcampus"].'');
-                
-                    exit;
-                   }
+                    else
+                    {
+                        $veriprof=$DB->get_records_sql("SELECT * FROM {salleele} sa,{inscription} i WHERE sa.idsalle='".$_POST["idsalle"]."'
+                        AND sa.idetudiant=i.idetudiant AND i.idspecialite='".$_POST["idspecialite"]."' AND i.idcycle='".$_POST["idcycle"]."'");
+                            if($veriprof)
+                            {
+                                if($veriprofss)
+                                {
+                                    array_push($tarr,$recordtoinsert);
+    
+                                    $DB->insert_records('programme', $tarr);
+                                    $tarr=array();
+                                    $event = new calendar_event($even);
+                                    $event->update($even);
+                                }
+                                else
+                                {
+    
+                                    \core\notification::add('Soit cet enseignant n\'appartient pas à cette specialité
+                                    <br> Soit il\'enseigne pas à ce cours', \core\output\notification::NOTIFY_ERROR);
+                                    redirect($CFG->wwwroot . '/local/powerschool/programme.php?idca='.$_POST["idcampus"].'');
+                                
+                                }
+                            } 
+                            else 
+                            {
+                                $speci=$DB->get_records_sql("SELECT * FROM {specialite} WHERE id='".$_POST["idspecialite"]."'");
+    
+                                foreach ($speci as $key => $value) {
+                                    # code...
+                                }
+                                \core\notification::add('Cette salle n\'appertient pas à cette specialité '.$value->libellespecialite.'', \core\output\notification::NOTIFY_ERROR);
+                                redirect($CFG->wwwroot . '/local/powerschool/programme.php?idca='.$_POST["idcampus"].'');
+                            
+                                exit;
+                            }
+                    }
         }
 
-            // $date = $date->modify("+".($i)."week");
+        //     // $date = $date->modify("+".($i)."week");
         
             
 
         
-        //    var_dump($recordtoinsert);
+        // //    var_dump($recordtoinsert);
         // exit;
         
         
         
     }
+    // die;
     redirect($CFG->wwwroot . '/local/powerschool/programme.php?idca='.$_POST["idcampus"].'', 'Enregistrement effectué');
     }
 }else
@@ -193,7 +236,7 @@ if($_GET['id']) {
 
 $sql = "SELECT * FROM {course} c, {semestre} s,{specialite} sp,{cycle} cy, {programme} p WHERE p.idcourses = c.id AND p.idsemestre =s.id AND p.idspecialite = sp.id
         AND p.idcycle = cy.id  AND cy.idcampus='".ChangerSchoolUser($USER->id)."'";
-
+    // die;
     $programmes = $DB->get_records_sql($sql);
 
     foreach($programmes as $key){
@@ -273,6 +316,8 @@ $menu = (object)[
     'inscriptionnavr'=>get_string('inscription', 'local_powerschool'),
     'configurationminini'=>get_string('configurationminini', 'local_powerschool'),
     'bulletinnavr'=>get_string('bulletin', 'local_powerschool'),
+    'groupapprenant' => new moodle_url('/local/powerschool/groupapprenant.php'),
+
 ];
 
 echo $OUTPUT->header();

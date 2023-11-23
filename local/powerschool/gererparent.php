@@ -92,22 +92,39 @@ $mform=new filiere();
 //     'filieresupp'=> new moodle_url('/local/powerschool/filiere.php'),
 //     'specialite' => new moodle_url('/local/powerschool/specialite.php'),
 // ];
+$espace="";
+if($CFG->theme=="boost")
+{
 
+}
+elseif ($CFG->theme == 'adaptable') {
+    // Changer la couleur en bleu
+    $espace='<p style="margin-top:-150px"></p>';
+    
+}
 $menu = (object)[
     // 'annee' => new moodle_url('/local/powerschool/anneescolaire.php'),
     'paiement' => new moodle_url('/local/powerschool/paiementpersoparent.php'),
     'note' => new moodle_url('/local/powerschool/bulletinnotepersoparent.php'),
     'absence' => new moodle_url('/local/powerschool/listeetuabsenetuparent.php'),
     'programme' => new moodle_url('/local/powerschool/programmepersoparent.php'),
-
+    'espace'=>$espace
 ];
 
 
 echo $OUTPUT->header();
 
-
-echo $OUTPUT->render_from_template('local_powerschool/navbargerer', $menu);
-// $mform->display();
+$OUTPUT->render_from_template('local_powerschool/navbargerer', $menu);
+// if($CFG->theme=="boost")
+// {
+// }
+// elseif ($CFG->theme == 'adaptable') {
+//     // Changer la couleur en bleu
+//     echo "<style>
+            
+//     </style>";
+//     echo $OUTPUT->render_from_template('local_powerschool/navbargerer', $menu);
+// }
 
 
 echo $OUTPUT->render_from_template('local_powerschool/gerer', $templatecontext);

@@ -1,18 +1,38 @@
 <?php
    require_once(__DIR__ . '/../../../config.php');
+   require_once(__DIR__ . '/../idetablisse.php');
    global $DB;
    if ($_POST["cycle"] && $_POST["specialite"]) {
-    $sql="SELECT sa.id as idsa,numerosalle
-    FROM {inscription} i, {anneescolaire} a, {user} u, {specialite} s, {campus} c, {cycle} cy,{salleele} saet,{salle} sa
-    WHERE i.idanneescolaire=a.id AND saet.idetudiant=u.id AND sa.id=saet.idsalle AND etudiantpresen=1 AND i.idspecialite='".$_POST["specialite"]."' AND i.idetudiant=u.id 
-    AND i.idcampus=c.id AND i.idcycle ='".$_POST["cycle"]."'";
+       $veriEta=array();
+    $veriEta=$DB->get_records_sql('SELECT * FROM {campus} c,{typecampus} t WHERE c.idtypecampus=t.id AND c.id='.ChangerSchoolUser($USER->id).'');
 
-    $sallejs="";
-    $cours=$DB->get_records_sql($sql);
-        $sallejs='<option value=""><option>';
-    foreach ($cours as $key => $value1) {
-         $sallejs.='<option value='.$value1->idsa.'>'.$value1->numerosalle.'</option>';
-    }
+    // $sallejs='<option value="">'. $veriEta.'<option>';
+        foreach($veriEta  as $valueEt){}
+
+        if($valueEt->libelletype=="universite")
+        {
+            $sql="SELECT g.id,g.numerogroup FROM {groupapprenant} g WHERE idspecialite='".$_POST["specialite"]."' AND idcycle ='".$_POST["cycle"]."'";
+            $cours=$DB->get_records_sql($sql);
+            $sallejs="";
+                $sallejs='<option value=""><option>';
+            foreach ($cours as $key => $value1) {
+                 $sallejs.='<option value='.$value1->id.'>'.$value1->numerogroup.'</option>';
+            }
+        }
+        else
+        {
+            $sql="SELECT sa.id as idsa,numerosalle
+            FROM {inscription} i, {anneescolaire} a, {user} u, {specialite} s, {campus} c, {cycle} cy,{salleele} saet,{salle} sa
+            WHERE i.idanneescolaire=a.id AND saet.idetudiant=u.id AND sa.id=saet.idsalle AND etudiantpresen=1 AND i.idspecialite='".$_POST["specialite"]."' AND i.idetudiant=u.id 
+            AND i.idcampus=c.id AND i.idcycle ='".$_POST["cycle"]."'";
+            $cours=$DB->get_records_sql($sql);
+            $sallejs="";
+                $sallejs='<option value="">222<option>';
+            foreach ($cours as $key => $value1) {
+                 $sallejs.='<option value='.$value1->idsa.'>'.$value1->numerosalle.'</option>';
+            }
+        }
+        
 
     $sql1="SELECT c.id as idco,c.fullname FROM {coursspecialite},{cycle} as cy,{course} as c WHERE idspecialite='".$_POST['specialite']."' AND idcycle='".$_POST['cycle']."' AND idcourses=c.id";
     $cours=$DB->get_records_sql($sql1);

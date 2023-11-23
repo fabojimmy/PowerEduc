@@ -102,7 +102,7 @@ class configurerpaiement extends moodleform {
 
         }
 
-        $mform->addElement('header','configuration', 'Configuration');
+        $mform->addElement('header','configuration', get_string('configurerpaie', 'local_powerschool'));
 
         $mform->addElement('hidden', 'id');
         $mform->setType('id', PARAM_INT);

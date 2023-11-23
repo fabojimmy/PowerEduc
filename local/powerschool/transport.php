@@ -154,6 +154,14 @@ echo $OUTPUT->header();
 // echo $OUTPUT->render_from_template('local_powerschool/navbarconfiguration', $menumini);
 echo'<div style="margin-top:25px"></div>';
 // echo $OUTPUT->render_from_template('local_powerschool/campustou', $campuss);
+// if($CFG->theme=="boost")
+// {
+//     echo "<style>body { background-color: red; }</style>";
+// }
+// elseif ($CFG->theme == 'adaptable') {
+//     // Changer la couleur en bleu
+//     echo "<style>body { background-color: blue; }</style>";
+// }
 $mform->display();
 
 

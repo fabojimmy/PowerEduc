@@ -77,6 +77,19 @@ if (!$mform->veri_insc($_POST["idetudiant"])) {
     $recordtoinsert->idcycle=$_POST["idcycle"];
     $recordtoinsert->idcampus=$_POST["idcampus"];
     $recordtoinsert->idetudiant=$_POST["idetudiant"];
+    $veriEta=$DB->get_records_sql('SELECT * FROM {campus} c,{typecampus} t WHERE c.idtypecampus=t.id AND c.id='.ChangerSchoolUser($USER->id).'');
+    $libellegr="";
+    foreach($veriEta as $valueEt){}
+    if($valueEt->libelletype=="universite")
+    {
+       $recordtoinsert->idgroupapprenant=$_POST["idgroupapprenant"];
+    }
+    else
+    {
+        $recordtoinsert->idgroupapprenant=0;
+
+    }
+    
     // $recordtoinsert->idcycle=$fromform->cycle;
     $recordtoinsert->nomsparent=$_POST["nomsparent"];
     $recordtoinsert->telparent=$_POST["telparent"];
@@ -114,7 +127,7 @@ if(ChangerSchoolUser($USER->id)==0)
 }
 
 if($_GET['id'] && $_GET['action']='affectercours') {
-
+// var_dump($_GET['idgro']);die;
 $veriaff=$DB->get_records_sql("SELECT c.id as coursid,c.fullname,en.id as enroleid FROM {coursspecialite} cs,{course} c,{courssemestre} css,{affecterprof} af,{enrol} en
                                WHERE cs.idspecialite='".$_GET["idsp"]."' AND cs.idcycle='".$_GET["idcy"]."' AND en.courseid=c.id
                                AND cs.idcourses=c.id AND css.idcoursspecialite=cs.id AND af.idcourssemestre=css.id AND quit=0");
@@ -208,11 +221,28 @@ $tarcon=array();
                     $DB->insert_record('role_assignments', $sql_roleass);
                     
                     
-                    
-                    $salllle=$DB->get_records("salle",array("id"=>$_GET["idsa"]));
-                    
-                    foreach($salllle as $key =>$valcapa){}
-                    $versalgro=$DB->get_records("groups",array("name"=>$valcapa->numerosalle,"courseid"=>$val->courseid));
+                    ///college,lycee,primary
+                    // ChangerSchoolUser($USER->id)
+                    $veriEta=$DB->get_records_sql('SELECT * FROM {campus} c,{typecampus} t WHERE c.idtypecampus=t.id AND c.id='.ChangerSchoolUser($USER->id).'');
+                    $libellegr="";
+                    foreach($veriEta as $valueEt){}
+                    if($valueEt->libelletype=="universite")
+                    {
+
+                        $groupeeapp=$DB->get_records("groupapprenant",array("id"=>$_GET["idgro"]));
+                        foreach($groupeeapp as $key =>$valcapa){}
+                       $libellegr= $valcapa->numerogroup;
+                    }
+                    else
+                    {
+                        $salllle=$DB->get_records("salle",array("id"=>$_GET["idsa"]));
+                        foreach($salllle as $key =>$valcapa){}
+                        $libellegr=$valcapa->numerosalle;
+                    }
+                    //universite
+
+
+                    $versalgro=$DB->get_records("groups",array("name"=>$libellegr,"courseid"=>$val->courseid));
                     // var_dump($versalgro);
                     // die;
 
@@ -323,11 +353,11 @@ else
 {
     $idccaa=ChangerSchoolUser($USER->id);
 }
-$sql_inscrip = "SELECT i.id, u.firstname, u.lastname, a.datedebut, a.datefin, c.libellecampus, c.villecampus, 
+$sql_inscrip = "SELECT i.id, u.firstname, u.lastname, a.datedebut, a.datefin, c.libellecampus, c.villecampus,idgroupapprenant,
                 s.libellespecialite, s.abreviationspecialite , cy.libellecycle, cy.nombreannee,s.idfiliere,idcycle,i.idcampus,idspecialite
                 FROM {inscription} i, {anneescolaire} a, {user} u, {specialite} s, {campus} c, {cycle} cy
-                WHERE i.idanneescolaire=a.id AND i.idspecialite=s.id AND i.idetudiant=u.id 
-                AND i.idcampus=c.id AND i.idcycle = cy.id AND i.idcampus='".$idccaa."'" ;
+                WHERE i.idanneescolaire=a.id AND i.idspecialite=s.id AND i.idetudiant=u.id  AND i.idcampus=c.id AND i.idcycle = cy.id 
+                AND i.idcampus='".$idccaa."'" ;
     
     if($_GET["filiere"])
     {
@@ -370,12 +400,19 @@ foreach ($inscription as $key ){
 
     $key->datedebut = $dated;
     $key->datefin = $datef;
+    $group=$DB->get_records_sql("SELECT * FROM {groupapprenant} WHERE id ='".$key->idgroupapprenant."'");
+    foreach($group as $kelo)
+    {
 
+    }
+
+    $key->numerogroup=$kelo->numerogroup;
+
+    // var_dump($key->idgroupapprenant);
+    // die;
 }
 
 // var_dump($i);
-// var_dump($inscription);
-// die;
 $campus=$DB->get_records("campus");
 $semestre=$DB->get_records("semestre");
 $annee=$DB->get_records("anneescolaire");
@@ -455,6 +492,7 @@ $menu = (object)[
     'inscriptionnavr'=>get_string('inscription', 'local_powerschool'),
     'configurationminini'=>get_string('configurationminini', 'local_powerschool'),
     'bulletinnavr'=>get_string('bulletin', 'local_powerschool'),
+    'groupapprenant' => new moodle_url('/local/powerschool/groupapprenant.php'),
 
 ];
 

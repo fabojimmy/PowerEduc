@@ -53,6 +53,7 @@ class tranche extends moodleform {
             $selectcampus[$key] = $val->libellecampus;
         }
 
+        $mform->addElement('header', 'header','Enregistrer une '.get_string('tranche', 'local_powerschool'));
         $mform->addElement('hidden', 'id');
         $mform->setType('id', PARAM_INT);
         $mform->addElement('hidden', 'action');

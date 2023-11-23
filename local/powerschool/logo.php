@@ -87,6 +87,14 @@ $menumini = (object)[
 ];
 echo $OUTPUT->header();
 
+if($CFG->theme=="boost")
+  {
+      echo'<div class="" style="margin-top:110px;"></div>';
+  }
+   elseif ($CFG->theme == 'adaptable') {
+            // Changer la couleur en bleu
+            echo'<div class="" style="margin-top:50px;"></div>';            
+        }
 
 echo $OUTPUT->render_from_template('local_powerschool/navbarconfiguration', $menumini);
 // echo $OUTPUT->render_from_template('local_powerschool/campustou', $campuss);

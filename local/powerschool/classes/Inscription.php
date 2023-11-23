@@ -96,7 +96,7 @@ class inscription extends moodleform {
         $sql8 = "SELECT s.id,libellespecialite,libellefiliere,abreviationspecialite FROM {filiere} f, {specialite} s WHERE s.idfiliere = f.id AND idcampus='".ChangerSchoolUser($USER->id)."' AND libellespecialite IN ('$stringspecialitecat')";
         
         $campus = new campus();
-        $etudiant = $anneescolaire = $ecole = $specialite = $cycle =  array();
+        $etudiant = $anneescolaire = $ecole = $specialite = $cycle = $groupe= array();
 
         //
         // if(has_capability("local/powerschool:activation",$modulecontext,$USER->id) )
@@ -117,6 +117,7 @@ class inscription extends moodleform {
         $sql3 = "SELECT * FROM {campus} ";
         // $sql4 = "SELECT * FROM {specialite} ";
         $sql5 = "SELECT * FROM {cycle} WHERE idcampus='".ChangerSchoolUser($USER->id)."'";
+        $sqlgr = "SELECT g.id,s.libellespecialite,c.libellecycle,g.numerogroup,capacitegroup FROM {specialite} s,{cycle} c,{filiere} f,{groupapprenant} g WHERE s.id=g.idspecialite AND c.id=g.idcycle AND f.id=s.idfiliere AND f.idcampus='".ChangerSchoolUser($USER->id)."'";
 
 
         // var_dump($etudiant,$sql1);die;
@@ -124,6 +125,7 @@ class inscription extends moodleform {
         $ecole = $campus->select($sql3);
         $specialite = $campus->select($sql8);
         $cycle = $campus->select($sql5);
+        $group = $campus->select($sqlgr);
         
 
 
@@ -162,6 +164,10 @@ class inscription extends moodleform {
         foreach ($cycle as $key => $val)
         {
             $selectcycle[$key] = $val->libellecycle;
+        }
+        foreach ($group as $key => $valgr)
+        {
+            $selectgroup[$key] = $valgr->numerogroup;
         }
         // var_dump( $campus->selectcampus($sql)); 
         // die;
@@ -208,38 +214,51 @@ class inscription extends moodleform {
         $mform->setDefault('gender', '');        //Default value
         $mform->addRule('gender', 'Choix du gender', 'required', null, 'client');
         $mform->addHelpButton('gender', 'specialite');
-       
+        
+        $veriEta=$DB->get_records_sql('SELECT * FROM {campus} c,{typecampus} t WHERE c.idtypecampus=t.id AND c.id='.ChangerSchoolUser($USER->id).'');
+        foreach($veriEta as $valueEt){}
+        if($valueEt->libelletype=="universite")
+        {
+           $mform->addElement('select', 'idgroupapprenant', 'Groupe Apprenant', $selectgroup ); // Add elements to your form
+           $mform->setType('idgroupapprenant', PARAM_TEXT);                   //Set type of element
+           $mform->setDefault('idgroupapprenant', '');        //Default value
+           $mform->addRule('idgroupapprenant', 'Choix du gender', 'required', null, 'client');
+           $mform->addHelpButton('idgroupapprenant', 'specialite');
+          
+        }
+        
+
         $mform->addElement('date_time_selector', 'date_naissance', 'Date de naissance', $selectcycle ); // Add elements to your form
         $mform->setType('date_naissance', PARAM_TEXT);                   //Set type of element
         $mform->setDefault('date_naissance', '');        //Default value
         $mform->addRule('date_naissance', 'Choix du cycle', 'required', null, 'client');
         $mform->addHelpButton('date_naissance', 'specialite');
 
-        //informations sur le parent
-        $mform->addElement('header','parent', 'Informations sur le parents');
+        // //informations sur le parent
+        // $mform->addElement('header','parent', 'Informations sur le parents');
 
 
-        $mform->addElement('text', 'nomsparent', 'Noms du Parent' ); // Add elements to your form
-        $mform->setType('nomsparent', PARAM_TEXT);                   //Set type of element
-        $mform->setDefault('nomsparent', '');        //Default value
-        $mform->addRule('nomsparent', 'Noms du Parent', 'required', null, 'client');
-        $mform->addHelpButton('nomsparent', 'heure');
+        // $mform->addElement('text', 'nomsparent', 'Noms du Parent' ); // Add elements to your form
+        // $mform->setType('nomsparent', PARAM_TEXT);                   //Set type of element
+        // $mform->setDefault('nomsparent', '');        //Default value
+        // $mform->addRule('nomsparent', 'Noms du Parent', 'required', null, 'client');
+        // $mform->addHelpButton('nomsparent', 'heure');
 
-        $mform->addElement('text', 'telparent', 'Telephone parent' ); // Add elements to your form
-        $mform->setType('telparent', PARAM_TEXT);                   //Set type of element
-        $mform->setDefault('telparent', '');        //Default value
-        $mform->addRule('telparent', 'Telephone Parent', 'required', null, 'client');
-        $mform->addHelpButton('telparent', 'Telephone');
+        // $mform->addElement('text', 'telparent', 'Telephone parent' ); // Add elements to your form
+        // $mform->setType('telparent', PARAM_TEXT);                   //Set type of element
+        // $mform->setDefault('telparent', '');        //Default value
+        // $mform->addRule('telparent', 'Telephone Parent', 'required', null, 'client');
+        // $mform->addHelpButton('telparent', 'Telephone');
 
-        $mform->addElement('text', 'emailparent', 'Email Parent' ); // Add elements to your form
-        $mform->setType('emailparent', PARAM_TEXT);                   //Set type of element
-        $mform->setDefault('emailparent', '');        //Default value
-        $mform->addHelpButton('emailparent', 'Telephone');
+        // $mform->addElement('text', 'emailparent', 'Email Parent' ); // Add elements to your form
+        // $mform->setType('emailparent', PARAM_TEXT);                   //Set type of element
+        // $mform->setDefault('emailparent', '');        //Default value
+        // $mform->addHelpButton('emailparent', 'Telephone');
 
-        $mform->addElement('text', 'professionparent', 'Email Parent' ); // Add elements to your form
-        $mform->setType('professionparent', PARAM_TEXT);                   //Set type of element
-        $mform->setDefault('professionparent', '');        //Default value
-        $mform->addHelpButton('professionparent', 'Telephone');
+        // $mform->addElement('text', 'professionparent', 'Email Parent' ); // Add elements to your form
+        // $mform->setType('professionparent', PARAM_TEXT);                   //Set type of element
+        // $mform->setDefault('professionparent', '');        //Default value
+        // $mform->addHelpButton('professionparent', 'Telephone');
 
         $mform->addElement('hidden', 'usermodified'); // Add elements to your form
         $mform->setType('usermodified', PARAM_INT);                   //Set type of element

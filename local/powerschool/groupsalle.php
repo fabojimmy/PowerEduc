@@ -39,7 +39,7 @@ $context = context_system::instance();
 $PAGE->set_url(new moodle_url('/local/powerschool/salleleretirer.php'));
 $PAGE->set_context(\context_system::instance());
 $PAGE->set_title(get_string('sallelere', 'local_powerschool'));
-$PAGE->set_heading(get_string('groupsalle', 'local_powerschool'));
+// $PAGE->set_heading(get_string('groupsalle', 'local_powerschool'));
 
 $PAGE->navbar->add(get_string('configurationminini', 'local_powerschool'),  new moodle_url('/local/powerschool/configurationmini.php'));
 $PAGE->navbar->add(get_string('groupsalle', 'local_powerschool'), $managementurl);
@@ -82,6 +82,7 @@ $templatecontext = (object)[
     'salleele' => new moodle_url('/local/powerschool/salleele.php'),
     'salleeleretirer' => new moodle_url('/local/powerschool/groupsalle.php'),
     'idca'=>$_GET["idca"],
+    'title'=>get_string('groupsalle', 'local_powerschool'),
 
  ];
 
@@ -114,7 +115,15 @@ $templatecontext = (object)[
 
 
 echo $OUTPUT->header();
-
+if($CFG->theme=="boost")
+{
+    echo'<div class="" style="margin-top:115px;"></div>';
+}
+elseif ($CFG->theme == 'adaptable') {
+    // Changer la couleur en bleu
+    echo'<div class="" style="margin-top:50px;"></div>';
+    
+}
 
 // echo $OUTPUT->render_from_template('local_powerschool/navbar', $menu);
 // $mform->display();

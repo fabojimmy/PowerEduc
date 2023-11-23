@@ -93,13 +93,23 @@ $mform=new filiere();
 //     'specialite' => new moodle_url('/local/powerschool/specialite.php'),
 // ];
 
+$espace="";
+if($CFG->theme=="boost")
+{
+
+}
+elseif ($CFG->theme == 'adaptable') {
+    // Changer la couleur en bleu
+    $espace='<p style="margin-top:-150px"></p>';
+    
+}
 $menu = (object)[
     'annee' => new moodle_url('/local/powerschool/anneescolaire.php'),
     'paiement' => new moodle_url('/local/powerschool/paiementperso.php'),
     'note' => new moodle_url('/local/powerschool/bulletinnoteperso.php'),
     'absence' => new moodle_url('/local/powerschool/listeetuabsenetu.php'),
     'programme' => new moodle_url('/local/powerschool/programmeperso.php'),
-
+    'espace'=>$espace
 ];
 
 

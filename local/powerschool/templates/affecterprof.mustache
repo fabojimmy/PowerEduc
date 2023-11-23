@@ -28,8 +28,8 @@
   </head>
     <body> 
        
-        <h1>{{affec}}</h1>
-      <form location.href='{{courssemestre}}' method="post">
+        <h1 class="mx-4">{{affec}}</h1>
+      <form location.href='{{courssemestre}}' class="mt-5" method="post">
         <div class="d-flex justify-content-around">
           <div class="col-2">
               <label>Choisir professeur</label>
@@ -74,6 +74,7 @@
               </select>
           </div>
         </div>
+        {{#veriEtaColLy}}
           <div class="col-2">
               <label>Choisir Salle</label>
               <select class="form-control salle" name="salle">
@@ -82,9 +83,18 @@
                   {{/sallee}}
               </select>
           </div>
+        {{/veriEtaColLy}}
+          <div class="col-2">
+              <label>Choisir Groupe</label>
+              <select class="form-control salle" name="group">
+                  {{#groupe}}
+                    <option value="{{id}}">{{numerogroup}}</option>
+                  {{/groupe}}
+              </select>
+          </div>
         <input type="hidden" value="{{idca}}" name="idcampus">
           <div class="ms-4">
-              <button class="btn btn-primary btn-lg col-2 text-center mt-3" id="btn-recherche">Enregistrer</button>
+              <button class="btn btn-primary col-1 text-center mx-3 my-3" id="btn-recherche">Enregistrer</button>
           </div>
       </form>
        <!--<div class="d-flex flex-wrap align-items-center mt-5">
@@ -96,10 +106,10 @@
                 <table class="table">
                     <thead>
                       <tr>
-                        <th scope="col">id</th>
                         <th scope="col">Professeurs</th>
                         <th scope="col">Cours & Specialite</th>
                         <th scope="col">Salle</th>
+                        <th scope="col">Groupe</th>
                         <th scope="col">Actions</th>
                       </tr>
                     </thead>
@@ -107,10 +117,10 @@
                     <tbody>
                       <tr>
                         
-                            <th scope="row">{{id}} </th>
                             <td>{{lastname}}-{{firstname}} </td>
                             <td>{{fullname}}-{{libellecycle}}-{{libellespecialite}}-{{libellesemestre}} </td>
                             <td>{{numerosalle}} </td>
+                            <td>{{libellegroup}} </td>
                             <td>
                                <!-- <input type="button" class="btn btn-primary" value="modifier" onclick="location.href='{{affecterprofedit}}?id={{idaffe}}&idca={{idca}}'">-->
                                 <input type="button" class="btn btn-danger local_annee_delete_button" value="supprimer" onclick="location.href='{{affecterprofsupp}}?id={{idaffe}}&idca={{idca}}&idcou={{idcouu}}&iduser={{iduser}}'">

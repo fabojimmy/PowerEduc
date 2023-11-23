@@ -63,22 +63,41 @@ $recordtoinsert = new stdClass();
 // var_dump($recordtoinsert);
 // die;
     # code...
+//    var_dump($_POST["idgroupapprenant"]);die;
     $verif=$DB->get_records_sql("SELECT * FROM {coursspecialite} cs,{courssemestre} css,{affecterprof} af
                                  WHERE cs.id=css.idcoursspecialite AND css.id=af.idcourssemestre AND 
                                  cs.idcycle='".$_POST["idcycle"]."' AND cs.idspecialite='".$_POST["idspecialite"]."'
                                  AND css.idsemestre='".$_POST["idsemestre"]."' AND af.idprof='".$USER->id."' 
                                  AND af.idsalle='".$_POST["salle"]."'");
- if($verif)
+if($verif)
  {
-    $vetar=[
-       "idcycle"=>$_POST["idcycle"],
-       "idspecialite"=>$_POST["idspecialite"],
-       "idcampus"=>$_POST["idcampus"],
-       "idsemestre"=>$_POST["idsemestre"],
-       "idanneescolaire"=>$_POST["idanneescolaire"],
-       "idprofesseur"=>$USER->id,
-       "idsalle"=>$_POST["salle"],
-    ];
+    if($_POST["salle"])
+    {
+
+        $vetar=[
+        "idcycle"=>$_POST["idcycle"],
+        "idspecialite"=>$_POST["idspecialite"],
+        "idcampus"=>$_POST["idcampus"],
+        "idsemestre"=>$_POST["idsemestre"],
+        "idanneescolaire"=>$_POST["idanneescolaire"],
+        "idprofesseur"=>$USER->id,
+        "idsalle"=>$_POST["salle"],
+        
+        ];
+    }
+    else
+    {
+        $vetar=[
+            "idcycle"=>$_POST["idcycle"],
+            "idspecialite"=>$_POST["idspecialite"],
+            "idcampus"=>$_POST["idcampus"],
+            "idsemestre"=>$_POST["idsemestre"],
+            "idanneescolaire"=>$_POST["idanneescolaire"],
+            "idprofesseur"=>$USER->id,
+            "idgroupapprenant"=>$_POST["idgroupapprenant"],
+            
+            ];
+    }
     $verib=$DB->get_records("bulletin",$vetar);
         if(!$verib)
         {
@@ -96,7 +115,15 @@ $recordtoinsert = new stdClass();
 
             // var_dump($recordtoinsert,$_POST["salle"]);die;
             // $DB->insert_record('bulletin', $recordtoinsert);
-            $DB->execute("INSERT INTO mdl_bulletin VALUES(0,'".$USER->id."','".$recordtoinsert->idanneescolaire."','".$recordtoinsert->idsemestre."','".$recordtoinsert->idcampus."','".$recordtoinsert->idspecialite."','".$recordtoinsert->idcycle."','".$recordtoinsert->usermodified."','".$recordtoinsert->timecreated."','".$recordtoinsert->timemodified."','".$_POST["salle"]."')");
+            // die;
+            if($_POST["salle"])
+            {
+                $DB->execute("INSERT INTO mdl_bulletin VALUES(0,'".$USER->id."','".$recordtoinsert->idanneescolaire."','".$recordtoinsert->idsemestre."','".$recordtoinsert->idcampus."','".$recordtoinsert->idspecialite."','".$recordtoinsert->idcycle."','".$recordtoinsert->usermodified."','".$recordtoinsert->timecreated."','".$recordtoinsert->timemodified."','".$_POST["salle"]."',0)");
+            }
+            else if($_POST["idgroupapprenant"])
+            {
+                $DB->execute("INSERT INTO mdl_bulletin VALUES(0,'".$USER->id."','".$recordtoinsert->idanneescolaire."','".$recordtoinsert->idsemestre."','".$recordtoinsert->idcampus."','".$recordtoinsert->idspecialite."','".$recordtoinsert->idcycle."','".$recordtoinsert->usermodified."','".$recordtoinsert->timecreated."','".$recordtoinsert->timemodified."',0,'".$_POST["idgroupapprenant"]."')");
+            }
             redirect($CFG->wwwroot . '/local/powerschool/note.php?idca='.$_POST["idcampus"].'', 'Enregistrement effectué');
         }
         else{
@@ -130,11 +157,23 @@ $recordtoinsert = new stdClass();
 
 
 // $inscription =$tab = array();
+$veriEta=$DB->get_records_sql('SELECT * FROM {campus} c,{typecampus} t WHERE c.idtypecampus=t.id AND c.id='.$_GET["idca"].'');
+        foreach($veriEta as $valueEt){}
+     if($valueEt->libelletype=="universite")
+        {
+            $sql_inscrip = "SELECT i.id as idbu,idspecialite,idcycle,i.idanneescolaire,i.idcampus,idsemestre,libellesemestre,datedebut,datefin,villecampus,libellecampus,libellespecialite,libellecycle,nombreannee,idgroupapprenant
+            FROM {bulletin} i, {anneescolaire} a,{semestre} sem, {user} u, {specialite} s, {campus} c, {cycle} cy
+            WHERE i.idanneescolaire=a.id AND i.idspecialite=s.id AND i.idprofesseur=u.id 
+            AND i.idcampus=c.id AND i.idcycle = cy.id AND i.idsemestre=sem.id AND i.idprofesseur='".$USER->id."' AND i.idcampus='".$_GET["idca"]."'" ;
+        }
+        else 
+        {
 
-$sql_inscrip = "SELECT i.id as idbu,idspecialite,idcycle,i.idanneescolaire,i.idcampus,numerosalle,sa.id as idsa,idsemestre,libellesemestre,datedebut,datefin,villecampus,libellecampus,libellespecialite,libellecycle,nombreannee
-                FROM {bulletin} i, {anneescolaire} a,{semestre} sem, {user} u, {specialite} s, {campus} c, {cycle} cy,{salle} sa
-                WHERE i.idsalle=sa.id AND i.idanneescolaire=a.id AND i.idspecialite=s.id AND i.idprofesseur=u.id 
-                AND i.idcampus=c.id AND i.idcycle = cy.id AND i.idsemestre=sem.id AND i.idprofesseur='".$USER->id."' AND i.idcampus='".$_GET["idca"]."'" ;
+            $sql_inscrip = "SELECT i.id as idbu,idspecialite,idcycle,i.idanneescolaire,i.idcampus,numerosalle,sa.id as idsa,idsemestre,libellesemestre,datedebut,datefin,villecampus,libellecampus,libellespecialite,libellecycle,nombreannee
+                            FROM {bulletin} i, {anneescolaire} a,{semestre} sem, {user} u, {specialite} s, {campus} c, {cycle} cy,{salle} sa
+                            WHERE i.idsalle=sa.id AND i.idanneescolaire=a.id AND i.idspecialite=s.id AND i.idprofesseur=u.id 
+                            AND i.idcampus=c.id AND i.idcycle = cy.id AND i.idsemestre=sem.id AND i.idprofesseur='".$USER->id."' AND i.idcampus='".$_GET["idca"]."'" ;
+        }
 
 // $inscription = $DB->get_records('inscription', null, 'id');
 
@@ -159,6 +198,14 @@ foreach ($inscriptionss as $key=> $value){
     $value->datedebut = $dated;
     $value->datefin = $datef;
 
+    if($valueEt->libelletype=="universite")
+    {
+        $group=$DB->get_records("groupapprenant",array("id"=>$value->idgroupapprenant));
+        foreach($group as $key)
+        {}
+        $value->idgr=$key->id;
+        $value->numerogroup=$key->numerogroup;
+    }
     $inscription[]= (array) $value;
 
 }

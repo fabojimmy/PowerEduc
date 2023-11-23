@@ -59,7 +59,7 @@
             </tbody>
             {{/filierecycletran}}
                 <tr>
-                   <td colspan="6">TOTAL:{{montant}}</td>
+                   <td colspan="6"><p style="font-weight:600">TOTAL: <span class="badge badge-info" style="font-size:12px">{{somme}} fr</span> </p></td>
                 </tr>
           </table>
 </div>
@@ -92,7 +92,12 @@
             
             {{/paiement}}
                 <tr>
-                    <td colspan="4">TOTAL: {{somme}}  Somme à payer:{{montant}} Reste:{{reste}}</td>
+                    <td colspan="5"><div class="col-12 d-flex justify-content-between">
+                                      <div><p style="font-weight:600">Somme à payer: <span class="badge badge-info" style="font-size:12px">{{montant}}  fr</span> </p></div>
+                                      <div><p style="font-weight:600">TOTAL: <span class="badge badge-info" style="font-size:12px">{{somme}} fr</span> </p> </div>
+                                      <div><p style="font-weight:600">Reste: <span class="badge badge-warning" style="font-size:12px">{{reste}} fr</span> </p></div>
+                                    </div>
+                      </td>
                 </tr>
 
           </table>

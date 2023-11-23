@@ -120,7 +120,7 @@ if ($_GET['id']&&$_GET['action']=="edit")
 }
 
 
-$sql = "SELECT * FROM {cantine} s WHERE s.idcampus = '".ChangerSchoolUser($USER->id)."' ";
+$sql = "SELECT * FROM {cantine} s WHERE s.idcampus = '".ChangerSchoolUser($USER->id)."'";
 
 
 // $cantine = $DB->get_records('cantine', null, 'id');

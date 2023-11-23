@@ -38,7 +38,7 @@ $context = context_system::instance();
 $PAGE->set_url($CFG->wwwroot.'/local/powerschool/salleleretirer.php');
 $PAGE->set_context(\context_system::instance());
 $PAGE->set_title(get_string('sallelere', 'local_powerschool'));
-$PAGE->set_heading(get_string('sallelere', 'local_powerschool'));
+// $PAGE->set_heading(get_string('sallelere', 'local_powerschool'));
 
 $PAGE->navbar->add(get_string('configurationminini', 'local_powerschool'),  $CFG->wwwroot.'/local/powerschool/configurationmini.php');
 $PAGE->navbar->add(get_string('sallelere', 'local_powerschool'), $managementurl);
@@ -91,7 +91,7 @@ $templatecontext = (object)[
     'root'=>$CFG->wwwroot,
     'salleele' => $CFG->wwwroot.'/local/powerschool/salleele.php',
     'salleeleretirer' => $CFG->wwwroot.'/local/powerschool/salleeleretirer.php',
-
+    'title'=>get_string('sallelere', 'local_powerschool')
  ];
 
  $menumini = (object)[
@@ -130,7 +130,7 @@ echo $OUTPUT->header();
 // echo $OUTPUT->render_from_template('local_powerschool/navbar', $menu);
 // $mform->display();
 
-echo $OUTPUT->render_from_template('local_powerschool/navbarconfiguration', $menumini);
+// echo $OUTPUT->render_from_template('local_powerschool/navbarconfiguration', $menumini);
 
 echo $OUTPUT->render_from_template('local_powerschool/salleeleretirer', $templatecontext);
 

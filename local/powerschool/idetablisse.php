@@ -51,6 +51,10 @@ global $iddetablisse;
           }
           $ValueChanger=$value->idcampuser;
     }
+    if($ValueChanger==null)
+    {
+      $ValueChanger=0;
+    }
     return $ValueChanger;
   }
   

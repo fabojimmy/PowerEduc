@@ -79,6 +79,8 @@ $menu = (object)[
     'inscriptionnavr'=>get_string('inscription', 'local_powerschool'),
     'configurationminini'=>get_string('configurationminini', 'local_powerschool'),
     'bulletinnavr'=>get_string('bulletin', 'local_powerschool'),
+    'groupapprenant' => new moodle_url('/local/powerschool/groupapprenant.php'),
+
 ];
 
 

@@ -84,12 +84,15 @@ class note extends moodleform {
         $sql4 = "SELECT * FROM {specialite}";
         // $sql5 = "SELECT * FROM {cycle} cy,{affecterprof} af,{courssemestre} cs,{coursspecialite} csp WHERE cy.id=csp.idcycle AND cs.idcoursspecialite=csp.id AND cs.id=af.idcourssemestre AND idprof='".$USER->id."'";
         $sql5 = "SELECT id,libellecycle FROM {cycle} WHERE idcampus='".$_GET["idca"]."'";
+        $sqlgr = "SELECT g.id,s.libellespecialite,c.libellecycle,g.numerogroup,capacitegroup FROM {specialite} s,{cycle} c,{filiere} f,{groupapprenant} g WHERE s.id=g.idspecialite AND c.id=g.idcycle AND f.id=s.idfiliere AND f.idcampus='".$_GET["idca"]."'";
 
         $semestre = $campus->select($sql1);
         $anneescolaire = $campus->select($sql2);
         $ecole = $campus->select($sql3);
         $specialite = $DB->get_recordset_sql($sql8);
         $cycle = $campus->select($sql5);
+        $group = $campus->select($sqlgr);
+
         // $salle=$DB->get_records_sql("SELECT id,numerosalle FROM {salle} WHERE idcampus='".$_GET["idca"]."' AND numerosalle IN (SELECT DISTINCT name FROM {groups})");        
         $salle=$DB->get_records_sql("SELECT id,numerosalle FROM {salle} WHERE idcampus='".$_GET["idca"]."'");        
 
@@ -131,6 +134,11 @@ class note extends moodleform {
         {
             $selectsalle[$key] = $val->numerosalle;
         }
+        foreach ($group as $key => $valgr)
+        {
+            $selectgroup[$key] = $valgr->numerogroup;
+        }
+
         // var_dump( $campus->selectcampus($sql)); 
         // die;
         $mform->addElement('select', 'idsemestre', 'Partie de Année Scolaire', $selectetudiant ); // Add elements to your form
@@ -143,13 +151,31 @@ class note extends moodleform {
         $mform->setDefault('idanneescolaire', '');        //Default value
         $mform->addRule('idanneescolaire', 'Choix de l annee scolaire', 'required', null, 'client');
         $mform->addHelpButton('idanneescolaire', 'specialite');
-
-        $mform->addElement('select', 'salle', 'Salle', $selectsalle ); // Add elements to your form
-        $mform->setType('salle', PARAM_TEXT);                   //Set type of element
-        $mform->setDefault('salle', '');        //Default value
-        $mform->addRule('salle', 'Choix du campus', 'required', null, 'client');
-        $mform->addHelpButton('salle', 'Salle');
-
+        
+        if($_GET["idca"]==null)
+        {
+            $_GET["idca"]=0;
+        }
+       
+        $veriEta=$DB->get_records_sql('SELECT * FROM {campus} c,{typecampus} t WHERE c.idtypecampus=t.id AND c.id='.$_GET["idca"].'');
+        foreach($veriEta as $valueEt){}
+        if($valueEt->libelletype=="universite")
+        {
+           $mform->addElement('select', 'idgroupapprenant', 'Groupe Apprenant', $selectgroup ); // Add elements to your form
+           $mform->setType('idgroupapprenant', PARAM_TEXT);                   //Set type of element
+           $mform->setDefault('idgroupapprenant', '');        //Default value
+           $mform->addRule('idgroupapprenant', 'Choix du gender', 'required', null, 'client');
+           $mform->addHelpButton('idgroupapprenant', 'specialite');
+          
+        }
+        else
+        {
+            $mform->addElement('select', 'salle', 'Salle', $selectsalle ); // Add elements to your form
+            $mform->setType('salle', PARAM_TEXT);                   //Set type of element
+            $mform->setDefault('salle', '');        //Default value
+            $mform->addRule('salle', 'Choix du campus', 'required', null, 'client');
+            $mform->addHelpButton('salle', 'Salle');
+        }
         $mform->addElement('select', 'idspecialite', 'Specialite', $selectspecialite ); // Add elements to your form
         $mform->setType('idspecialite', PARAM_TEXT);                   //Set type of element
         $mform->setDefault('idspecialite', '');        //Default value
@@ -182,7 +208,6 @@ class note extends moodleform {
         $mform->setDefault('timemodified', time());        //Default value
 
        
-
         $this->add_action_buttons();
 
     }

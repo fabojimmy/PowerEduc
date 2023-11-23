@@ -457,6 +457,7 @@ class calendar_event {
     public function update($data, $checkcapability=true) {
         global $DB, $USER;
 
+        
         foreach ($data as $key => $value) {
             $this->properties->$key = $value;
         }
@@ -525,9 +526,20 @@ class calendar_event {
                 $this->properties->format = $this->properties->description['format'];
                 $this->properties->description = $this->properties->description['text'];
             }
+            $tareven=array();
 
+            // var_dump($data);die;
+            array_push($tareven,$this->properties);
             // Insert the event into the database.
-            $this->properties->id = $DB->insert_record('event', $this->properties);
+            if($tareven)
+            {
+               $DB->insert_records('event', $tareven);
+
+            }else
+            {
+
+                $this->properties->id = $DB->insert_record('event', $this->properties);
+            }
 
             if ($usingeditor) {
                 $this->properties->description = file_save_draft_area_files(

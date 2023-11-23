@@ -97,6 +97,7 @@
                 <th scope="col">Campus</th>
                 <th scope="col">Specialite</th>
                 <th scope="col">Cycle</th>
+                <th scope="col">Groupe Apprenant</th>
                 <th scope="col">Actions</th>
               </tr>
             </thead>
@@ -110,6 +111,7 @@
                     <td>{{villecampus}} - {{libellecampus}}  </td>
                     <td>{{libellespecialite}}  ({{abreviationspecialite}})  </td>
                     <td>{{libellecycle}} ({{nombreannee}} ans) </td>
+                    <td>{{numerogroup}}</td>
                     <td>
                         <input type="button" class="btn btn-danger" value="Supprimer" onclick="location.href='{{suppins}}?idins={{id}}&idca={{idca}}'">
                         <input type="button" class="btn btn-warning local_annee_delete_button" value="payer" onclick="location.href='{{inscriptionpayer}}?idins={{id}}&idfi={{idfiliere}}&idcy={{idcycle}}&idca={{idcampus}}&idsp={{idspecialite}}'">

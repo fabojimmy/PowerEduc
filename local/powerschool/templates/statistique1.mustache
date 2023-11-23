@@ -6,6 +6,18 @@
 
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css">
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <style>
+      @media print{
+          form{
+            display:none;
+
+          }
+          .cl,.btn{
+            display:none;
+
+          }
+      }
+    </style>
 </head>
 <body>
 
@@ -821,12 +833,13 @@
            
    </div>
 
-    <h1 class="align-text ">Liste des Apprenants des differentes statistiques</h1>
+    <h1 class="align-text cl">Liste des Apprenants des differentes statistiques</h1>
     <div class="d-flex justify-content-evenly">
       
         <div><a class="btn btn-primary mr-4" href="{{listevers}}?idca={{idca}}&idfi={{idfi}}&idsp={{idsp}}&idcy={{idcy}}&idan={{idan}}&idgen={{idge}}">Liste des differents versements </a></div>
         <div><a class="btn btn-primary mr-4" href="{{listenombre}}?idca={{idca}}&idfi={{idfi}}&idsp={{idsp}}&idcy={{idcy}}&idan={{idan}}&idgen={{idge}}">Liste de nombre d'apprenant</a></div>
         <div><a class="btn btn-primary mr-4" href="{{listenote}}?idca={{idca}}&idfi={{idfi}}&idsp={{idsp}}&idcy={{idcy}}&idan={{idan}}&idgen={{idge}}&idsem={{idsem}}">Liste de Note des differents apprenants</a></div>
+        <a class="btn btn-outline-primary" onclick="window.print()">print</a>
        <!-- <div><a class="btn btn-primary mr-4" href="{{nomm}}">Button</a></div>-->
        
     </div>
