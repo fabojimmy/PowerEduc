@@ -26,13 +26,13 @@
                 <td>{{description}}</td>
                 <td>
                         {{! <input type="button" class="btn btn-primary local_annee_delete_button" value="Modifier" onclick="location.href='{{materielsmod}}<!--?id={{id}}'"> }}-->
-                        <input type="button" class="btn btn-danger local_annee_delete_button" value="Supprimer" action="affectercours" onclick="location.href='{{materielssup}}?id={{id}}'">
+                        <a href='{{materielssup}}?id={{id}}' class="btn btn-danger"><i class="fa fa-trash"></i></a>
                 </td>
             </tr>
             {{/materiels}}
             <tr>
                {{#somme}}
-                <td colspan=6>Total des dépenses: {{sommateriel}}</td>
+                <td colspan=6 class="text-align">Total des dépenses: {{sommateriel}}</td>
                {{/somme}}
             </tr>
         </table>

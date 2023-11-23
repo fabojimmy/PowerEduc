@@ -33,9 +33,9 @@
 
 </div>
 
-<div class="d-flex justify-content-around">
+<div class="d-flex justify-content-around ">
 
-    <div class="table card mt-2 mb-2">
+    <div class="table card mx-2 my-3">
     <h1 class="text-center">Entrer une partie de l'année </h1>
             <table class="table">
                 <thead>
@@ -62,7 +62,7 @@
                 {{/coursspecialite1}}
               </table>
     </div>
-    <div class="table card mt-2 mb-2">
+    <div class="table card mx-2 my-3">
     <h1 class="text-center">Ajouter un cours</h1>
             <table class="table">
                 <thead>
@@ -70,7 +70,7 @@
                     <th scope="col">Specialites</th>
                     <th scope="col">Cycles</th>
                     <th scope="col">Semestre</th>
-                    <th scope="col">Nombre Heure</th>
+                    <th scope="col">Heure</th>
                     <th scope="col">Actions</th>
                   </tr>
                 </thead>
@@ -84,7 +84,7 @@
                         <td>{{nombreheure}}</td>
                         <td>
                             <!--<input type="button" class="btn btn-primary" value="modifier" onclick="location.href='{{coursspecialiteedit}}?id={{id}}&idca={{idca}}'">-->
-                            <input type="button" class="btn btn-danger local_annee_delete_button" value="supprimer" onclick="location.href='{{coursspecialitesupp}}?id={{id}}'">
+                            <a href='{{coursspecialitesupp}}?id={{id}}' class="btn btn-danger"><i class="fa fa-trash"></i></a>
                             <input type="button" class="btn btn-warning local_annee_delete_button" value="Ajouter un cours" onclick="location.href='{{cours}}?category={{idcatsem}}&returnto=catmanage&idcy={{idcy}}&idsp={{idspecialite}}&idca={{idcampus}}&idsem={{idsemestre}}&idfil={{idfiliere}}&libelle=courssp'">
                         </td>
                     </tr>
@@ -121,7 +121,7 @@
                         <td>{{credit}}</td>
                         <td>
                             <input type="button" class="btn btn-primary" value="Ajouter credit" onclick="location.href='{{creditt}}?idspco={{id}}&idca={{idca}}'">
-                            <input type="button" class="btn btn-danger local_annee_delete_button" value="supprimer" onclick="location.href='{{coursspecialitesupp}}?id={{id}}'">
+                            <a href='{{coursspecialitesupp}}?id={{id}}' class="btn btn-danger"><i class="fa fa-trash"></i></a>
                             <!--<input type="button" class="btn btn-warning local_annee_delete_button" value="Ajouter un cours" onclick="location.href='{{cours}}?category={{idcatsem}}&returnto=catmanage&idcy={{idcy}}&idsp={{idspecialite}}&idca={{idcampus}}&idsem={{idsemestre}}&idfil={{idfiliere}}'">-->
                         </td>
                     </tr>

@@ -38,7 +38,7 @@ $context = context_system::instance();
 $PAGE->set_url($CFG->wwwroot.'/local/powerschool/materiels.php');
 $PAGE->set_context(\context_system::instance());
 $PAGE->set_title(get_string('materiel', 'local_powerschool'));
-$PAGE->set_heading(get_string('materiel', 'local_powerschool'));
+// $PAGE->set_heading(get_string('materiel', 'local_powerschool'));
 
 $PAGE->navbar->add(get_string('configurationminini', 'local_powerschool'),  $CFG->wwwroot.'/local/powerschool/configurationmini.php');
 $PAGE->navbar->add(get_string('materiel', 'local_powerschool'), $managementurl);
@@ -138,7 +138,10 @@ $menumini = (object)[
     'logo' => $CFG->wwwroot.'/local/powerschool/logo.php',
     'confinot' => $CFG->wwwroot.'/local/powerschool/configurationnote.php',
     'materiell' => $CFG->wwwroot.'/local/powerschool/materiels.php',
+    'groupapprenant' => new moodle_url('/local/powerschool/groupapprenant.php'),
+    'ressource' => new moodle_url('/local/powerschool/ressource.php'),
 
+    
 
 ];
 
@@ -150,7 +153,15 @@ $campuss=(object)[
 
 echo $OUTPUT->header();
 // echo $OUTPUT->render_from_template('local_powerschool/campustou', $campuss);
-
+if($CFG->theme=="boost")
+{
+    echo'<div class="" style="margin-top:110px;"></div>';
+}
+elseif ($CFG->theme == 'adaptable') {
+    // Changer la couleur en bleu
+    echo'<div class="" style="margin-top:50px;"></div>';
+    
+}
 echo $OUTPUT->render_from_template('local_powerschool/navbarconfiguration', $menumini);
 echo'<div style="margin-top:55px"></div>';
 // echo $OUTPUT->render_from_template('local_powerschool/campustou', $campuss);

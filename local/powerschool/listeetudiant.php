@@ -52,7 +52,7 @@ $PAGE->navbar->add(get_string('listeetudiant', 'local_powerschool'), $management
 
 // $inscription =$tab = array();
 
-$sql_inscrip = "SELECT i.id, u.firstname, u.lastname, a.datedebut, a.datefin, c.libellecampus, c.villecampus,i.idetudiant, 
+$sql_inscrip = "SELECT i.id, u.firstname, u.lastname, a.datedebut, a.datefin, c.libellecampus, c.villecampus,i.idetudiant,i.idgroupapprenant,
                 s.libellespecialite, s.abreviationspecialite , cy.libellecycle, cy.nombreannee,s.idfiliere,idcycle,i.idcampus,idspecialite
                 FROM {inscription} i, {anneescolaire} a, {user} u, {specialite} s, {campus} c, {cycle} cy
                 WHERE i.idanneescolaire=a.id AND i.idspecialite=s.id AND i.idetudiant=u.id 
@@ -171,6 +171,8 @@ $menu = (object)[
     'inscriptionnavr'=>get_string('inscription', 'local_powerschool'),
     'configurationminini'=>get_string('configurationminini', 'local_powerschool'),
     'bulletinnavr'=>get_string('bulletin', 'local_powerschool'),
+    'groupapprenant' => new moodle_url('/local/powerschool/groupapprenant.php'),
+
 ];
 
 echo $OUTPUT->header();

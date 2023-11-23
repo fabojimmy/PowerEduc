@@ -91,6 +91,7 @@ $sql8 = "SELECT s.id,libellespecialite,libellefiliere,abreviationspecialite FROM
         $sql6 = "SELECT * FROM {periode} ";
 
         $sql7 = "SELECT id,numerosalle FROM {salle} WHERE idcampus='".ChangerSchoolUser($USER->id)."'";
+        $sqlgr = "SELECT g.id,s.libellespecialite,c.libellecycle,g.numerogroup,capacitegroup FROM {specialite} s,{cycle} c,{filiere} f,{groupapprenant} g WHERE s.id=g.idspecialite AND c.id=g.idcycle AND f.id=s.idfiliere AND f.idcampus='".ChangerSchoolUser($USER->id)."'";
 
         $cours = $campus->select($sql1);
         $semestre = $campus->select($sql2);
@@ -100,8 +101,9 @@ $sql8 = "SELECT s.id,libellespecialite,libellefiliere,abreviationspecialite FROM
         $periode = $campus->select($sql6);
         $salle = $campus->select($sql7);
         $profession = $campus->select($sql9);
-        
+        $group = $campus->select($sqlgr);
 
+        // die;
 
         $mform = $this->_form; // Don't forget the underscore!
 
@@ -142,6 +144,10 @@ $sql8 = "SELECT s.id,libellespecialite,libellefiliere,abreviationspecialite FROM
         foreach ($profession as $key => $prof)
         {
             $selectprofession[$key] = $prof->firstname."-".$prof->lastname;
+        }
+        foreach ($group as $key => $valgr)
+        {
+            $selectgroup[$key] = $valgr->numerogroup;
         }
         
         // var_dump( $campus->selectcampus($sql)); 
@@ -184,7 +190,21 @@ $sql8 = "SELECT s.id,libellespecialite,libellefiliere,abreviationspecialite FROM
         $mform->setDefault('idsalle', '');        //Default value
         $mform->addRule('idsalle', 'Choix une salle', 'required', null, 'client');
         $mform->addHelpButton('idsalle', 'Salle');
-    
+        
+        // var_dump(ChangerSchoolUser($USER->id));
+        // die;
+        $veriEta=$DB->get_records_sql('SELECT * FROM {campus} c,{typecampus} t WHERE c.idtypecampus=t.id AND c.id='.ChangerSchoolUser($USER->id).'');
+        foreach($veriEta as $valueEt){}
+        if($valueEt->libelletype=="universite")
+        {
+           $mform->addElement('select', 'idgroupapprenant', 'Groupe Apprenant', $selectgroup ); // Add elements to your form
+           $mform->setType('idgroupapprenant', PARAM_TEXT);                   //Set type of element
+           $mform->setDefault('idgroupapprenant', '');        //Default value
+           $mform->addRule('idgroupapprenant', 'Choix du gender', 'required', null, 'client');
+           $mform->addHelpButton('idgroupapprenant', 'specialite');
+          
+        }
+
         $mform->addElement('select', 'idprof', 'Enseignants', $selectprofession ); // Add elements to your form
         $mform->setType('idprof', PARAM_TEXT);                   //Set type of element
         $mform->setDefault('idprof', '');        //Default value
@@ -214,6 +234,7 @@ $sql8 = "SELECT s.id,libellespecialite,libellefiliere,abreviationspecialite FROM
         $mform->setDefault('nobresemaine', '');        //Default value
         $mform->addHelpButton('nobresemaine', 'heure');
 
+
         // $periode = ['une seance', 'sur un mois', 'sur deux mois', 'sur toute'];
 
         // $mform->addElement('select', 'idperiode', 'periode', $selectperiode ); // Add elements to your form
@@ -234,7 +255,16 @@ $sql8 = "SELECT s.id,libellespecialite,libellefiliere,abreviationspecialite FROM
         $mform->setType('timemodified', PARAM_INT);                   //Set type of element
         $mform->setDefault('timemodified', time());        //Default value
 
-       
+        $mform->addElement('hidden', 'name'); // Add elements to your form
+        $mform->setDefault('name', "Emploi de temps"); // Add elements to your form
+        
+        $mform->addElement('hidden', 'description'); // Add elements to your form
+        $mform->setDefault('description', '<p dir="ltr" style="text-align:left;">Permet de savoir aux apprenants de savoir quel jour ils ont cours</p>'); // Add elements to your form
+        
+        $mform->addElement('hidden', 'eventtype'); // Add elements to your form
+        $mform->setDefault('eventtype', "group"); // Add elements to your form
+
+
 
         $this->add_action_buttons();
 

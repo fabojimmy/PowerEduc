@@ -38,7 +38,7 @@ $context = context_system::instance();
 $PAGE->set_url(new moodle_url('/local/powerschool/configurerpaiement.php'));
 $PAGE->set_context(\context_system::instance());
 $PAGE->set_title(get_string('configurerpaie', 'local_powerschool'));
-$PAGE->set_heading(get_string('configurerpaie', 'local_powerschool'));
+// $PAGE->set_heading(get_string('configurerpaie', 'local_powerschool'));
 
 $PAGE->navbar->add(get_string('configurationminini', 'local_powerschool'),  new moodle_url('/local/powerschool/configurationmini.php'));
 $PAGE->navbar->add(get_string('configurerpaie', 'local_powerschool'), $managementurl);
@@ -198,6 +198,8 @@ $menumini = (object)[
     'logo' => new moodle_url('/local/powerschool/logo.php'),
     'message' => new moodle_url('/local/powerschool/message.php'),
     'groupe' => new moodle_url('/local/powerschool/groupsalle.php'),
+    'groupapprenant' => new moodle_url('/local/powerschool/groupapprenant.php'),
+    'ressource' => new moodle_url('/local/powerschool/ressource.php'),
 
 ];
 
@@ -207,6 +209,15 @@ $campuss=(object)[
     'confpaie'=>new moodle_url('/local/powerschool/configurerpaiement.php'),
 ];
 echo $OUTPUT->header();
+if($CFG->theme=="boost")
+{
+    echo'<div class="" style="margin-top:110px;"></div>';
+}
+elseif ($CFG->theme == 'adaptable') {
+    // Changer la couleur en bleu
+    echo'<div class="" style="margin-top:50px;"></div>';
+    
+}
 echo $OUTPUT->render_from_template('local_powerschool/navbarconfiguration', $menumini);
 echo'<div style="margin-top:45px;"></div>';
 

@@ -38,7 +38,7 @@ $context = context_system::instance();
 $PAGE->set_url(new moodle_url('/local/powerschool/absenceetu.php'));
 $PAGE->set_context(\context_system::instance());
 $PAGE->set_title(get_string('absenceetu', 'local_powerschool'));
-$PAGE->set_heading(get_string('absenceetu', 'local_powerschool'));
+// $PAGE->set_heading(get_string('absenceetu', 'local_powerschool'));
 
 // $PAGE->navbar->add(get_string('statistique', 'local_powerschool'),  new moodle_url('/local/powerschool/configurationmini.php'));
 $PAGE->navbar->add(get_string('absenceetu', 'local_powerschool'), $managementurl);
@@ -129,7 +129,7 @@ $templatecontext = (object)[
     'idca'=>$_GET["idca"],
     // 'salleele' => new moodle_url('/local/powerschool/salleele.php'),
     'salleeleretirer' => new moodle_url('/local/powerschool/absenceetu.php'),
-
+    'affec'=>get_string('absenceetu', 'local_powerschool')
  ];
 
 //  $menumini = (object)[

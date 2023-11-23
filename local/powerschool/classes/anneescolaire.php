@@ -38,18 +38,18 @@ class anneescolaire extends moodleform {
 
         $mform = $this->_form; // Don't forget the underscore!
 
-        $mform->addElement('header','Annee Scolaire', 'Annee Scolaire');
+        $mform->addElement('header',get_string('annee','local_powerschool'), get_string('annee','local_powerschool'));
       
         $mform->addElement('hidden', 'id');
         $mform->setType('id', PARAM_INT);
 
-        $mform->addElement('date_time_selector', 'datedebut', 'Année Scolaire de debut'); // Add elements to your form
+        $mform->addElement('date_time_selector', 'datedebut', get_string('anneedebut','local_powerschool')); // Add elements to your form
         $mform->setType('datedebut', PARAM_INT);                   //Set type of element
         $mform->setDefault('datedebut', '');        //Default value
         $mform->addRule('datedebut', 'Date de debut annee scolaire', 'required', null, 'client');
         $mform->addHelpButton('datedebut', 'date');
         
-        $mform->addElement('date_time_selector', 'datefin', 'Année Scolaire de fin'); // Add elements to your form
+        $mform->addElement('date_time_selector', 'datefin', get_string('anneefin','local_powerschool')); // Add elements to your form
         $mform->setType('datefin', PARAM_INT);                   //Set type of element
         $mform->setDefault('datefin', '');        //Default value
         $mform->addRule('datefin', 'Date de fin annee scolaire', 'required', null, 'client');

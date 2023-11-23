@@ -1657,6 +1657,7 @@ $menu = (object)[
     'activer' => $CFG->wwwroot.'/local/powerschool/activat.php',
     'activat' => get_string('activat', 'local_powerschool'),
     // 'gerer' => new moodle_url('/local/powerschool/gerer.php'),
+    'groupapprenant' => new moodle_url('/local/powerschool/groupapprenant.php'),
 
     //navbar
     'statistiquenavr'=>get_string('statistique', 'local_powerschool'),
@@ -1672,6 +1673,13 @@ $menu = (object)[
 echo $OUTPUT->header();
 
 // var_dump($CFG->wwwroot.'/local/powerschool/activat.php',new moodle_url($CFG->wwwwroot.'/local/powerschool/activat.php'));die;
+if($CFG->theme=="boost")
+{
+}
+elseif ($CFG->theme == 'adaptable') {
+    // Changer la couleur en bleu
+    echo"<p style='margin-top:-120px'><p>";
+}
 echo $OUTPUT->render_from_template('local_powerschool/navbar', $menu);
 
 // $mform->display();

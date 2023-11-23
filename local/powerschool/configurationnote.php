@@ -38,7 +38,7 @@ $context = context_system::instance();
 $PAGE->set_url(new moodle_url('/local/powerschool/configurationnote.php'));
 $PAGE->set_context(\context_system::instance());
 $PAGE->set_title(get_string('confignote', 'local_powerschool'));
-$PAGE->set_heading(get_string('confignote', 'local_powerschool'));
+// $PAGE->set_heading(get_string('confignote', 'local_powerschool'));
 
 $PAGE->navbar->add(get_string('configurationminini', 'local_powerschool'),  new moodle_url('/local/powerschool/configurationmini.php'));
 $PAGE->navbar->add(get_string('confignote', 'local_powerschool'), $managementurl);
@@ -98,23 +98,21 @@ $templatecontext = (object)[
     'programme' => new moodle_url('/local/powerschool/programme.php'),
 ];
 
-// $menu = (object)[
-//     'annee' => new moodle_url('/local/powerschool/anneescolaire.php'),
-//     'campus' => new moodle_url('/local/powerschool/campus.php'),
-//     'semestre' => new moodle_url('/local/powerschool/semestre.php'),
-//     'salle' => new moodle_url('/local/powerschool/salle.php'),
-//     'filiere' => new moodle_url('/local/powerschool/filiere.php'),
-//     'cycle' => new moodle_url('/local/powerschool/cycle.php'),
-//     'periode' => new moodle_url('/local/powerschool/periode.php'),
-//     'modepayement' => new moodle_url('/local/powerschool/modepayement.php'),
-//     'matiere' => new moodle_url('/local/powerschool/matiere.php'),
-//     'seance' => new moodle_url('/local/powerschool/seance.php'),
-//     'inscription' => new moodle_url('/local/powerschool/inscription.php'),
-//     'enseigner' => new moodle_url('/local/powerschool/enseigner.php'),
-//     'paiement' => new moodle_url('/local/powerschool/paiement.php'),
-//     'programme' => new moodle_url('/local/powerschool/programme.php'),
-// ];
+$menumini = (object)[
+    'affecterprof' => new moodle_url('/local/powerschool/affecterprof.php'),
+    'configurerpaie' => new moodle_url('/local/powerschool/configurerpaiement.php'),
+    'coursspecialite' => new moodle_url('/local/powerschool/coursspecialite.php'),
+    'salleele' => new moodle_url('/local/powerschool/salleele.php'),
+    'tranche' => new moodle_url('/local/powerschool/tranche.php'),
+    'confinot' => new moodle_url('/local/powerschool/configurationnote.php'),
+    'logo' => new moodle_url('/local/powerschool/logo.php'),
+    'message' => new moodle_url('/local/powerschool/message.php'),
+    'materiell' => new moodle_url('/local/powerschool/materiels.php'),
+    'groupe' => new moodle_url('/local/powerschool/groupsalle.php'),
+    'groupapprenant' => new moodle_url('/local/powerschool/groupapprenant.php'),
+    'ressource' => new moodle_url('/local/powerschool/ressource.php'),
 
+    ];
 
 echo $OUTPUT->header();
 

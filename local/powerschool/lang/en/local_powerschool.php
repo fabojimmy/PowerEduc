@@ -73,6 +73,44 @@ $string['local_powerschool:createfiliere'] = 'You don\'t have the capacity to cr
 $string['listeabsencejustifier'] = 'List of justified absences';
 
 
+//annee scolaire
+$string['annee'] = 'Annee Scolaire';
+$string['anneedebut'] = 'Année Scolaire de debut';
+$string['anneefin'] = 'Année Scolaire de fin';
+$string['anneemustacheaca'] = 'Année Academique';
+
+
+//Salle
+
+//batiment
+$string['batimenttitle'] = 'Batiment';
+$string['batimentlibelle'] = 'Libelle batiment';
+//batiment Notificacion
+$string['verifierexistebatimen'] = 'Ce batiment existe déjà pour cette établissement';
+$string['verifierexistebatimenet'] = 'Vous avez pas activer l\'établissement';
+
+//groupapprenant
+$string['groupapprenanttitle'] = 'Groupe Apprenant';
+$string['groupapprenantlibelle'] = 'Libelle du groupe';
+$string['capacitegroup'] = 'Capacite du groupe';
+$string['capacitegroup'] = 'Capacite du groupe';
+$string['idcoursspecialite'] = 'Specialité';
+//inscription
+
+//filiere
+
+//specialite
+
+//listeabsencejustifier
+
+//group
+
+
+//Notification generale
+$string['notificationedit'] = 'Modification effectué';
+$string['notificationinsert'] = 'Enregistrement effectué';
+$string['notificationdelete'] = 'Information Bien supprimée';
+
 
 
 

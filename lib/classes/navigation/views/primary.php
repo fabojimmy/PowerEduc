@@ -142,7 +142,7 @@ class primary extends view {
            if($role)
            {
 
-               $this->add("Profit de vos apprenants", new \moodle_url('/local/powerschool/gererparent.php'), self::TYPE_ROOTNODE, null, 'notes');
+               $this->add("Profit de vos apprenants", new \moodle_url('/local/powerschool/bulletinnotepersoparent.php'), self::TYPE_ROOTNODE, null, 'notes');
            }
         }
 

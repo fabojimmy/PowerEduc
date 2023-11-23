@@ -67,6 +67,12 @@ function  local_powerschool_extend_navigation (global_navigation $navigation  ){
 
                $nodefoo->add("Profit Apprenant", new \moodle_url('/local/powerschool/gerer.php'),null,null,'Professeur',null);
            }
+ $rolepare=$DB->get_records("role_assignments",array("userid"=>$USER->id,"roleid"=>11));
+           if($rolepare)
+           {
+
+               $nodefoo->add("Profit Apprenant", new \moodle_url('/local/powerschool/gererparent.php'),null,null,'Professeur',null);
+           }
 
 }
 ?>

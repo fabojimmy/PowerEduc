@@ -81,10 +81,22 @@ foreach ($courspe as $key => $value1) {
         // var_dump($value2->id);
     }
 }
+$veriEta=$DB->get_records_sql('SELECT * FROM {campus} c,{typecampus} t WHERE c.idtypecampus=t.id AND c.id='.$_GET["idca"].'');
+        foreach($veriEta as $valueEt){}
+if($valueEt->libelletype=="universite")
+ {
+    $sql_etuu="SELECT u.id as userid, u.firstname, u.lastname,note1,note2,note3 FROM {listenote} l LEFT JOIN {affecterprof} af ON l.idaffecterprof=af.id LEFT JOIN {courssemestre} couss ON couss.id=af.idcourssemestre
+        LEFT JOIN {coursspecialite} coursspe ON coursspe.id=couss.idcoursspecialite
+        LEFT JOIN {course} c ON c.id=coursspe.idcourses LEFT JOIN {user} u ON u.id=l.idetudiant WHERE af.id='".$value2->id."' AND af.quit=0 AND idgroupapprenant='".$_GET["idgr"]."'";
 
-$sql_etuu="SELECT u.id as userid, u.firstname, u.lastname,note1,note2,note3 FROM (((((({listenote} l LEFT JOIN {affecterprof} af ON l.idaffecterprof=af.id)LEFT JOIN {courssemestre} couss ON couss.id=af.idcourssemestre)
-            LEFT JOIN {coursspecialite} coursspe ON coursspe.id=couss.idcoursspecialite)
-            LEFT JOIN {course} c ON c.id=coursspe.idcourses) LEFT JOIN {user} u ON u.id=l.idetudiant) LEFT JOIN {salleele} saa ON saa.idetudiant=u.id) WHERE af.id='".$value2->id."' AND saa.idsalle='".$_GET["idsa"]."' AND af.quit=0 AND saa.etudiantpresen=1";
+ }
+ else
+ {
+    $sql_etuu="SELECT u.id as userid, u.firstname, u.lastname,note1,note2,note3 FROM (((((({listenote} l LEFT JOIN {affecterprof} af ON l.idaffecterprof=af.id)LEFT JOIN {courssemestre} couss ON couss.id=af.idcourssemestre)
+        LEFT JOIN {coursspecialite} coursspe ON coursspe.id=couss.idcoursspecialite)
+        LEFT JOIN {course} c ON c.id=coursspe.idcourses) LEFT JOIN {user} u ON u.id=l.idetudiant) LEFT JOIN {salleele} saa ON saa.idetudiant=u.id) WHERE af.id='".$value2->id."' AND saa.idsalle='".$_GET["idsa"]."' AND af.quit=0 AND saa.etudiantpresen=1";
+
+ }
 $etudiants = $DB->get_records_sql($sql_etuu);
 // var_dump($etudiants);die;
 
@@ -116,7 +128,7 @@ $templatecontext = (object)[
     'etudiants'=>array_values($etudiants),
     'ajoute'=> new moodle_url('/local/powerschool/inscription.php'),
     'modifiernote'=> new moodle_url('/local/powerschool/entrernote.php'),
-    'ajou'=> new moodle_url('/local/powerschool/classes/entrernote.php'),
+    'ajout'=> new moodle_url('/local/powerschool/classes/entrernote.php'),
     'coursid'=> new moodle_url('/local/powerschool/entrernote.php'),
     'idsp'=>$_GET['idsp'],
     'idca'=>$_GET['idca'],
@@ -129,6 +141,7 @@ $templatecontext = (object)[
     'note'=>$_GET["note"],
     'idbu'=>$_GET["idbu"],
     'idsa'=>$_GET["idsa"],
+    'idgr'=>$_GET["idgr"],
     // 'imprimer' => new moodle_url('/local/powerschool/imp.php'),
 ];
 

@@ -107,6 +107,10 @@ class event_form extends moodleform {
         $mform->addElement('text', 'name', get_string('eventname','calendar'), 'size="50"');
         $mform->addRule('name', get_string('required'), 'required');
         $mform->setType('name', PARAM_TEXT);
+       
+        // $mform->addElement('text', 'name', get_string('dd','calendar'), 'size="50"');
+        // $mform->addRule('name', get_string('required'), 'required');
+        // $mform->setType('name', PARAM_TEXT);
 
         $mform->addElement('editor', 'description', get_string('eventdescription','calendar'), null, $this->_customdata->event->editoroptions);
         $mform->setType('description', PARAM_RAW);

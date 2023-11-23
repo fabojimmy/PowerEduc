@@ -107,8 +107,17 @@ echo $OUTPUT->header();
 
 if(has_capability("local/powerschool:configurationminimal",context_system::instance(),$USER->id))
 {
+     if($CFG->theme=="boost")
+        {
+            echo'<div class="" style="margin-top:115px;"></div>';
+        }
+        elseif ($CFG->theme == 'adaptable') {
+            // Changer la couleur en bleu
+            echo'<div class="" style="margin-top:50px;"></div>';
+            
+        }
+        echo $OUTPUT->render_from_template('local_powerschool/Configurationmini', $templatecontext);
 
-    echo $OUTPUT->render_from_template('local_powerschool/Configurationmini', $templatecontext);
 }
 else{
     \core\notification::add("Vous avez pas autorisation", \core\output\notification::NOTIFY_ERROR);

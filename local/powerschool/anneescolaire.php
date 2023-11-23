@@ -135,6 +135,7 @@ foreach($annee as $key){
         'annee' => array_values($annee),
         // 'datedebut'=> $annees['datedebut'],
         // 'datefins'=> $datefin,
+        'libelleanne'=>get_string('anneemustacheaca','local_powerschool'),
         'anneeedit' => new moodle_url('/local/powerschool/anneescolaireedit.php'),
         'anneesupp'=> new moodle_url('/local/powerschool/anneescolaire.php'),
         'semestre' => new moodle_url('/local/powerschool/semestre.php'),

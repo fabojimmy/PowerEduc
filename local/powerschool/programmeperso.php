@@ -88,7 +88,7 @@ $samedi=$DB->get_records_sql($sqlsad);
 
 $progr='
 <div class="table card mt-2 mb-2">
-<table class="table">
+<table class="table card table-bordered">
 <tr>
 <th>Lundi</th>
 <th>Mardi</th>
@@ -98,48 +98,54 @@ $progr='
 <th>Samedi</th>
 </tr>
 <tr>
- <td >';
- foreach($lundi as $key => $valuel)
- {
-    $progr.='<div style="border-top:1px solid black;margin-top:20px;">'.$valuel->fullname.'  '.$valuel->heuredebutcours.'h-'.$valuel->heurefincours.'h</div>';
- }
- $progr.='</td>';
- $progr.='<td>';
-  foreach($mardi as $key => $valuel)
- {
-    $progr.='<div style="border-top:1px solid black;margin-top:20px;">'.$valuel->fullname.'  '.$valuel->heuredebutcours.'h-'.$valuel->heurefincours.'h</div>';
- }
- $progr.='</td>';
-        
- $progr.='<td>';
-  foreach($mercredi as $key => $valuel)
- {
-    $progr.='<div style="border-top:1px solid black;margin-top:20px;">'.$valuel->fullname.'  '.$valuel->heuredebutcours.'h-'.$valuel->heurefincours.'h</div>';
- }
- $progr.='</td>';
-        
- $progr.='<td>';
-  foreach($jeudi as $key => $valuel)
- {
-    $progr.='<div style="border-top:1px solid black;margin-top:20px;">'.$valuel->fullname.'  '.$valuel->heuredebutcours.'h-'.$valuel->heurefincours.'h</div>';
- }
- $progr.='</td>';
-        
- $progr.='<td>';
-  foreach($vendredi as $key => $valuel)
- {
-    $progr.='<div style="border-top:1px solid black;margin-top:20px;">'.$valuel->fullname.'  '.$valuel->heuredebutcours.'h-'.$valuel->heurefincours.'h</div>';
- }
- $progr.='</td>';
-        
- $progr.='<td>';
-  foreach($samedi as $key => $valuel)
- {
-    $progr.='<div style="border-top:1px solid black;margin-top:20px;">'.$valuel->fullname.'  '.$valuel->heuredebutcours.'h-'.$valuel->heurefincours.'h</div>';
- }
- $progr.='</td>';
-        
-       $progr.='</tr>
+<td >';
+foreach($lundi as $key => $valuel)
+{
+   $progr.='<div class="my-3 col-12 border-top" style="width:100%;"> <div  style="font-weight:650">Cours :</div> <em class="badge badge-info mx-4" style="font-size:14px ">'.$valuel->fullname.'</em> 
+   <br> <div style="font-weight:650">Heure:</div> <em class="badge badge-warning mx-4" style="font-size:14px">'.$valuel->heuredebutcours.'h-'.$valuel->heurefincours.'h </em><br> <div style="font-weight:650"> Salle:</div> <em class="badge badge-info mx-4" style="font-size:14px">'.$valuel->numerosalle.'</em></div>';
+}
+$progr.='</td>';
+$progr.='<td>';
+ foreach($mardi as $key => $valuel)
+{
+  $progr.='<div class="my-3 col-12 border-top" style="width:100%;"> <div style="font-weight:650">Cours :</div> <em class="badge badge-info mx-4" style="font-size:14px">'.$valuel->fullname.'</em> 
+  <br> <div style="font-weight:650">Heure:</div> <em class="badge badge-warning mx-4" style="font-size:14px">'.$valuel->heuredebutcours.'h-'.$valuel->heurefincours.'h </em><br> <div style="font-weight:650"> Salle:</div> <em class="badge badge-info mx-4" style="font-size:14px">'.$valuel->numerosalle.'</em></div>';
+}
+$progr.='</td>';
+       
+$progr.='<td>';
+ foreach($mercredi as $key => $valuel)
+{
+  $progr.='<div class="my-3 col-12 border-top" style="width:100%;"> <div style="font-weight:650">Cours :</div> <em class="badge badge-info mx-4" style="font-size:14px">'.$valuel->fullname.'</em> 
+  <br> <div style="font-weight:650">Heure:</div> <em class="badge badge-warning mx-4" style="font-size:14px">'.$valuel->heuredebutcours.'h-'.$valuel->heurefincours.'h </em><br> <div style="font-weight:650"> Salle:</div> <em class="badge badge-info mx-4" style="font-size:14px">'.$valuel->numerosalle.'</em></div>';
+}
+$progr.='</td>';
+       
+$progr.='<td>';
+ foreach($jeudi as $key => $valuel)
+{
+  $progr.='<div class="my-3 col-12 border-top" style="width:100%;"> <div style="font-weight:650">Cours :</div> <em class="badge badge-info mx-4" style="font-size:14px">'.$valuel->fullname.'</em> 
+   <br> <div style="font-weight:650">Heure:</div> <em class="badge badge-warning mx-4" style="font-size:14px">'.$valuel->heuredebutcours.'h-'.$valuel->heurefincours.'h </em><br> <div style="font-weight:650"> Salle:</div> <em class="badge badge-info mx-4" style="font-size:14px">'.$valuel->numerosalle.'</em></div>';
+}
+$progr.='</td>';
+       
+$progr.='<td>';
+ foreach($vendredi as $key => $valuel)
+{
+  $progr.='<div class="my-3 col-12 border-top" style="width:100%;"> <div style="font-weight:650">Cours :</div> <em class="badge badge-info mx-4" style="font-size:14px">'.$valuel->fullname.'</em> 
+  <br> <div style="font-weight:650">Heure:</div> <em class="badge badge-warning mx-4" style="font-size:14px">'.$valuel->heuredebutcours.'h-'.$valuel->heurefincours.'h </em><br> <div style="font-weight:650"> Salle:</div> <em class="badge badge-info mx-4" style="font-size:14px">'.$valuel->numerosalle.'</em></div>';
+}
+$progr.='</td>';
+       
+$progr.='<td>';
+ foreach($samedi as $key => $valuel)
+{
+  $progr.='<div class="my-3 col-12 border-top" style="width:100%;"> <div style="font-weight:650">Cours :</div> <em class="badge badge-info mx-4" style="font-size:14px">'.$valuel->fullname.'</em> 
+  <br> <div style="font-weight:650">Heure:</div> <em class="badge badge-warning mx-4" style="font-size:14px">'.$valuel->heuredebutcours.'h-'.$valuel->heurefincours.'h </em><br> <div style="font-weight:650"> Salle:</div> <em class="badge badge-info mx-4" style="font-size:14px">'.$valuel->numerosalle.'</em></div>';
+}
+$progr.='</td>';
+       
+      $progr.='</tr>
    </table>
 </div>';
 $menu = (object)[

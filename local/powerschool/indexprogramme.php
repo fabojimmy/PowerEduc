@@ -134,47 +134,47 @@ $menu = (object)[
     'programme' => new moodle_url('/local/powerschool/programme.php'),
 ];
 
-$sqllu = "SELECT fullname,DATE_FORMAT(FROM_UNIXTIME(p.datecours),'%D %b %Y') as datec,heuredebutcours,heurefincours FROM {course} c, {semestre} s,{specialite} sp,{cycle} cy,{salle} sa, {programme} p
+$sqllu = "SELECT fullname,DATE_FORMAT(FROM_UNIXTIME(p.datecours),'%D %b %Y') as datec,heuredebutcours,heurefincours,numerosalle FROM {course} c, {semestre} s,{specialite} sp,{cycle} cy,{salle} sa, {programme} p
 WHERE p.idcourses = c.id AND p.idsemestre =s.id AND p.idspecialite = sp.id
 AND p.idcycle = cy.id AND idcycle='".$_GET["idcy"]."' AND idspecialite='".$_GET["idsp"]."' AND sa.idcampus='".$_GET["idca"]."'AND idsemestre='".$_GET["semestre"]."'
 AND sa.id=p.idsalle AND p.idsalle='".$_GET["idsa"]."' AND DAYOFWEEK(FROM_UNIXTIME(p.datecours))=2";
 
-$lundi=$DB->get_records_sql($sqllu);
-$sqlma = "SELECT fullname,DATE_FORMAT(FROM_UNIXTIME(p.datecours),'%D %b %Y') as datec,heuredebutcours,heurefincours FROM {course} c, {semestre} s,{specialite} sp,{cycle} cy,{salle} sa, {programme} p
+$lundi=$DB->get_recordset_sql($sqllu);
+$sqlma = "SELECT fullname,DATE_FORMAT(FROM_UNIXTIME(p.datecours),'%D %b %Y') as datec,heuredebutcours,heurefincours,numerosalle FROM {course} c, {semestre} s,{specialite} sp,{cycle} cy,{salle} sa, {programme} p
 WHERE p.idcourses = c.id AND p.idsemestre =s.id AND p.idspecialite = sp.id
 AND p.idcycle = cy.id AND idcycle='".$_GET["idcy"]."' AND idspecialite='".$_GET["idsp"]."' AND sa.idcampus='".$_GET["idca"]."'AND idsemestre='".$_GET["semestre"]."'
 AND sa.id=p.idsalle AND p.idsalle='".$_GET["idsa"]."' AND DAYOFWEEK(FROM_UNIXTIME(p.datecours))=3";
 
-$mardi=$DB->get_records_sql($sqlma);
-$sqlme = "SELECT fullname,DATE_FORMAT(FROM_UNIXTIME(p.datecours),'%D %b %Y') as datec,heuredebutcours,heurefincours FROM {course} c, {semestre} s,{specialite} sp,{cycle} cy,{salle} sa, {programme} p
+$mardi=$DB->get_recordset_sql($sqlma);
+$sqlme = "SELECT fullname,DATE_FORMAT(FROM_UNIXTIME(p.datecours),'%D %b %Y') as datec,heuredebutcours,heurefincours,numerosalle FROM {course} c, {semestre} s,{specialite} sp,{cycle} cy,{salle} sa, {programme} p
 WHERE p.idcourses = c.id AND p.idsemestre =s.id AND p.idspecialite = sp.id
 AND p.idcycle = cy.id AND idcycle='".$_GET["idcy"]."' AND idspecialite='".$_GET["idsp"]."' AND sa.idcampus='".$_GET["idca"]."'AND idsemestre='".$_GET["semestre"]."'
 AND sa.id=p.idsalle AND p.idsalle='".$_GET["idsa"]."' AND DAYOFWEEK(FROM_UNIXTIME(p.datecours))=4";
 
-$mercredi=$DB->get_records_sql($sqlme);
-$sqljeu = "SELECT fullname,DATE_FORMAT(FROM_UNIXTIME(p.datecours),'%D %b %Y') as datec,heuredebutcours,heurefincours FROM {course} c, {semestre} s,{specialite} sp,{cycle} cy,{salle} sa, {programme} p
+$mercredi=$DB->get_recordset_sql($sqlme);
+$sqljeu = "SELECT fullname,DATE_FORMAT(FROM_UNIXTIME(p.datecours),'%D %b %Y') as datec,heuredebutcours,heurefincours,numerosalle FROM {course} c, {semestre} s,{specialite} sp,{cycle} cy,{salle} sa, {programme} p
 WHERE p.idcourses = c.id AND p.idsemestre =s.id AND p.idspecialite = sp.id
 AND p.idcycle = cy.id AND idcycle='".$_GET["idcy"]."' AND idspecialite='".$_GET["idsp"]."' AND sa.idcampus='".$_GET["idca"]."'AND idsemestre='".$_GET["semestre"]."'
 AND sa.id=p.idsalle AND p.idsalle='".$_GET["idsa"]."' AND DAYOFWEEK(FROM_UNIXTIME(p.datecours))=5";
 
-$jeudi=$DB->get_records_sql($sqljeu);
-$sqlven = "SELECT fullname,DATE_FORMAT(FROM_UNIXTIME(p.datecours),'%D %b %Y') as datec,heuredebutcours,heurefincours FROM {course} c, {semestre} s,{specialite} sp,{cycle} cy,{salle} sa, {programme} p
+$jeudi=$DB->get_recordset_sql($sqljeu);
+$sqlven = "SELECT fullname,DATE_FORMAT(FROM_UNIXTIME(p.datecours),'%D %b %Y') as datec,heuredebutcours,heurefincours,numerosalle FROM {course} c, {semestre} s,{specialite} sp,{cycle} cy,{salle} sa, {programme} p
 WHERE p.idcourses = c.id AND p.idsemestre =s.id AND p.idspecialite = sp.id
 AND p.idcycle = cy.id AND idcycle='".$_GET["idcy"]."' AND idspecialite='".$_GET["idsp"]."' AND sa.idcampus='".$_GET["idca"]."'AND idsemestre='".$_GET["semestre"]."'
 AND sa.id=p.idsalle AND p.idsalle='".$_GET["idsa"]."' AND DAYOFWEEK(FROM_UNIXTIME(p.datecours))=6";
 
-$vendredi=$DB->get_records_sql($sqlven);
-$sqlsad = "SELECT fullname,DATE_FORMAT(FROM_UNIXTIME(p.datecours),'%D %b %Y') as datec,heuredebutcours,heurefincours FROM {course} c, {semestre} s,{specialite} sp,{cycle} cy,{salle} sa, {programme} p
+$vendredi=$DB->get_recordset_sql($sqlven);
+$sqlsad = "SELECT fullname,DATE_FORMAT(FROM_UNIXTIME(p.datecours),'%D %b %Y') as datec,heuredebutcours,heurefincours,numerosalle FROM {course} c, {semestre} s,{specialite} sp,{cycle} cy,{salle} sa, {programme} p
 WHERE p.idcourses = c.id AND p.idsemestre =s.id AND p.idspecialite = sp.id
 AND p.idcycle = cy.id AND idcycle='".$_GET["idcy"]."' AND idspecialite='".$_GET["idsp"]."' AND sa.idcampus='".$_GET["idca"]."'AND idsemestre='".$_GET["semestre"]."'
 AND sa.id=p.idsalle AND p.idsalle='".$_GET["idsa"]."' AND DAYOFWEEK(FROM_UNIXTIME(p.datecours))=7";
 
-$samedi=$DB->get_records_sql($sqlsad);
+$samedi=$DB->get_recordset_sql($sqlsad);
 // var_dump($oo);
 // die;
 $progr='
-<div class="table card mt-2 mb-2">
-<table class="table">
+<div class="mt-2 mb-2">
+<table class="table card table-bordered">
 <tr>
 <th>Lundi</th>
 <th>Mardi</th>
@@ -187,41 +187,47 @@ $progr='
  <td >';
  foreach($lundi as $key => $valuel)
  {
-    $progr.='<div style="border-top:1px solid black;margin-top:20px;">'.$valuel->fullname.'  '.$valuel->heuredebutcours.'h-'.$valuel->heurefincours.'h</div>';
+    $progr.='<div class="my-3 col-12 border-top" style="width:100%;"> <div  style="font-weight:650">Cours :</div> <em class="badge badge-info mx-4" style="font-size:14px ">'.$valuel->fullname.'</em> 
+    <br> <div style="font-weight:650">Heure:</div> <em class="badge badge-warning mx-4" style="font-size:14px">'.$valuel->heuredebutcours.'h-'.$valuel->heurefincours.'h </em><br> <div style="font-weight:650"> Salle:</div> <em class="badge badge-info mx-4" style="font-size:14px">'.$valuel->numerosalle.'</em></div>';
  }
  $progr.='</td>';
  $progr.='<td>';
   foreach($mardi as $key => $valuel)
  {
-    $progr.='<div style="border-top:1px solid black;margin-top:20px;">'.$valuel->fullname.'  '.$valuel->heuredebutcours.'h-'.$valuel->heurefincours.'h</div>';
+   $progr.='<div class="my-3 col-12 border-top" style="width:100%;"> <div style="font-weight:650">Cours :</div> <em class="badge badge-info mx-4" style="font-size:14px">'.$valuel->fullname.'</em> 
+   <br> <div style="font-weight:650">Heure:</div> <em class="badge badge-warning mx-4" style="font-size:14px">'.$valuel->heuredebutcours.'h-'.$valuel->heurefincours.'h </em><br> <div style="font-weight:650"> Salle:</div> <em class="badge badge-info mx-4" style="font-size:14px">'.$valuel->numerosalle.'</em></div>';
  }
  $progr.='</td>';
         
  $progr.='<td>';
   foreach($mercredi as $key => $valuel)
  {
-    $progr.='<div style="border-top:1px solid black;margin-top:20px;">'.$valuel->fullname.'  '.$valuel->heuredebutcours.'h-'.$valuel->heurefincours.'h</div>';
+   $progr.='<div class="my-3 col-12 border-top" style="width:100%;"> <div style="font-weight:650">Cours :</div> <em class="badge badge-info mx-4" style="font-size:14px">'.$valuel->fullname.'</em> 
+   <br> <div style="font-weight:650">Heure:</div> <em class="badge badge-warning mx-4" style="font-size:14px">'.$valuel->heuredebutcours.'h-'.$valuel->heurefincours.'h </em><br> <div style="font-weight:650"> Salle:</div> <em class="badge badge-info mx-4" style="font-size:14px">'.$valuel->numerosalle.'</em></div>';
  }
  $progr.='</td>';
         
  $progr.='<td>';
   foreach($jeudi as $key => $valuel)
  {
-    $progr.='<div style="border-top:1px solid black;margin-top:20px;">'.$valuel->fullname.'  '.$valuel->heuredebutcours.'h-'.$valuel->heurefincours.'h</div>';
+   $progr.='<div class="my-3 col-12 border-top" style="width:100%;"> <div style="font-weight:650">Cours :</div> <em class="badge badge-info mx-4" style="font-size:14px">'.$valuel->fullname.'</em> 
+    <br> <div style="font-weight:650">Heure:</div> <em class="badge badge-warning mx-4" style="font-size:14px">'.$valuel->heuredebutcours.'h-'.$valuel->heurefincours.'h </em><br> <div style="font-weight:650"> Salle:</div> <em class="badge badge-info mx-4" style="font-size:14px">'.$valuel->numerosalle.'</em></div>';
  }
  $progr.='</td>';
         
  $progr.='<td>';
   foreach($vendredi as $key => $valuel)
  {
-    $progr.='<div style="border-top:1px solid black;margin-top:20px;">'.$valuel->fullname.'  '.$valuel->heuredebutcours.'h-'.$valuel->heurefincours.'h</div>';
+   $progr.='<div class="my-3 col-12 border-top" style="width:100%;"> <div style="font-weight:650">Cours :</div> <em class="badge badge-info mx-4" style="font-size:14px">'.$valuel->fullname.'</em> 
+   <br> <div style="font-weight:650">Heure:</div> <em class="badge badge-warning mx-4" style="font-size:14px">'.$valuel->heuredebutcours.'h-'.$valuel->heurefincours.'h </em><br> <div style="font-weight:650"> Salle:</div> <em class="badge badge-info mx-4" style="font-size:14px">'.$valuel->numerosalle.'</em></div>';
  }
  $progr.='</td>';
         
  $progr.='<td>';
   foreach($samedi as $key => $valuel)
  {
-    $progr.='<div style="border-top:1px solid black;margin-top:20px;">'.$valuel->fullname.'  '.$valuel->heuredebutcours.'h-'.$valuel->heurefincours.'h</div>';
+   $progr.='<div class="my-3 col-12 border-top" style="width:100%;"> <div style="font-weight:650">Cours :</div> <em class="badge badge-info mx-4" style="font-size:14px">'.$valuel->fullname.'</em> 
+   <br> <div style="font-weight:650">Heure:</div> <em class="badge badge-warning mx-4" style="font-size:14px">'.$valuel->heuredebutcours.'h-'.$valuel->heurefincours.'h </em><br> <div style="font-weight:650"> Salle:</div> <em class="badge badge-info mx-4" style="font-size:14px">'.$valuel->numerosalle.'</em></div>';
  }
  $progr.='</td>';
         
