@@ -51,6 +51,7 @@ function  local_powerschool_extend_navigation (global_navigation $navigation  ){
          $nodefoo->add("Notes", new \moodle_url('/local/powerschool/note.php'),null,null,'Professeur',null);
          $nodefoo->add("Gérer les absences", new \moodle_url('/local/powerschool/absenceetu.php'),null,null,'Professeur',null);
          $nodefoo->add("Liste des apprenants absences", new \moodle_url('/local/powerschool/listeetuabsenprof.php'),null,null,'Professeur',null);
+         $nodefoo->add("Emploi de temps", new \moodle_url('/local/powerschool/programmeprof.php'),null,null,'Professeur',null);
        }
        if(has_capability("local/powerschool:reglageetablissement",context_system::instance(),$USER->id)&&!is_siteadmin()){
         $nodefoo->add("Réglages d'etablissement", new \moodle_url('/local/powerschool/statistique.php'),null, null, 'notes',null);
@@ -71,7 +72,7 @@ function  local_powerschool_extend_navigation (global_navigation $navigation  ){
            if($rolepare)
            {
 
-               $nodefoo->add("Profit Apprenant", new \moodle_url('/local/powerschool/gererparent.php'),null,null,'Professeur',null);
+               $nodefoo->add("Profit Apprenant", new \moodle_url('/local/powerschool/bulletinnotepersoparent.php'),null,null,'Professeur',null);
            }
 
 }

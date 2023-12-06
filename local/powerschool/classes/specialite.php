@@ -50,14 +50,14 @@ class specialite extends moodleform {
         {
 
         }
-        $sqlcampcat = "SELECT * FROM {campus} WHERE id='".$vaaalca->id."'";
+        $sqlcampcat = "SELECT * FROM {campus} WHERE id='".$vaaalca->idcampus."'";
         $campcat=$DB->get_records_sql($sqlcampcat);
         foreach($campcat as $key =>$vlca)
         {
 
         }
         $categcampus=$DB->get_records("course_categories",array("name"=>$vlca->libellecampus,"depth"=>1));
-        $categfiliere=$DB->get_records("course_categories",array("name"=>$filcat->libellespecialite,"depth"=>2));
+        $categfiliere=$DB->get_records("course_categories",array("name"=>$vaaalca->libellefiliere,"depth"=>2));
         $categspecialite=$DB->get_records("course_categories",array("name"=>$vaspelca->libellespecialite,"depth"=>3));
         foreach($categcampus as $key =>$camps)
         {}
@@ -219,7 +219,7 @@ class specialite extends moodleform {
 
         }
         $categcampus=$DB->get_records("course_categories",array("name"=>$vlca->libellecampus,"depth"=>1));
-        $categfiliere=$DB->get_records("course_categories",array("name"=>$filcat->libellespecialite,"depth"=>2));
+        $categfiliere=$DB->get_records("course_categories",array("name"=>$vaaalca->libellesfiliere,"depth"=>2));
         $categspecialite=$DB->get_records("course_categories",array("name"=>$vaspelca->libellespecialite,"depth"=>3));
         foreach($categcampus as $key =>$camps)
         {}

@@ -322,29 +322,47 @@ foreach ($affecter as $record) {
 $veriEtaColLy=true;
 $veriEtaUver=true;
 $veriEtaUverver=$DB->get_records_sql('SELECT * FROM {campus} c,{typecampus} t WHERE c.idtypecampus=t.id AND libelletype="universite" AND c.id='.ChangerSchoolUser($USER->id).'');
-$veriEtaColLyver=$DB->get_records_sql('SELECT * FROM {campus} c,{typecampus} t WHERE c.idtypecampus=t.id AND libelletype="college" AND c.id='.ChangerSchoolUser($USER->id).'');
+// $veriEtaColLyver=$DB->get_records_sql('SELECT * FROM {campus} c,{typecampus} t WHERE c.idtypecampus=t.id AND libelletype="college" AND c.id='.ChangerSchoolUser($USER->id).'');
 
 $sqlgr = "SELECT g.id,s.libellespecialite,c.libellecycle,g.numerogroup,capacitegroup FROM {specialite} s,{cycle} c,{filiere} f,{groupapprenant} g WHERE s.id=g.idspecialite AND c.id=g.idcycle AND f.id=s.idfiliere AND f.idcampus='".ChangerSchoolUser($USER->id)."'";
 $groupe=$DB->get_records_sql($sqlgr);
 // var_dump($veriEtaColLyver);die;
-if($veriEtaColLyver==null)
-{
-    $veriEtaColLy=true;
-    // die;
-}
+
  if($veriEtaUverver)
 {
-    $veriEtaUver=true;
+   $sallegro='     <div class="col-2 labelsta">
+   <label> Groupe</label>
+   <select class="form-control salle" name="group">';
+      foreach($group as $key => $value)
+      {
+
+        $sallegro.=  '<option value='.$value->id.'>'.$value->numerogroup.'</option>';
+      }
+      
+   $sallegro.='</select>
+</div>';
+}
+else
+{
+    $sallegro='<div class="col-2 labelsta">
+    <label> Salle</label>
+    <select class="form-control salle" name="salle">';
+       foreach($salle as $key){
+
+           $sallegro.='<option value='.$key->id.'>'.$key->numerosalle.'</option>';
+       }
+       
+    $sallegro.='</select>
+</div>';
 }
        
 $templatecontext = (object)[
     'affecterprof' => array_values($affecterprof),
     'professeur' => array_values($professeur),
     'groupe' => array_values($groupe),
-    'veriEtaColLy' => $veriEtaColLyver,
-    'veriEtaUver' => $veriEtaUverver,
-    'specialite' => array_values($specialite),
     'sallee' => array_values($salle),
+    'sallegro'=>$sallegro,
+    'specialite' => array_values($specialite),
     'affecterprofedit' => new moodle_url('/local/powerschool/affecterprofedit.php'),
     'affecterprofsupp'=> new moodle_url('/local/powerschool/affecterprof.php'),
     'salle' => new moodle_url('/local/powerschool/salle.php'),

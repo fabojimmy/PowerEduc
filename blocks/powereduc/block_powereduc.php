@@ -3,6 +3,7 @@
     function init(){
         global $CFG;
         $this->title=get_string('powereduc','block_powereduc');
+        $this->get_context();
     }
     function has_config(){
         return true;

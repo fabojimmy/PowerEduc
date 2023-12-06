@@ -127,7 +127,7 @@ if ($mform->is_cancelled()) {
         }
         $coursecat->update($data, $mform->get_description_editor_options());
     } else {
-        // var_dump($_POST["filiere"]);die;
+        // var_dump($data->parent);die;
         $category = core_course_category::create($data, $mform->get_description_editor_options());
     }
     if ($_POST["campus"]!=null) {

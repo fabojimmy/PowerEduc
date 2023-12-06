@@ -208,6 +208,13 @@ $templatecontext = (object)[
 
 echo $OUTPUT->header();
 
+if($CFG->theme=="boost")
+{
+}
+elseif ($CFG->theme == 'adaptable') {
+    // Changer la couleur en bleu
+    echo"<p style='margin-top:-100px'><p>";
+}
 
 // echo $OUTPUT->render_from_template('local_powerschool/navbar', $menu);
 // $mform->display();

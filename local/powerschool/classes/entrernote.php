@@ -148,6 +148,9 @@ if($_GET["notetest"]=="test"&&$_GET["idbu"]&&$_GET["id"])
     $itest=0;
     $itest1=0;
 
+    // var_dump($notes,$notescc);
+    // die;
+
     foreach ($notes as $userId => $note) {
                 // var_dump($note,$userId);
                 // Enregistrer la note dans la base de données ou effectuer toute autre opération nécessaire
@@ -207,12 +210,13 @@ $vericam=$DB->get_records_sql("SELECT * FROM {campus} c,{typecampus} t WHERE c.i
                                 }
                                 
                             }
-                    }else
-                    {
-                        \core\notification::add('Vos ne pouvez pas remplir les données dans la case controle continu', \core\output\notification::NOTIFY_ERROR);
-
-                        redirect($CFG->wwwroot . '/local/powerschool/entrernote.php?idbu='.$_GET["idbu"].'&idsa='.$_GET["idsa"].'&idcour='.$_GET["idcour"].'&idsp='.$_GET["idsp"].'&idcy='.$_GET["idcy"].'&idsem='.$_GET["idsem"].'&idca='.$_GET["idca"].'&idan='.$_GET["idan"].'&libelcou='.$_GET["libelcou"].'');                        
                     }
+                    // else
+                    // {
+                    //     // \core\notification::add('Vos ne pouvez pas remplir les données dans la case controle continu', \core\output\notification::NOTIFY_ERROR);
+
+                    //     redirect($CFG->wwwroot . '/local/powerschool/entrernote.php?idbu='.$_GET["idbu"].'&idsa='.$_GET["idsa"].'&idcour='.$_GET["idcour"].'&idsp='.$_GET["idsp"].'&idcy='.$_GET["idcy"].'&idsem='.$_GET["idsem"].'&idca='.$_GET["idca"].'&idan='.$_GET["idan"].'&libelcou='.$_GET["libelcou"].'');                        
+                    // }
    
     
                 // if($itest==0)

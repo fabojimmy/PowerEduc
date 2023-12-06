@@ -101,7 +101,7 @@ if($_GET['id']) {
 }
 
 
-$sql = "SELECT s.id,s.idcampus,numerosalle,libellecampus,capacitesalle,villecampus FROM {campus} c, {salle} s WHERE s.idcampus=c.id AND s.idcampus ='".ChangerSchoolUser($USER->id)."'";
+$sql = "SELECT s.id,s.idcampus,numerosalle,libellecampus,capacitesalle,villecampus,numerobatiment FROM {campus} c, {salle} s ,{batiment} b WHERE b.id=s.idbatiment AND s.idcampus=c.id AND s.idcampus ='".ChangerSchoolUser($USER->id)."'";
 
 
 // $salle = $DB->get_records('salle', null, 'id');

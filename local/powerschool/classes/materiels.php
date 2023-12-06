@@ -66,15 +66,15 @@ class materiels extends moodleform {
         $mform->addRule('libellemate', 'Enregistrer le libellé du materiel', 'required', null, 'client');
         $mform->addHelpButton('libellemate', 'specialite');
      
-        $mform->addElement('text', 'quantite', 'Quantité'); // Add elements to your form
-        $mform->setType('quantite', PARAM_TEXT);                   //Set type of element
-        $mform->addRule('quantite', 'Enregistrer la quantité', 'required', null, 'client');
-        $mform->addHelpButton('quantite', 'specialite');
+        // $mform->addElement('text', 'quantite', 'Quantité'); // Add elements to your form
+        // $mform->setType('quantite', PARAM_TEXT);                   //Set type of element
+        // $mform->addRule('quantite', 'Enregistrer la quantité', 'required', null, 'client');
+        // $mform->addHelpButton('quantite', 'specialite');
         
-        $mform->addElement('text', 'prixuni', 'Prix Unitaire'); // Add elements to your form
-        $mform->setType('prixuni', PARAM_TEXT);                   //Set type of element
-        $mform->addRule('prixuni', 'Enregistrer le prix unitaire', 'required', null, 'client');
-        $mform->addHelpButton('prixuni', 'specialite');
+        // $mform->addElement('text', 'prixuni', 'Prix Unitaire'); // Add elements to your form
+        // $mform->setType('prixuni', PARAM_TEXT);                   //Set type of element
+        // $mform->addRule('prixuni', 'Enregistrer le prix unitaire', 'required', null, 'client');
+        // $mform->addHelpButton('prixuni', 'specialite');
         
         // $mform->addElement('text', 'prixuni', 'Quantité'); // Add elements to your form
         // $mform->setType('prixuni', PARAM_TEXT);                   //Set type of element

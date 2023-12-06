@@ -55,12 +55,17 @@ if ($mform->is_cancelled()) {
 
     redirect($CFG->wwwroot . '/local/powerschool/statistique.php', 'annuler');
 
-} else if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST["idsemestre"])) {
+} else if ($_SERVER['REQUEST_METHOD'] === 'POST' ) {
 
+    // if ($mform->isDisabled('idsemestre')) {
+    //     // L'élément 'idsemestre' est désactivé
+    //     // Faites ce que vous avez à faire lorsque l'élément est désactivé
+    //     die;
+    // }
 
 $recordtoinsert = new stdClass();
 
-// var_dump($_POST["heuredebutcours"]);die;
+// var_dump($_POST["idsemestre"]);die;
 // $recordtoinsert = $fromform;
 
     // var_dump($recordtoinsert);
@@ -91,42 +96,121 @@ $recordtoinsert = new stdClass();
         $recordtoinsert->datecours= strtotime($datesea["day"]."-".$datesea["month"]."-".$datesea["year"]);
         
         $verda=$datesea["day"]."-".$datesea["month"]."-".$datesea["year"];
-        
+
+        // var_dump($verda);
+        // die;
+
+        if(empty($_POST["datefincours"])&&empty($_POST["datecours"])&&!empty($_POST["idsemestre"]))
+        {
+
+            $veridat=$DB->get_records_sql("SELECT * FROM {semestre} WHERE id='".$_POST["idsemestre"]."'");
+            
+            foreach($veridat as $key => $val)
+            {}
+          
+            $verda=date("d-n-Y",$val->datedebutsemestre);
+
+            // var_dump($verda);
+            // die;
+        }
+
+
+
+
         $veriprofss=$DB->get_records_sql("SELECT * FROM {user} u,{coursspecialite} cs,{courssemestre} css,{affecterprof} af,{specialite} s,{filiere} f,{cycle} cy
     WHERE cy.id=cs.idcycle AND cs.idspecialite=s.id AND css.idcoursspecialite=cs.id AND css.id=af.idcourssemestre AND s.idfiliere=f.id AND af.idprof=u.id AND f.idcampus='".$_POST["idcampus"]."' 
     AND s.id='".$_POST["idspecialite"]."' AND cy.id='".$_POST["idcycle"]."' AND u.id='".$_POST["idprof"]."' AND idcourses='".$_POST["idcourses"]."'");
-    $verappart=$DB->get_records_sql("SELECT * FROM {programme} WHERE idspecialite='".$_POST["idspecialite"]."' AND idcycle='".$_POST["idcycle"]."' AND DATE_FORMAT(FROM_UNIXTIME(datecours), '%e-%c-%Y')='".$verda."'AND idsemestre='".$_POST["idsemestre"]."' AND heuredebutcours='".$_POST["heuredebutcours"]."' AND heurefincours='".$_POST["heurefincours"]."'");
+    $verappart=$DB->get_records_sql("SELECT * FROM {programme} WHERE idspecialite='".$_POST["idspecialite"]."' AND idcycle='".$_POST["idcycle"]."' AND DATE_FORMAT(FROM_UNIXTIME(datecours), '%e-%c-%Y')='".$verda."' AND heuredebutcours='".$_POST["heuredebutcours"]."' AND idsalle='".$_POST["idsalle"]."'");
     // var_dump($veriprofss,$_POST["idcampus"],$_POST["idprof"],$_POST["idspecialite"],$_POST["idcourses"],$_POST["idcycle"]);die;
     // var_dump($verappart,$verda,$_POST["idspecialite"],$_POST["idcycle"],$_POST["idsemestre"]);die;
 if(!$verappart){
    
-    $semver = $mform->definir_semestre($recordtoinsert->datecours,$_POST["idsemestre"]);
-    if($semver==null)
-    {
+    // if(!empty($_POST["idsemestre"]))
+    // {
+    //     $semver = $mform->definir_semestre($recordtoinsert->datecours,$_POST["idsemestre"]);
 
-        \core\notification::add('Cette Date n\'est pas dans ce semestre', \core\output\notification::NOTIFY_ERROR);
-        redirect($CFG->wwwroot . '/local/powerschool/programme.php?idca='.$_POST["idcampus"].'');
+    //     \core\notification::add('Cette Date n\'est pas dans ce semestre', \core\output\notification::NOTIFY_ERROR);
+    //     redirect($CFG->wwwroot . '/local/powerschool/programme.php?idca='.$_POST["idcampus"].'');
 
-    }
-    else
-    {
+    // }
+    // else
+    // {
+        $tardateocc=array();
         $tarr=array();
         $tareven=array();
         $even=new stdClass();
+        if(!empty($_POST["idsemestre"]) && !empty($_POST["datecours"]))
+        {
+            $semver = $mform->definir_semestre($recordtoinsert->datecours,$_POST["idsemestre"]);
+    
+            \core\notification::add('Cette Date n\'est pas dans ce semestre', \core\output\notification::NOTIFY_ERROR);
+            redirect($CFG->wwwroot . '/local/powerschool/programme.php?idca='.$_POST["idcampus"].'');
+    
+        }
         for($i=0;$i<=$_POST["nobresemaine"];$i++)
         {
-            // var_dump($i,$recordtoinsert);
-        //     $datesea=$_POST["datecours"];
-        //     $recordtoinsert->datecours= strtotime($datesea["day"]."-".$datesea["month"]."-".$datesea["year"]);
 
+            $dateffin=$_POST["datefincours"];
+            
+            // var_dump($i,$recordtoinsert);
+            $datesea=$_POST["datecours"];
+            $recordtoinsert->datecours= strtotime($datesea["day"]."-".$datesea["month"]."-".$datesea["year"]);
+            $dateseafin=$_POST["datefincours"];
+            $recordtoinsert->datefincours= strtotime($dateseafin["day"]."-".$dateseafin["month"]."-".$dateseafin["year"]);
+
+            // var_dump($_POST["datefincours"],$_POST["datecours"."\n"]);
             // $date = $recordtoinsert->datecours ;
             $date =  $recordtoinsert->datecours + ($i * 604800);
+            // $date =  strtotime('next monday', $recordtoinsert->datecours + ($i*7*24*3600));
+            // var_dump($date."\n");
+            
+            $datetestfin = date('d-M-Y',$recordtoinsert->datefincours);
             // var_dump(date("Y/m/d",$recordtoinsert->datecours));
-            $semm = $mform->definir_semestre($date,$_POST["idsemestre"]);
+            // var_dump($recordtoinsert->datefincours,$date);
+            // var_dump($datetest,$datetestfin);
+            if(empty($_POST["datefincours"])&&empty($_POST["datecours"] && !empty($_POST["idsemestre"])))
+            {
+                $veridat=$DB->get_records_sql("SELECT * FROM {semestre} WHERE id='".$_POST["idsemestre"]."'");
+                
+                foreach($veridat as $key)
+                {}
+                $date =  $key->datedebutsemestre + ($i * 604800);
+                $dateffin=$key->datefinsemestre;
+                $datetestfin =  date('d-M-Y',$key->datefinsemestre);
+                // $recordtoinsert->datecours=$date;
+            }
+            
+            $datetest = date('d-M-Y',$date);
+            
+            // var_dump($datetest);
+            if($date<=$dateffin)
+            {
+                // var_dump($datetest,$datetestfin,$date<=$key->datefinsemestre);
+                // die;
+                if(!empty($_POST["idsemestre"])){
+                    // die;
+                    $semm = $mform->definir_semestre($date,$_POST["idsemestre"]);
+                    $recordtoinsert->idsemestre = $semm;
+                    // var_dump($semm,$i,$_POST["datefincours"],$_POST["datecours"]);
+                }
+                $verappartint=$DB->get_records_sql("SELECT * FROM {programme} WHERE idspecialite='".$_POST["idspecialite"]."' AND idcycle='".$_POST["idcycle"]."' AND DATE_FORMAT(FROM_UNIXTIME(datecours), '%e-%c-%Y')='".$date."' AND heuredebutcours='".$_POST["heuredebutcours"]."' AND heurefincours='".$_POST["heurefincours"]."'");
+                
+                if(empty($verappartint))
+                {
+                    $recordtoinsert->datecours=$date;
+        
+                }
+                else
+                {
+                    array_push($tardateocc,$date."-".$_POST["heuredebutcours"]);
+                }
+                
+            }
+           
+            // var_dump($_POST["disable_datefincours"],$_POST["datecours"],$_POST["datefincours"]);die;
 
-            $recordtoinsert->idsemestre = $semm;
-            $recordtoinsert->datecours=$date;
-        //     // var_dump( $recordtoinsert->idsemestre."---".$date."-sds-".$_POST["idsemestre"]);
+            // var_dump( $recordtoinsert->idsemestre."---".$date."-sds-".$_POST["idsemestre"]);
+            // die;
         if($recordtoinsert->heuredebutcours==$recordtoinsert->heurefincours)
         {
             \core\notification::add('Heure de début et de fin sont pareil', \core\output\notification::NOTIFY_ERROR);
@@ -140,15 +224,22 @@ if(!$verappart){
             $even->eventtype=$_POST["eventtype"];
             $even->timestart=$date;
             $even->courseid=$_POST["idcourses"];
-            $even->groupid=$_POST["idgroupapprenant"];
-
-           array_push($tarr,$recordtoinsert);
-           
-            // var_dump($i,$tarr);
+            
+            array_push($tarr,$recordtoinsert);
+            
+            var_dump($i,$tarr);
             $veriEta=$DB->get_records_sql('SELECT * FROM {campus} c,{typecampus} t WHERE c.idtypecampus=t.id AND c.id='.ChangerSchoolUser($USER->id).'');
-                foreach($veriEta as $valueEt){}
-                    if($valueEt->libelletype=="universite")
-                    {
+            foreach($veriEta as $valueEt){}
+            if($valueEt->libelletype=="universite")
+            {
+                $even->groupid=$_POST["idgroupapprenant"];
+                $verappartgroup=$DB->get_records_sql("SELECT * FROM {programme} WHERE idspecialite='".$_POST["idspecialite"]."' AND idcycle='".$_POST["idcycle"]."' AND DATE_FORMAT(FROM_UNIXTIME(datecours), '%e-%c-%Y')='".$verda."' AND heuredebutcours='".$_POST["heuredebutcours"]."' AND idsalle='".$_POST["idsalle"]."' AND idgroupapprenant='".$_POST["idgroupapprenant"]."'");
+                
+                if($verappartgroup)
+                {
+                    \core\notification::add('Ce groupe a été déjà programme pour cette seance dans cette salle');
+                        }
+
                         if($veriprofss)
                         {
                             $DB->insert_records('programme', $tarr);
@@ -160,7 +251,7 @@ if(!$verappart){
                         {
                             \core\notification::add('Soit cet enseignant n\'appartient pas à cette specialité
                             <br> Soit il\'enseigne pas à ce cours', \core\output\notification::NOTIFY_ERROR);
-                            redirect($CFG->wwwroot . '/local/powerschool/programme.php?idca='.$_POST["idcampus"].'');
+                            redirect($CFG->wwwroot . '/local/powerschool/programme.php?idca');
                         }
 
                     }
@@ -172,12 +263,13 @@ if(!$verappart){
                             {
                                 if($veriprofss)
                                 {
-                                    array_push($tarr,$recordtoinsert);
+                                    // die;
+                                    $even->groupid=$_POST["idsalle"];
     
                                     $DB->insert_records('programme', $tarr);
                                     $tarr=array();
-                                    $event = new calendar_event($even);
-                                    $event->update($even);
+                                    // $event = new calendar_event($even);
+                                    // $event->update($even);
                                 }
                                 else
                                 {
@@ -213,9 +305,15 @@ if(!$verappart){
         
         
         
-    }
+    // }
     // die;
-    redirect($CFG->wwwroot . '/local/powerschool/programme.php?idca='.$_POST["idcampus"].'', 'Enregistrement effectué');
+    }
+    if(empty($tardateocc))
+    {
+        redirect($CFG->wwwroot . '/local/powerschool/programme.php', 'Enregistrement effectué');
+    }else
+    {
+        redirect($CFG->wwwroot . '/local/powerschool/programme.php', 'Enregistrement effectué<br> les dates qui ne sont pas enregistrés cas ils sont occupées '.$tardateocc);
     }
 }else
 {
@@ -234,7 +332,7 @@ if($_GET['id']) {
         
 }
 
-$sql = "SELECT * FROM {course} c, {semestre} s,{specialite} sp,{cycle} cy, {programme} p WHERE p.idcourses = c.id AND p.idsemestre =s.id AND p.idspecialite = sp.id
+$sql = "SELECT * FROM {course} c,{specialite} sp,{cycle} cy, {programme} p WHERE p.idcourses = c.id AND p.idspecialite = sp.id
         AND p.idcycle = cy.id  AND cy.idcampus='".ChangerSchoolUser($USER->id)."'";
     // die;
     $programmes = $DB->get_records_sql($sql);
@@ -248,7 +346,26 @@ $sql = "SELECT * FROM {course} c, {semestre} s,{specialite} sp,{cycle} cy, {prog
         $timef = date('H:m',$time);
 
         $key->datecours = $date;
-        // $key->heuredebutcours = $timed;
+
+        $semestre=$DB->get_records("semestre",array("id" =>$key->idsemestre));
+        foreach($semestre as $keyse)
+        {
+            
+            $key->libellesemestre = $keyse->libellesemestre;
+        }
+        $group=$DB->get_records("groupapprenant",array("id" =>$key->idgroupapprenant));
+        foreach($group as $keyse)
+        {
+            
+            $key->numerogroup = $keyse->numerogroup;
+        }
+        $salle=$DB->get_records("salle",array("id" =>$key->idsalle));
+        foreach($salle as $keyse)
+        {
+            
+            $key->numerosalle = $keyse->numerosalle;
+        }
+
         // $key->heurefincours = $timef;
 
     }
@@ -320,6 +437,7 @@ $menu = (object)[
 
 ];
 
+
 echo $OUTPUT->header();
 
 // $mois = $_GET['mois'] ;
@@ -347,7 +465,13 @@ echo $OUTPUT->header();
 
 
 
-
+if($CFG->theme=="boost")
+    {
+    }
+    elseif ($CFG->theme == 'adaptable') {
+        // Changer la couleur en bleu
+        echo"<p style='margin-top:-120px'><p>";
+    }
 // echo $OUTPUT->render_from_template('local_powerschool/tableau', $getWeeks);
 
 // echo $OUTPUT->render_from_template('local_powerschool/campustou', $campuss);

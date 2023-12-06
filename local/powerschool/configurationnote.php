@@ -116,7 +116,13 @@ $menumini = (object)[
 
 echo $OUTPUT->header();
 
-
+if($CFG->theme=="boost")
+    {
+    }
+    elseif ($CFG->theme == 'adaptable') {
+        // Changer la couleur en bleu
+        echo"<p style='margin-top:-120px'><p>";
+    }
 // echo $OUTPUT->render_from_template('local_powerschool/navbar', $menu);
 
 $vv=$DB->get_records_sql("SELECT libelletype FROM {campus} c,{typecampus} t WHERE c.idtypecampus=t.id AND c.id='".ChangerSchoolUser($USER->id)."'");

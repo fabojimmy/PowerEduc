@@ -354,7 +354,15 @@ echo $OUTPUT->header();
     // echo $OUTPUT->render_from_template('local_powerschool/navbar', $menu);
     // echo $OUTPUT->render_from_template('local_powerschool/campustou', $campuss);
     
+$vericam=$DB->get_records_sql("SELECT * FROM {campus} c,{typecampus} t WHERE c.idtypecampus=t.id AND c.id='".ChangerSchoolUser($USER->id)."'");
+
+foreach($vericam as $key)
+{}
+if($key->libelletype=="universite" )
+{
+
     $mform->display();
+}
     
     
     echo $OUTPUT->render_from_template('local_powerschool/filiere', $templatecontext);

@@ -88,7 +88,7 @@ $datecours= strtotime($datesea["day"]."-".$datesea["month"]."-".$datesea["year"]
 }
 
 
-// $sql = "SELECT * FROM {course} c, {semestre} s,{specialite} sp,{cycle} cy, {indexprogramme} p WHERE p.idcourses = c.id AND p.idsemestre =s.id AND p.idspecialite = sp.id
+// $sql = "SELECT * FROM {course} c, {specialite} sp,{cycle} cy, {indexprogramme} p WHERE p.idcourses = c.id  AND p.idspecialite = sp.id
 //         AND p.idcycle = cy.id  ";
 
 //     $indexprogrammes = $DB->get_records_sql($sql);
@@ -134,40 +134,40 @@ $menu = (object)[
     'programme' => new moodle_url('/local/powerschool/programme.php'),
 ];
 
-$sqllu = "SELECT fullname,DATE_FORMAT(FROM_UNIXTIME(p.datecours),'%D %b %Y') as datec,heuredebutcours,heurefincours,numerosalle FROM {course} c, {semestre} s,{specialite} sp,{cycle} cy,{salle} sa, {programme} p
-WHERE p.idcourses = c.id AND p.idsemestre =s.id AND p.idspecialite = sp.id
-AND p.idcycle = cy.id AND idcycle='".$_GET["idcy"]."' AND idspecialite='".$_GET["idsp"]."' AND sa.idcampus='".$_GET["idca"]."'AND idsemestre='".$_GET["semestre"]."'
-AND sa.id=p.idsalle AND p.idsalle='".$_GET["idsa"]."' AND DAYOFWEEK(FROM_UNIXTIME(p.datecours))=2";
+$sqllu = "SELECT fullname,DATE_FORMAT(FROM_UNIXTIME(p.datecours),'%D %b %Y') as datec,heuredebutcours,heurefincours,numerosalle,MONTH(FROM_UNIXTIME(p.datecours)) AS mois,DAYOFWEEK(FROM_UNIXTIME(p.datecours)) AS dayc FROM {course} c, {specialite} sp,{cycle} cy,{salle} sa, {programme} p
+WHERE p.idcourses = c.id  AND p.idspecialite = sp.id
+AND p.idcycle = cy.id AND idcycle='".$_GET["idcy"]."' AND idspecialite='".$_GET["idsp"]."' AND sa.idcampus='".$_GET["idca"]."'
+AND sa.id=p.idsalle AND p.idsalle='".$_GET["idsa"]."' AND DAYOFWEEK(FROM_UNIXTIME(p.datecours))=2 GROUP BY fullname,heuredebutcours,heurefincours,dayc";
 
 $lundi=$DB->get_recordset_sql($sqllu);
-$sqlma = "SELECT fullname,DATE_FORMAT(FROM_UNIXTIME(p.datecours),'%D %b %Y') as datec,heuredebutcours,heurefincours,numerosalle FROM {course} c, {semestre} s,{specialite} sp,{cycle} cy,{salle} sa, {programme} p
-WHERE p.idcourses = c.id AND p.idsemestre =s.id AND p.idspecialite = sp.id
-AND p.idcycle = cy.id AND idcycle='".$_GET["idcy"]."' AND idspecialite='".$_GET["idsp"]."' AND sa.idcampus='".$_GET["idca"]."'AND idsemestre='".$_GET["semestre"]."'
-AND sa.id=p.idsalle AND p.idsalle='".$_GET["idsa"]."' AND DAYOFWEEK(FROM_UNIXTIME(p.datecours))=3";
+$sqlma = "SELECT fullname,DATE_FORMAT(FROM_UNIXTIME(p.datecours),'%D %b %Y') as datec,heuredebutcours,heurefincours,numerosalle,MONTH(FROM_UNIXTIME(p.datecours)) AS mois,DAYOFWEEK(FROM_UNIXTIME(p.datecours)) AS dayc FROM {course} c, {specialite} sp,{cycle} cy,{salle} sa, {programme} p
+WHERE p.idcourses = c.id  AND p.idspecialite = sp.id
+AND p.idcycle = cy.id AND idcycle='".$_GET["idcy"]."' AND idspecialite='".$_GET["idsp"]."' AND sa.idcampus='".$_GET["idca"]."'
+AND sa.id=p.idsalle AND p.idsalle='".$_GET["idsa"]."' AND DAYOFWEEK(FROM_UNIXTIME(p.datecours))=3 GROUP BY fullname,heuredebutcours,heurefincours,dayc";
 
 $mardi=$DB->get_recordset_sql($sqlma);
-$sqlme = "SELECT fullname,DATE_FORMAT(FROM_UNIXTIME(p.datecours),'%D %b %Y') as datec,heuredebutcours,heurefincours,numerosalle FROM {course} c, {semestre} s,{specialite} sp,{cycle} cy,{salle} sa, {programme} p
-WHERE p.idcourses = c.id AND p.idsemestre =s.id AND p.idspecialite = sp.id
-AND p.idcycle = cy.id AND idcycle='".$_GET["idcy"]."' AND idspecialite='".$_GET["idsp"]."' AND sa.idcampus='".$_GET["idca"]."'AND idsemestre='".$_GET["semestre"]."'
-AND sa.id=p.idsalle AND p.idsalle='".$_GET["idsa"]."' AND DAYOFWEEK(FROM_UNIXTIME(p.datecours))=4";
+$sqlme = "SELECT fullname,DATE_FORMAT(FROM_UNIXTIME(p.datecours),'%D %b %Y') as datec,heuredebutcours,heurefincours,numerosalle,MONTH(FROM_UNIXTIME(p.datecours)) AS mois,DAYOFWEEK(FROM_UNIXTIME(p.datecours)) AS dayc FROM {course} c, {specialite} sp,{cycle} cy,{salle} sa, {programme} p
+WHERE p.idcourses = c.id  AND p.idspecialite = sp.id
+AND p.idcycle = cy.id AND idcycle='".$_GET["idcy"]."' AND idspecialite='".$_GET["idsp"]."' AND sa.idcampus='".$_GET["idca"]."'
+AND sa.id=p.idsalle AND p.idsalle='".$_GET["idsa"]."' AND DAYOFWEEK(FROM_UNIXTIME(p.datecours))=4 GROUP BY fullname,heuredebutcours,heurefincours,dayc";
 
 $mercredi=$DB->get_recordset_sql($sqlme);
-$sqljeu = "SELECT fullname,DATE_FORMAT(FROM_UNIXTIME(p.datecours),'%D %b %Y') as datec,heuredebutcours,heurefincours,numerosalle FROM {course} c, {semestre} s,{specialite} sp,{cycle} cy,{salle} sa, {programme} p
-WHERE p.idcourses = c.id AND p.idsemestre =s.id AND p.idspecialite = sp.id
-AND p.idcycle = cy.id AND idcycle='".$_GET["idcy"]."' AND idspecialite='".$_GET["idsp"]."' AND sa.idcampus='".$_GET["idca"]."'AND idsemestre='".$_GET["semestre"]."'
-AND sa.id=p.idsalle AND p.idsalle='".$_GET["idsa"]."' AND DAYOFWEEK(FROM_UNIXTIME(p.datecours))=5";
+$sqljeu = "SELECT fullname,DATE_FORMAT(FROM_UNIXTIME(p.datecours),'%D %b %Y') as datec,heuredebutcours,heurefincours,numerosalle,MONTH(FROM_UNIXTIME(p.datecours)) AS mois,DAYOFWEEK(FROM_UNIXTIME(p.datecours)) AS dayc FROM {course} c, {specialite} sp,{cycle} cy,{salle} sa, {programme} p
+WHERE p.idcourses = c.id  AND p.idspecialite = sp.id
+AND p.idcycle = cy.id AND idcycle='".$_GET["idcy"]."' AND idspecialite='".$_GET["idsp"]."' AND sa.idcampus='".$_GET["idca"]."'
+AND sa.id=p.idsalle AND p.idsalle='".$_GET["idsa"]."' AND DAYOFWEEK(FROM_UNIXTIME(p.datecours))=5 GROUP BY fullname,heuredebutcours,heurefincours,dayc";
 
 $jeudi=$DB->get_recordset_sql($sqljeu);
-$sqlven = "SELECT fullname,DATE_FORMAT(FROM_UNIXTIME(p.datecours),'%D %b %Y') as datec,heuredebutcours,heurefincours,numerosalle FROM {course} c, {semestre} s,{specialite} sp,{cycle} cy,{salle} sa, {programme} p
-WHERE p.idcourses = c.id AND p.idsemestre =s.id AND p.idspecialite = sp.id
-AND p.idcycle = cy.id AND idcycle='".$_GET["idcy"]."' AND idspecialite='".$_GET["idsp"]."' AND sa.idcampus='".$_GET["idca"]."'AND idsemestre='".$_GET["semestre"]."'
-AND sa.id=p.idsalle AND p.idsalle='".$_GET["idsa"]."' AND DAYOFWEEK(FROM_UNIXTIME(p.datecours))=6";
+$sqlven = "SELECT fullname,DATE_FORMAT(FROM_UNIXTIME(p.datecours),'%D %b %Y') as datec,heuredebutcours,heurefincours,numerosalle,MONTH(FROM_UNIXTIME(p.datecours)) AS mois,DAYOFWEEK(FROM_UNIXTIME(p.datecours)) AS dayc FROM {course} c, {specialite} sp,{cycle} cy,{salle} sa, {programme} p
+WHERE p.idcourses = c.id  AND p.idspecialite = sp.id
+AND p.idcycle = cy.id AND idcycle='".$_GET["idcy"]."' AND idspecialite='".$_GET["idsp"]."' AND sa.idcampus='".$_GET["idca"]."'
+AND sa.id=p.idsalle AND p.idsalle='".$_GET["idsa"]."' AND DAYOFWEEK(FROM_UNIXTIME(p.datecours))=6 GROUP BY fullname,heuredebutcours,heurefincours,dayc";
 
 $vendredi=$DB->get_recordset_sql($sqlven);
-$sqlsad = "SELECT fullname,DATE_FORMAT(FROM_UNIXTIME(p.datecours),'%D %b %Y') as datec,heuredebutcours,heurefincours,numerosalle FROM {course} c, {semestre} s,{specialite} sp,{cycle} cy,{salle} sa, {programme} p
-WHERE p.idcourses = c.id AND p.idsemestre =s.id AND p.idspecialite = sp.id
-AND p.idcycle = cy.id AND idcycle='".$_GET["idcy"]."' AND idspecialite='".$_GET["idsp"]."' AND sa.idcampus='".$_GET["idca"]."'AND idsemestre='".$_GET["semestre"]."'
-AND sa.id=p.idsalle AND p.idsalle='".$_GET["idsa"]."' AND DAYOFWEEK(FROM_UNIXTIME(p.datecours))=7";
+$sqlsad = "SELECT fullname,DATE_FORMAT(FROM_UNIXTIME(p.datecours),'%D %b %Y') as datec,heuredebutcours,heurefincours,numerosalle,MONTH(FROM_UNIXTIME(p.datecours)) AS mois,DAYOFWEEK(FROM_UNIXTIME(p.datecours)) AS dayc FROM {course} c, {specialite} sp,{cycle} cy,{salle} sa, {programme} p
+WHERE p.idcourses = c.id  AND p.idspecialite = sp.id
+AND p.idcycle = cy.id AND idcycle='".$_GET["idcy"]."' AND idspecialite='".$_GET["idsp"]."' AND sa.idcampus='".$_GET["idca"]."'
+AND sa.id=p.idsalle AND p.idsalle='".$_GET["idsa"]."' AND DAYOFWEEK(FROM_UNIXTIME(p.datecours))=7 GROUP BY fullname,heuredebutcours,heurefincours,dayc";
 
 $samedi=$DB->get_recordset_sql($sqlsad);
 // var_dump($oo);
@@ -188,14 +188,14 @@ $progr='
  foreach($lundi as $key => $valuel)
  {
     $progr.='<div class="my-3 col-12 border-top" style="width:100%;"> <div  style="font-weight:650">Cours :</div> <em class="badge badge-info mx-4" style="font-size:14px ">'.$valuel->fullname.'</em> 
-    <br> <div style="font-weight:650">Heure:</div> <em class="badge badge-warning mx-4" style="font-size:14px">'.$valuel->heuredebutcours.'h-'.$valuel->heurefincours.'h </em><br> <div style="font-weight:650"> Salle:</div> <em class="badge badge-info mx-4" style="font-size:14px">'.$valuel->numerosalle.'</em></div>';
+    <br> <div style="font-weight:650">Heure:</div> <em class="badge badge-warning mx-4" style="font-size:14px">'.$valuel->mois.'/'.$valuel->heuredebutcours.'h-'.$valuel->heurefincours.'h </em><br> <div style="font-weight:650"> Salle:</div> <em class="badge badge-info mx-4" style="font-size:14px">'.$valuel->numerosalle.'</em></div>';
  }
  $progr.='</td>';
  $progr.='<td>';
   foreach($mardi as $key => $valuel)
  {
    $progr.='<div class="my-3 col-12 border-top" style="width:100%;"> <div style="font-weight:650">Cours :</div> <em class="badge badge-info mx-4" style="font-size:14px">'.$valuel->fullname.'</em> 
-   <br> <div style="font-weight:650">Heure:</div> <em class="badge badge-warning mx-4" style="font-size:14px">'.$valuel->heuredebutcours.'h-'.$valuel->heurefincours.'h </em><br> <div style="font-weight:650"> Salle:</div> <em class="badge badge-info mx-4" style="font-size:14px">'.$valuel->numerosalle.'</em></div>';
+   <br> <div style="font-weight:650">Heure:</div> <em class="badge badge-warning mx-4" style="font-size:14px">'.$valuel->datec.'/'.$valuel->heuredebutcours.'h-'.$valuel->heurefincours.'h </em><br> <div style="font-weight:650"> Salle:</div> <em class="badge badge-info mx-4" style="font-size:14px">'.$valuel->numerosalle.'</em></div>';
  }
  $progr.='</td>';
         
@@ -265,7 +265,7 @@ $eventsByDay = $month->getEventsByDay($start,$end,$semestre,$_GET["idca"],$_GET[
 // die;
 
 
-echo $OUTPUT->render_from_template('local_powerschool/navbar', $menu);
+// echo $OUTPUT->render_from_template('local_powerschool/navbar', $menu);
 
 // echo '<i href="/powereduc03/local/powerschool/programme.php" class="fa fa-arrow-left fa-2x"style="color: #1D7DC2;"> </i> ';
 
@@ -275,7 +275,13 @@ echo $OUTPUT->render_from_template('local_powerschool/navbar', $menu);
 // echo ' <a href="/powereduc03/local/powerschool/programme.php> 
 //         <istyle="color: #1D7DC2;"> </i>  </a>';
 
-
+if($CFG->theme=="boost")
+{
+}
+elseif ($CFG->theme == 'adaptable') {
+    // Changer la couleur en bleu
+    echo"<p style='margin-top:-120px'><p>";
+}
 
 $mform->display();
 

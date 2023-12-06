@@ -146,9 +146,16 @@ $templatecontext = (object)[
     'suppins'=> new moodle_url('/local/powerschool/inscription.php'),
     'importationn'=> new moodle_url('/local/powerschool/importation.php'),
     'importationpaie'=> new moodle_url('/local/powerschool/importationpaie.php'),
+    'filiere'=> new moodle_url('/local/powerschool/importationfiliere.php'),
+    'specialite'=> new moodle_url('/local/powerschool/importationspecialite.php'),
+    'cycle'=> new moodle_url('/local/powerschool/importationcycle.php'),
+    'semestre'=> new moodle_url('/local/powerschool/importationsemestre.php'),
+    'cours'=> new moodle_url('/local/powerschool/importationcours.php'),
+    'prof'=> new moodle_url('/local/powerschool/importationprofesseur.php'),
+    'pare'=> new moodle_url('/local/powerschool/importationparentim.php'),
     // 'imprimer' => new moodle_url('/local/powerschool/imp.php'),
     'anneee'=>array_values($annee),
-    'roote'=>$CFG->wwwroot,
+    'root'=>$CFG->wwwroot,
     'campus1' => array_values($campus),
     'idca'=>$_GET["campus"],
     'idsp'=>$_GET["specialite"],
@@ -209,7 +216,13 @@ echo $OUTPUT->header();
 
 // echo $OUTPUT->render_from_template('local_powerschool/navbar', $menu);
 // $mform->display();
-
+if($CFG->theme=="boost")
+{
+}
+elseif ($CFG->theme == 'adaptable') {
+    // Changer la couleur en bleu
+    echo"<p style='margin-top:-120px'><p>";
+}
 
 echo $OUTPUT->render_from_template('local_powerschool/importation', $templatecontext);
 

@@ -128,7 +128,13 @@ $menu = (object)[
 
 echo $OUTPUT->header();
 
-
+if($CFG->theme=="boost")
+    {
+    }
+    elseif ($CFG->theme == 'adaptable') {
+        // Changer la couleur en bleu
+        echo"<p style='margin-top:-120px'><p>";
+    }
 if(has_capability("local/powerschool:bulletin",context_system::instance(),$USER->id))
 {
 

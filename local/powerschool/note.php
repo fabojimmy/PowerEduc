@@ -254,7 +254,15 @@ if(has_capability("local/powerschool:notes",context_system::instance(),$USER->id
     
 }
 // echo $OUTPUT->render_from_template('local_powerschool/navbar', $menu);
-echo '<div style="margin-top:80px";><wxcvbn</div>';
+if($CFG->theme=="boost")
+{
+    echo'<div class="" style="margin-top:110px;"></div>';
+}
+elseif ($CFG->theme == 'adaptable') {
+    // Changer la couleur en bleu
+    echo'<div class="" style="margin-top:-70px;"></div>';
+    
+}
 echo $OUTPUT->render_from_template('local_powerschool/campustou', $campuss);
 
 $mform->display();
