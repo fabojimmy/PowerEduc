@@ -27,7 +27,7 @@
             AND i.idcampus=c.id AND i.idcycle ='".$_POST["cycle"]."'";
             $cours=$DB->get_records_sql($sql);
             $sallejs="";
-                $sallejs='<option value="">222<option>';
+                $sallejs='<option value=""><option>';
             foreach ($cours as $key => $value1) {
                  $sallejs.='<option value='.$value1->idsa.'>'.$value1->numerosalle.'</option>';
             }

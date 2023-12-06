@@ -15,7 +15,7 @@ $CFG->dboptions = array (
   'dbpersist' => 0,
   'dbport' => 3306,
   'dbsocket' => '',
-  'dbcollation' => 'utf8mb4_0900_ai_ci',
+  'dbcollation' => 'utf8mb4_unicode_ci',
 );
 
 $CFG->wwwroot   = 'http://127.0.0.1/moodle1';

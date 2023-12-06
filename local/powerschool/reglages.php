@@ -85,7 +85,13 @@ $menu = (object)[
 
 
 echo $OUTPUT->header();
-
+if($CFG->theme=="boost")
+    {
+    }
+    elseif ($CFG->theme == 'adaptable') {
+        // Changer la couleur en bleu
+        echo"<p style='margin-top:-120px'><p>";
+    }
 
 echo $OUTPUT->render_from_template('local_powerschool/navbar', $menu);
 // $mform->display();
@@ -95,7 +101,8 @@ echo $OUTPUT->render_from_template('local_powerschool/navbar', $menu);
 $modulecontext=context_system::instance();
 if(has_capability("local/powerschool:reglageetablissement",$modulecontext,$USER->id))
 {
-
+    
+    
     echo html_writer::start_div("card",array('style' => "width: 100%;")) ;
     echo"  <div class='card-header text-center'>
     <p class=''> Gérer les réglages de vos Etablissements</p>
@@ -109,6 +116,7 @@ if(has_capability("local/powerschool:reglageetablissement",$modulecontext,$USER-
         {
             echo "<li class='list-group-item '>".html_writer::link($CFG->wwwroot.'/local/powerschool/campus.php',get_string('campus', 'local_powerschool'),array("class"=>"fw-bold text-decoration-none fs-1 text-uppercase"))."</li>";echo "<br/>";
         }
+        echo "<li class='list-group-item '>".html_writer::link($CFG->wwwroot.'/local/powerschool/batiment.php',get_string('batimenttitle', 'local_powerschool'),array("class"=>"fw-bold text-decoration-none fs-1 text-uppercase"))."</li>";echo "<br/>";
         if(has_capability("local/powerschool:ajoutersemestre",$modulecontext,$USER->id))
         {
 
@@ -164,6 +172,7 @@ if(has_capability("local/powerschool:reglageetablissement",$modulecontext,$USER-
         // echo "<li class='list-group-item '>".html_writer::link($CFG->wwwroot.'/local/powerschool/logo.php'),"Logo",array("class"=>"fw-bold text-decoration-none fs-1 text-uppercase"))."</li>";echo "<br/>";
      echo"</ul>";
     echo html_writer::end_div();
+    
 }
 else
 {

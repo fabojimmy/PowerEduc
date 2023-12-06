@@ -83,6 +83,32 @@ if (!$mform->veri_insc($_POST["idetudiant"])) {
     if($valueEt->libelletype=="universite")
     {
        $recordtoinsert->idgroupapprenant=$_POST["idgroupapprenant"];
+       $veriEtagro=$DB->get_records_sql('SELECT * FROM {groupapprenant} c,{specialite} t,{filiere} f WHERE c.idspecialite=t.id AND f.id=t.idfiliere 
+       AND c.idspecialite='.$_POST["idspecialite"].' AND c.idcycle='.$_POST["idcycle"].' AND f.idcampus='.ChangerSchoolUser($USER->id).' AND c.id='.$_POST["idgroupapprenant"].'');
+        //   die;
+       $capinsc=$DB->get_records_sql('SELECT count(id) as capacite FROM {inscription} c WHERE c.idgroupapprenant='.$_POST["idgroupapprenant"].'');
+
+       foreach($capinsc as $key1)
+       {}
+       foreach($veriEtagro as $key)
+       {}
+
+       if($key1->capacite==$key->capacitegroup)
+       {
+
+           \core\notification::add('On ne peut plus Ajouter cette apprenant dans ce groupe cas il est plein', \core\output\notification::NOTIFY_ERROR);
+           redirect($CFG->wwwroot . '/local/powerschool/inscription.php');
+        }
+        
+        if(empty($veriEtagro))
+        {
+           \core\notification::add('Ce groupe n\'appartient pas à cette spécialite<br>
+                                   ou à ce cycle', \core\output\notification::NOTIFY_ERROR);
+           redirect($CFG->wwwroot . '/local/powerschool/inscription.php');
+
+       }
+
+
     }
     else
     {
@@ -106,7 +132,7 @@ if (!$mform->veri_insc($_POST["idetudiant"])) {
     redirect($CFG->wwwroot . '/local/powerschool/inscription.php?idca='.$_POST["idcampus"].'', 'Enregistrement effectué');
     exit;
 }else{
-    \core\notification::add('Cet etudiant est déjà inscrit', \core\output\notification::NOTIFY_ERROR);
+    \core\notification::add('Cet apprenant est déjà inscrit', \core\output\notification::NOTIFY_ERROR);
     redirect($CFG->wwwroot . '/local/powerschool/inscription.php');
 
 }
@@ -500,6 +526,13 @@ echo $OUTPUT->header();
 
 if(has_capability("local/powerschool:inscription",context_system::instance(),$USER->id))
 {
+    if($CFG->theme=="boost")
+    {
+    }
+    elseif ($CFG->theme == 'adaptable') {
+        // Changer la couleur en bleu
+        echo"<p style='margin-top:-120px'><p>";
+    }
     echo $OUTPUT->render_from_template('local_powerschool/navbar', $menu);
     // echo '<div style="margin-top:10px";><wxcvbn</div>';
     // echo $OUTPUT->render_from_template('local_powerschool/campustou', $campuss);

@@ -59,6 +59,8 @@ if($Extension=='xlxs' || $Extension='xls' || $Extension=='csv')
 
 
     }
+    redirect($CFG->wwwroot . '/local/powerschool/importationre.php', 'Importation éffectués avec succès',\core\output\notification::NOTIFY_ERROR);
+
     // die;
 }
    

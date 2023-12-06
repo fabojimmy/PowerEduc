@@ -4,28 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css">
+        <link rel="stylesheet" href="{{roote}}/local/powerschool/css/style.css">
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
     <style>
-      @media print{
-          form{
-            display:none;
-
-          }
-          .cl,.btn{
-            display:none;
-
-          }
-      }
+     
     </style>
 </head>
 <body>
 
  <input type="hidden" class="{{roote}}" value="{{{{roote}}}}">
  <form action="{{star}}?id=4" method="GET">
-    <div class="d-flex justify-content-around" style="margin-top:35px">
+    <div class="d-flex justify-content-around" style="margin-top:55px">
               <div class="col-2">
-                  <label>Choisir Année</label>
+                  <label class="labelsta"> Année</label>
                   <select class="form-control annee1" name="annee">
                   <option value=""></option>
                   {{#anneee}}
@@ -34,7 +25,7 @@
                   </select>
               </div>
               <div class="col-2">
-                  <label>Choisir Etablissement</label>
+                  <label class="labelsta"> Etablissement</label>
                   <select class="form-control campus1" name="campus">
                   <option value=""></option>
                   {{#campus1}}
@@ -44,7 +35,7 @@
                   </select>
               </div>
               <div class="col-2">
-                  <label>Choisir Filiere</label>
+                  <label class="labelsta"> Filiere</label>
                   <select class="form-control filiere1" name="filiere">
                   <option value=""></option>
                   {{#filiere1}}
@@ -53,7 +44,7 @@
                   </select>
               </div>
               <div class="col-2">
-                  <label>Choisir Specialite/Classe</label>
+                  <label class="labelsta"> Specialite/Classe</label>
                   <select class="form-control specialite1" name="specialite">
                   <option value=""></option>
                   {{#specialite1}}
@@ -62,7 +53,7 @@
                   </select>
               </div>
               <div class="col-2">
-                  <label>Choisir Cycle</label>
+                  <label class="labelsta"> Cycle</label>
                   <select class="form-control cycle1" name="cycle">
                     <option></option>
                   {{#cycle1}}
@@ -71,7 +62,7 @@
                   </select>
               </div>
               <div class="col-2">
-                  <label>Choisir une partie de l'année scolaire</label>
+                  <label class="labelsta"> Partie de l'année</label>
                   <select class="form-control semestre" name="semestre">
                     <option></option>
                   {{#semestre}}
@@ -82,7 +73,7 @@
       </div> 
     <div class="d-flex justify-content-around" style="margin-top:35px">
               <div class="col-2">
-                  <label>Choisir Genre</label>
+                  <label class="labelsta"> Genre</label>
                   <select class="form-control" name="gender">
                   <option value=""></option>
                     <option value="f">Femme</option>
@@ -90,7 +81,7 @@
                   </select>
               </div>
       </div> 
-      <input class="form-control col-2 btn-primary" type="submit" name="valider" value="valider" >
+      <input class="form-control col-2 btn-primary mt-5" type="submit" name="valider" value="valider" >
     </form>
   <!--<div class="table card mt-2 mb-2">-->
 
@@ -849,5 +840,6 @@
     <script src="{{roote}}/local/powerschool/js/circulaires.js"></script>
     <script src="{{roote}}/local/powerschool/js/statistique.js"></script>
     <script src="{{roote}}/local/powerschool/js/statistiquenotee.js"></script>
+ 
 </body>
 </html>

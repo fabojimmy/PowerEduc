@@ -118,6 +118,7 @@ $sql8 = "SELECT s.id,libellespecialite,libellefiliere,abreviationspecialite FROM
         }
         foreach ($semestre as $key => $val)
         {
+            $selectsemestre[0] = "";
             $selectsemestre[$key] = $val->libellesemestre;
         }
         foreach ($specialite as $key => $val)
@@ -168,10 +169,14 @@ $sql8 = "SELECT s.id,libellespecialite,libellefiliere,abreviationspecialite FROM
         $mform->addHelpButton('idcourses', 'cours');
 
         $mform->addElement('select', 'idsemestre', 'Partie scolaire', $selectsemestre ); // Add elements to your form
-        $mform->setType('idsemestre', PARAM_TEXT);                   //Set type of element
+        $mform->setType('idsemestre', PARAM_INT);                   //Set type of element
         $mform->setDefault('idsemestre', '');        //Default value
-        $mform->addRule('idsemestre', 'Choix du Semestre', 'required', null, 'client');
+        // $mform->addRule('idsemestre', 'Choix du Semestre', 'required', null, 'client');
         $mform->addHelpButton('idsemestre', 'semestre');
+
+        $mform->addElement('advcheckbox', 'disable_idsemestre', 'Disable Event Type', 'Disable', array('group' => 1));
+        $mform->setType('disable_idsemestre', PARAM_INT); // Assurez-vous que le type est paramétré correctement 
+        $mform->disabledIf('idsemestre', 'disable_idsemestre');
 
         $mform->addElement('select', 'idspecialite', 'Specialite/Classes', $selectspecialite ); // Add elements to your form
         $mform->setType('idspecialite', PARAM_TEXT);                   //Set type of element
@@ -211,11 +216,23 @@ $sql8 = "SELECT s.id,libellespecialite,libellefiliere,abreviationspecialite FROM
         $mform->addRule('idprof', 'Choix une salle', 'required', null, 'client');
         $mform->addHelpButton('idprof', 'Salle');
 
-        $mform->addElement('date_selector', 'datecours', 'Date du Cours' ); // Add elements to your form
+        $mform->addElement('date_selector', 'datecours', 'Date du Cours debut' ); // Add elements to your form
         // $mform->setType('datecours', PARAM_TEXT);                   //Set type of element
         // $mform->setDefault('datecours', '');        //Default value
         $mform->addRule('datecours', ' date de cours ', 'required', null, 'client');
         $mform->addHelpButton('datecours', 'datecours');
+        $mform->addElement('advcheckbox', 'disable_datecours', 'Disable Event Type', 'Disable', array('group' => 1));
+        $mform->setType('disable_datecours', PARAM_INT); // Assurez-vous que le type est paramétré correctement 
+        $mform->disabledIf('datecours', 'disable_datecours');
+
+        $mform->addElement('date_selector', 'datefincours', 'Date du Cours fin' ); // Add elements to your form
+        // $mform->setType('datecours', PARAM_TEXT);                   //Set type of element
+        // $mform->setDefault('datecours', '');        //Default value
+        $mform->addRule('datefincours', ' date de cours ', 'required', null, 'client');
+        $mform->addHelpButton('datefincours', 'datefincours');
+        $mform->addElement('advcheckbox', 'disable_datefincours', 'Disable Event Type', 'Disable', array('group' => 1));
+        $mform->setType('disable_datefincours', PARAM_INT); // Assurez-vous que le type est paramétré correctement 
+        $mform->disabledIf('datefincours', 'disable_datefincours');
 
         $mform->addElement('text', 'heuredebutcours', 'Heure debut cours' ); // Add elements to your form
         $mform->setType('heuredebutcours', PARAM_TEXT);                   //Set type of element
@@ -230,7 +247,6 @@ $sql8 = "SELECT s.id,libellespecialite,libellefiliere,abreviationspecialite FROM
         $mform->addHelpButton('heurefincours', 'heure');
        
         $mform->addElement('text', 'nobresemaine', 'Nombre de Semaine' ); // Add elements to your form
-        $mform->setType('nobresemaine', PARAM_TEXT);                   //Set type of element
         $mform->setDefault('nobresemaine', '');        //Default value
         $mform->addHelpButton('nobresemaine', 'heure');
 
@@ -347,6 +363,36 @@ $sql8 = "SELECT s.id,libellespecialite,libellefiliere,abreviationspecialite FROM
 
 
         $sqlsemestre = "SELECT * FROM {semestre} WHERE id='".$id."' AND $datecours BETWEEN  datedebutsemestre AND datefinsemestre";
+
+        // var_dump($sqlsemestre);
+
+        $semestre = $DB->get_records_sql($sqlsemestre);
+        
+        // var_dump($semestre);
+      if($semestre)
+      {
+
+          foreach ($semestre as $key => $val)
+          {
+              $idsemestre = $val->id;
+  
+          }
+  
+         return $idsemestre;
+        }
+        else
+        {
+          return null;
+          ;
+
+      }
+
+    }
+    public function definir_semestref ($id){
+        global $DB;
+
+
+        $sqlsemestre = "SELECT * FROM {semestre} WHERE id='".$id."'";
 
         // var_dump($sqlsemestre);
 

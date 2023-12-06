@@ -80,7 +80,7 @@ if($key->libelletype=="universite" || $key->libelletype=="lycee" || $key->libell
 {
     \core\notification::add('Votre n\'est autorisé pour cette partie', \core\output\notification::NOTIFY_ERROR);
 
-            redirect($CFG->wwwroot . '/local/powerschool/coursspecialite.php?idca='.$_GET["idca"].'');
+            redirect($CFG->wwwroot . '/local/powerschool/coursspecialite.php');
        
 }
 

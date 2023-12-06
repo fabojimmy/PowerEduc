@@ -3,12 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{root}}/local/powerschool/css/style.css">
+
 </head>
 <body>
-<h1 class="mx-5">{{title}}</h1>
-       <div class="d-flex justify-content-around mt-5">
+<h1 class="mx-6">{{title}}</h1>
+       <div class="d-flex justify-content-around mx-3">
           <div class="col-2">
-              <label>Choisir filiere</label>
+              <label class="labelsta"> Filiere</label>
               <select class="form-control filiere" name="filiere">
                 <option value=""></option>
               {{#filiere}}
@@ -17,7 +19,7 @@
               </select>
           </div>
           <div class="col-2">
-              <label>Choisir Specialite</label>
+              <label class="labelsta"> Specialite</label>
               <select class="form-control specialite" name="specialite">
                 <option value=""> </option>
              
@@ -25,20 +27,20 @@
           </div>
                 <!--<option value="{{id}}">{{libellespecialite}}</option>-->
           <div class="col-2">
-              <label>Choisir Cycle</label>
+              <label class="labelsta"> Cycle</label>
               <select class="form-control cycle" name="cycle">
                 <option value=""> </option>
               </select>
           </div>
 
           <div class="col-2">
-              <label>Choisir Salle</label>
+              <label class="labelsta"> Salle</label>
               <select class="form-control salle1" name="salleretirer">
                 <option value="">select </option>
               </select>
           </div>
           <div class="col-2">
-              <label>Choisir Cours</label>
+              <label class="labelsta"> Cours</label>
               <select class="form-control courss" name="cours">
                 <option value="">select </option>
               </select>
@@ -48,7 +50,7 @@
             <input type="hidden" value="{{root}}" class="roote"/>
             <input type="hidden" value="{{idca}}" class="campus"/>
         
-            <div class="mt-5" style="margin-left:50px">
+            <div class="mx-6 my-4" >
                 <button class="group btn btn-primary">Ajouter un groupe</button>
             </div>
         <div class="mt-5">

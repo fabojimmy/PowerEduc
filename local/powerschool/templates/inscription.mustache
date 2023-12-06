@@ -23,12 +23,13 @@
 
     }
 }}
+<link rel="stylesheet" href="{{roote}}/local/powerschool/css/style.css">
 
-<h1>inscription de cours</h1>
+<h1 class="mx-5 my-5">Inscription de cours</h1>
 <form action="{{inpf}}?id=4" method="GET">
     <div class="d-flex justify-content-around" style="margin-top:35px">
               <div class="col-2">
-                  <label>Choisir Année</label>
+                  <label class="labelsta"> Année</label>
                   <select class="form-control annee1" name="annee">
                   <option value=""></option>
                   {{#annee}}
@@ -37,7 +38,7 @@
                   </select>
               </div>
               <div class="col-2">
-                  <label>Choisir Etablissement</label>
+                  <label class="labelsta"> Etablissement</label>
                   <select class="form-control campus1" name="idca">
                   <option value=""></option>
                   {{#campus}}
@@ -47,7 +48,7 @@
                   </select>
               </div>
               <div class="col-2">
-                  <label>Choisir Filiere</label>
+                  <label class="labelsta"> Filiere</label>
                   <select class="form-control filiere1" name="filiere">
                   <option value=""></option>
                   {{#filiere1}}
@@ -56,7 +57,7 @@
                   </select>
               </div>
               <div class="col-2">
-                  <label>Choisir Specialite/Classe</label>
+                  <label class="labelsta"> Specialite/Classe</label>
                   <select class="form-control specialite1" name="specialite">
                   <option value=""></option>
                   {{#specialite1}}
@@ -65,7 +66,7 @@
                   </select>
               </div>
               <div class="col-2">
-                  <label>Choisir Cycle</label>
+                  <label class="labelsta"> Cycle</label>
                   <select class="form-control cycle1" name="cycle">
                     <option></option>
                   {{#cycle1}}
@@ -77,7 +78,7 @@
       </div> 
     {{! <div class="d-flex justify-content-around" style="margin-top:35px">
               <div class="col-2">
-                  <label>Choisir Genre</label>
+                  <label> Genre</label>
                   <select class="form-control" name="gender">
                   <option value=""></option>
                     <option value="f">Femme</option>

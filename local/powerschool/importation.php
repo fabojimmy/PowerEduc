@@ -58,6 +58,8 @@ if($Extension=='xlxs' || $Extension='xls' || $Extension=='csv')
         $new->department=$row[7];
         $new->address=$row[8];
         $new->country=$row[9];
+        $new->idparent=$row[20];
+        $new->idcampuser=$row[21];
         // $new->lastname=$row['2'];
         
         // var_dump($ko, "<br>");
@@ -88,7 +90,8 @@ if($Extension=='xlxs' || $Extension='xls' || $Extension=='csv')
 
     }
     // die;
-    \core\notification::add("Effectué avec succès",\core\output\notification::NOTIFY_SUCCESS);
+    redirect($CFG->wwwroot . '/local/powerschool/importationre.php', 'Importation éffectués avec succès',\core\output\notification::NOTIFY_ERROR);
+
 }
    
 

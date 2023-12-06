@@ -162,13 +162,13 @@ class Month {
     }
     else if($specialite==null && $cycle==null && $salle==null){
 
-        $sql = "SELECT * FROM {course} c, {semestre} s,{specialite} sp,{cycle} cy, {programme} p,{salle} saa WHERE p.idcourses = c.id AND p.idsemestre =s.id AND p.idspecialite = sp.id
-        AND saa.id=p.idsalle AND p.idcycle = cy.id AND idcampus='".$idca."'  AND FROM_UNIXTIME(datecours) BETWEEN '{$start->format('Y-m-d 00:00:00')} ' AND '{$end->format('Y-m-d 23:59:59')} ' AND idsemestre=$semestre";
+        $sql = "SELECT * FROM {course} c, {semestre} s,{specialite} sp,{cycle} cy, {programme} p,{salle} saa WHERE p.idcourses = c.id  AND p.idspecialite = sp.id
+        AND saa.id=p.idsalle AND p.idcycle = cy.id AND idcampus='".$idca."'  AND FROM_UNIXTIME(datecours) BETWEEN '{$start->format('Y-m-d 00:00:00')} ' AND '{$end->format('Y-m-d 23:59:59')}' ";
       
     }else{
         $sql = "SELECT * FROM {course} c, {semestre} s,{specialite} sp,{cycle} cy,{salle} sa, {programme} p
-        WHERE p.idcourses = c.id AND p.idsemestre =s.id AND p.idspecialite = sp.id
-        AND p.idcycle = cy.id AND idcycle='".$cycle."' AND idspecialite='".$specialite."' AND sa.idcampus='".$idca."'  AND FROM_UNIXTIME(datecours) BETWEEN '{$start->format('Y-m-d 00:00:00')} ' AND '{$end->format('Y-m-d 23:59:59')} ' AND idsemestre=$semestre
+        WHERE p.idcourses = c.id AND p.idspecialite = sp.id
+        AND p.idcycle = cy.id AND idcycle='".$cycle."' AND idspecialite='".$specialite."' AND sa.idcampus='".$idca."'  AND FROM_UNIXTIME(datecours) BETWEEN '{$start->format('Y-m-d 00:00:00')} ' AND '{$end->format('Y-m-d 23:59:59')} ' 
         AND sa.id=p.idsalle AND p.idsalle=$salle";
         // $sql = "SELECT * FROM {course} c,{programme} p,{semestre} s,{cycle} cy,{specialite} sp 
         // WHERE p.idsemestre=s.id AND p.idcycle=cy.id AND sp.id=p.idspecialite AND p.idcourses = c.id
@@ -176,13 +176,13 @@ class Month {
 
     }
         $req= $DB->get_records_sql($sql);
-
+        $tar=(array)$req;
         // $dates = date('d/m/Y H:i:s',$req);
 
 		                       
         // var_dump($req);
         // die;
-        return $req;
+        return $tar;
     }
 
     public function getEventsByDay (\DateTime $start, \DateTime $end, ?string $semestre = null,$idca,$specialite=null,$cycle=null,$salle){

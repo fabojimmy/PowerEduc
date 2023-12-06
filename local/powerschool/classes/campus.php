@@ -115,9 +115,9 @@ class campus extends moodleform {
 
         // $mform->addElement('filemanager', 'logocampus', "Votre logo", null, array('accepted_types' => '*'));
         // // $mform->get_file_manager("");
-        // $mform->addElement('hidden', 'usermodified'); // Add elements to your form
-        // $mform->setType('usermodified', PARAM_INT);                   //Set type of element
-        // $mform->setDefault('usermodified', $USER->id);        //Default value
+        $mform->addElement('hidden', 'usermodified'); // Add elements to your form
+        $mform->setType('usermodified', PARAM_INT);                   //Set type of element
+        $mform->setDefault('usermodified', $USER->id);        //Default value
         
 
         $mform->addElement('hidden', 'timecreated', 'date de creation'); // Add elements to your form

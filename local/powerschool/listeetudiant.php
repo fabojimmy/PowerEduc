@@ -177,6 +177,13 @@ $menu = (object)[
 
 echo $OUTPUT->header();
 
+if($CFG->theme=="boost")
+    {
+    }
+    elseif ($CFG->theme == 'adaptable') {
+        // Changer la couleur en bleu
+        echo"<p style='margin-top:-120px'><p>";
+    }
 if(has_capability("local/powerschool:affectercours",context_system::instance(),$USER->id))
     {
         echo $OUTPUT->render_from_template('local_powerschool/navbar', $menu);

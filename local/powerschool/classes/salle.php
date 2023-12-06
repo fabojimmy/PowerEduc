@@ -41,9 +41,13 @@ class salle extends moodleform {
         global $USER;
         $campus = new campus();
         $camp = array();
-        $sql = "SELECT * FROM {campus} ";
-        $camp = $campus->select($sql);
+        $sql = "SELECT * FROM {batiment} WHERE idcampus='".ChangerSchoolUser($USER->id)."'";
+        $batiment = $campus->select($sql);
         
+        foreach ($batiment as $key => $value)
+        {
+            $tarbatiment[$key] = $value->numerobatiment;
+        }
         // var_dump(ChangerSchoolUser($USER->id));die;
         $mform = $this->_form; // Don't forget the underscore!
 
@@ -63,6 +67,12 @@ class salle extends moodleform {
         $mform->setDefault('capacitesalle', '');        //Default value
         $mform->addRule('capacitesalle', 'Capacite de la Salle', 'required', null, 'client');
         $mform->addHelpButton('capacitesalle', 'salle');
+       
+        $mform->addElement('select', 'idbatiment', 'Batiment',$tarbatiment); // Add elements to your form
+        $mform->setType('idbatiment', PARAM_TEXT);                   //Set type of element
+        $mform->setDefault('idbatiment', '');        //Default value
+        $mform->addRule('idbatiment', 'idbatiment', 'required', null, 'client');
+        $mform->addHelpButton('idbatiment', 'batiment');
        
        
         $mform->addElement('hidden', 'usermodified'); // Add elements to your form

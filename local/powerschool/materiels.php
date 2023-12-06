@@ -69,9 +69,6 @@ $recordtoinsert = $fromform;
     $recordtoinsert=new stdClass();
     $recordtoinsert->libellemate=$_POST["libellemate"];
     $recordtoinsert->idcampus=$_POST["idcampus"];
-    $recordtoinsert->quantite=$_POST["quantite"];
-    $recordtoinsert->prixuni=$_POST["prixuni"];
-    $recordtoinsert->sommetota=$_POST["prixuni"]*$_POST["quantite"];
     $recordtoinsert->description=$_POST["description"];
     $recordtoinsert->idanneescolaire=$_POST["idanneescolaire"];
     $recordtoinsert->usermodified=$USER->id;
@@ -112,12 +109,10 @@ if($_GET['id']) {
 // var_dump($inscription);
 // die;
 $message=$DB->get_records("materiels",array("idcampus"=>ChangerSchoolUser($USER->id)));
-$somme=$DB->get_records_sql("SELECT SUM(sommetota) as sommateriel FROM {materiels} WHERE idcampus='".ChangerSchoolUser($USER->id)."'");
 $templatecontext = (object)[
     'materiels' => array_values($message),
-    'somme' => array_values($somme),
     // 'nb'=>array_values($tab),
-    'messagesc' => $CFG->wwwroot.'/local/powerschool/PHPMailer/email.php',
+    'ajouterachat' => $CFG->wwwroot.'/local/powerschool/ligneachat.php',
     'inscriptionpayer'=> $CFG->wwwroot.'/local/powerschool/paiement.php',
     'materielssup'=> $CFG->wwwroot.'/local/powerschool/materiels.php',
     'idca'=>ChangerSchoolUser($USER->id)

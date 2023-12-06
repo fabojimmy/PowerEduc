@@ -168,6 +168,13 @@ echo $OUTPUT->header();
 
 // echo $OUTPUT->render_from_template('local_powerschool/navbarconfiguration', $menumini);
 echo '<div style="margin-top:80px";></div>';
+if($CFG->theme=="boost")
+{
+}
+elseif ($CFG->theme == 'adaptable') {
+    // Changer la couleur en bleu
+    echo"<p style='margin-top:-170px'><p>";
+}
 echo '<div class="mx-6">'.$OUTPUT->render_from_template('local_powerschool/campustou', $campuss).'</div>';
 // echo $OUTPUT->render_from_template('local_powerschool/navbar', $menu);
 // $mform->display();
