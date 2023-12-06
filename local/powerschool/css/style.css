@@ -1,0 +1,35 @@
+.labelsta{
+   
+    font-weight: 600;
+}
+.choisir-fichier {
+    /* Ajoutez ici les styles que vous souhaitez pour le bouton */
+    /* Par exemple : */
+    background-color: #4CAF50; /* Couleur de fond */
+    color: white; /* Couleur du texte */
+    padding: 10px 20px; /* Espacement intérieur */
+    border: none; /* Supprimez la bordure */
+    border-radius: 5px; /* Bordures arrondies */
+    cursor: pointer; /* Curseur de la souris en forme de main */
+  }
+  
+  /* Masquez le champ de téléchargement de fichier par défaut */
+  input[type="file"] {
+    display: none;
+  }
+
+
+
+
+
+
+@media print{
+    form{
+      display:none;
+
+    }
+    .cl,.btn{
+      display:none;
+
+    }
+}
