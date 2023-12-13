@@ -78,7 +78,7 @@ $recordtoinsert = $fromform;
     $recordtoinsert->timemodified=time();
     // var_dump($recordtoinsert);die;
     // $DB->insert_record('ligneachat', $recordtoinsert);
-    $DB->execute("INSERT INTO mdl_ligneachat VALUE (0,'".$recordtoinsert->quantite."','".$recordtoinsert->prixuni."','".$recordtoinsert->sommetota."','".$recordtoinsert->idmateriels."','". $recordtoinsert->usermodified."','".$recordtoinsert->idanneescolaire."','".time()."','".time()."')");
+    $DB->execute("INSERT INTO mdl_ligneachat VALUE (0,'".$recordtoinsert->quantite."','".$recordtoinsert->prixuni."','".$recordtoinsert->sommetota."','".$recordtoinsert->idmateriels."','".ChangerSchoolUser($USER->id)."','". $recordtoinsert->usermodified."','".$recordtoinsert->idanneescolaire."','".time()."','".time()."')");
     redirect($CFG->wwwroot . '/local/powerschool/ligneachat.php?idac='.$_POST["idmateriels"].'', 'Enregistrement effectué');
     exit;
 // }else{
@@ -112,7 +112,8 @@ if($_GET['id']) {
 // var_dump($inscription);
 // die;
 $message=$DB->get_records_sql("SELECT * FROM {ligneachat} l,{materiels} m WHERE l.idmateriels=m.id AND l.idmateriels='".$_GET["idac"]."' AND m.idcampus='".ChangerSchoolUser($USER->id)."'");
-$somme=$DB->get_records_sql("SELECT SUM(sommetotal) as sommateriel FROM {ligneachat} l,{materiels} m WHERE l.idmateriels=m.id AND l.idmateriels='".$_GET["idac"]."' AND m.idcampus='".ChangerSchoolUser($USER->id)."'");
+// die;
+$somme=$DB->get_records_sql("SELECT SUM(sommetota) as sommateriel FROM {ligneachat} l,{materiels} m WHERE l.idmateriels=m.id AND l.idmateriels='".$_GET["idac"]."' AND m.idcampus='".ChangerSchoolUser($USER->id)."'");
 $templatecontext = (object)[
     'ligneachat' => array_values($message),
     'somme' => array_values($somme),

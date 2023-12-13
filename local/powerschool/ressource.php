@@ -420,6 +420,7 @@ $templatecontext = (object)[
     'salle' => new moodle_url('/local/powerschool/salle.php'),
     'ressourcelien' => new moodle_url('/local/powerschool/ressource.php'),
     'ressourcearchive' => new moodle_url('/local/powerschool/ressource.php'),
+    'ressourcelist' => new moodle_url('/local/powerschool/ressourcelist.php'),
     'root'=>$CFG->wwwroot,
     'resotest'=>$_GET["res"],
     'idca'=>ChangerSchoolUser($USER->id),

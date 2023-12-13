@@ -124,6 +124,16 @@ foreach ($inscription as $key ){
 // var_dump($i);
 // var_dump($inscription);
 // die;
+
+// die;
+
+// $specialite=$cycle=$semestre=array();
+$specialite=$DB->get_records_sql("SELECT s.id,libellespecialite FROM {specialite} s,{filiere} f WHERE s.idfiliere = f.id AND f.idcampus='".ChangerSchoolUser($USER->id)."'");
+$cycle=$DB->get_records_sql("SELECT * FROM {cycle} c WHERE c.idcampus='".ChangerSchoolUser($USER->id)."'");
+$semestre=$DB->get_records_sql("SELECT * FROM {semestre}");
+
+// var_dump($specialite,$cycle,$semestre);
+// die;
 $annee=$DB->get_records("anneescolaire");
 $campus=$DB->get_records("campus");
 foreach($annee as $key => $ab)
@@ -138,7 +148,9 @@ foreach($annee as $key => $ab)
                 $ab->datefin = $datef;
             }
 $templatecontext = (object)[
-    'inscription' => array_values($inscription),
+    'specialitere'=>array_values($specialite),
+    'cyclere'=>array_values($cycle),
+    'semestrere'=>array_values($semestre),
     // 'nb'=>array_values($tab),
     'inscriptionedit' => new moodle_url('/local/powerschool/inscriptionedit.php'),
     'inscriptionpayer'=> new moodle_url('/local/powerschool/paiement.php'),
@@ -156,12 +168,6 @@ $templatecontext = (object)[
     // 'imprimer' => new moodle_url('/local/powerschool/imp.php'),
     'anneee'=>array_values($annee),
     'root'=>$CFG->wwwroot,
-    'campus1' => array_values($campus),
-    'idca'=>$_GET["campus"],
-    'idsp'=>$_GET["specialite"],
-    'idcy'=>$_GET["cycle"],
-    'idan'=>$_GET["annee"],
-    'idfi'=>$_GET["filiere"],
 ];
 
 // $menu = (object)[

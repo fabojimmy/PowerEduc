@@ -126,6 +126,8 @@ if ($mform->is_cancelled()){
             $data->availability = null;
         }
     }
+    // var_dump($course);
+    // die;
     course_update_section($course, $section, $data);
 
     $PAGE->navigation->clear_cache();

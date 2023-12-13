@@ -25,6 +25,7 @@
 }}
 <html>
   <head>
+        <link rel="stylesheet" href="{{root}}/local/powerschool/css/style.css">
   </head>
     <body> 
        
@@ -32,7 +33,7 @@
       <form location.href='{{courssemestre}}' method="post">
         <div class="d-flex justify-content-around">
           <!--<div class="col-2">
-              <label>Choisir professeur</label>
+              <label> professeur</label>
               <select class="form-control professeur" name="professeur">
               {{#professeur}}
                 <option value="{{userid}}">{{firstname}}-{{lastname}}</option>
@@ -40,7 +41,7 @@
               </select>
           </div>-->
           <div class="col-2 ">
-              <label>Choisir Specialite</label>
+              <label class="labelsta"> Specialite</label>
               <select class="form-control specialite" name="specialite">
               {{#specialite}}
                 <option value="{{id}}">{{libellespecialite}}</option>
@@ -49,13 +50,13 @@
           </div>
          
           <div class="col-2">
-              <label>Choisir Cycle</label>
+              <label class="labelsta"> Cycle</label>
               <select class="form-control cycle" name="cycle">
               </select>
           </div>
            
           <div class="col-2">
-              <label>Choisir cours</label>
+              <label class="labelsta"> cours</label>
               <select class="form-control cours" name="cours">
                 <option>
 
@@ -64,12 +65,12 @@
           </div>
           
           <div class="col-2">
-              <label>Choisir Semestre</label>
+              <label class="labelsta"> Semestre</label>
               <select class="form-control semestre" name="semestre">
               </select>
           </div>
          <!-- <div class="col-2">
-              <label>Choisir Salle</label>
+              <label> Salle</label>
               <select class="form-control salle" name="salle">
                   {{#sallee}}
                     <option value="{{id}}">{{numerosalle}}</option>

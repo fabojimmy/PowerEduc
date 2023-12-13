@@ -531,15 +531,30 @@ if(has_capability("local/powerschool:inscription",context_system::instance(),$US
     }
     elseif ($CFG->theme == 'adaptable') {
         // Changer la couleur en bleu
-        echo"<p style='margin-top:-120px'><p>";
+        echo"<p style='margin-top:-120px' class='dipp'><p>";
     }
     echo $OUTPUT->render_from_template('local_powerschool/navbar', $menu);
     // echo '<div style="margin-top:10px";><wxcvbn</div>';
     // echo $OUTPUT->render_from_template('local_powerschool/campustou', $campuss);
     if(has_capability("local/powerschool:voirapprenantinscription",context_system::instance(),$USER->id))
     {
+        echo"<style>
+        @media screen and ( max-width:600px) {
+           
+            .dipp{
+               margin-top:0;
+            }
+            
+           }
+           @media screen and ( max-width:400px) {
+               
+               .dipp{
+                  margin-top:0;
+               }
+         }
+        </style>";
+        echo "<div class='disp' style='margin-top:1000px'>".$mform->display(). "</div>";
 
-        $mform->display();
     }
     else
     {
