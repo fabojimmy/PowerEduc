@@ -103,6 +103,17 @@ $string['idcoursspecialite'] = 'Specialité';
 
 //group
 
+// rapport
+$string['rapport']='Rapport';
+$string['freqappr']='Fréquentation des Apprenants';
+$string['contenu']='Contenu couvert';
+$string['activiclass']='Activités en classe';
+$string['progreapp']='Progrès des apprenants';
+$string['comportapp']='Comportement des apprenants';
+$string['questapp']='Questions des apprenants';
+$string['durre']='Durée du cours';
+$string['problete']='Problèmes techniques ou logistiques';
+$string['feelba']='Feedback du professeur';
 
 //Notification generale
 $string['notificationedit'] = 'Modification effectué';

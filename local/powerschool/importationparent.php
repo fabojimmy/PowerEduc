@@ -40,36 +40,45 @@ if($Extension=='xlxs' || $Extension='xls' || $Extension=='csv')
     $data=$obj->getActiveSheet()->toArray();
     foreach($data as $key =>$row)
     {
-        $new =new stdClass();
-        $new->auth="manual";
-        $new->confirmed=1;
-        $new->policyagreed=0;
-        $new->deleted=0;
-        $new->suspended=0;
-        $new->mnethostid=1;
-        $new->username=$row[0];
-        $new->password=hash_internal_user_password($row[1]);
-        $new->firstname=$row[2];
-        $new->lastname=$row[3];
-        $new->email=$row[4];
-        $new->emailstop=0;
-        $new->phone1=$row[5];
-        $new->phone2=$row[6];
-        $new->department=$row[7];
-        $new->address=$row[8];
-        $new->country=$row[9];
-        $new->idparent=0;
-        $new->idcampuser=$row[11];
-        // $new->lastname=$row['2'];
-        
-        // var_dump($ko, "<br>");
-        $id=$DB->insert_record("user",$new);
+      if(!empty($row[2]&&!empty($row[3])&&!empty($row[0])&&!empty($row[1])))
+      {
 
-        if($row[10])
-        {
+          $new =new stdClass();
+          $new->auth="manual";
+          $new->confirmed=1;
+          $new->policyagreed=0;
+          $new->deleted=0;
+          $new->suspended=0;
+          $new->mnethostid=1;
+          $new->username=$row[0];
+          $new->password=hash_internal_user_password($row[1]);
+          $new->firstname=$row[2];
+          $new->lastname=$row[3];
+          $new->email=$row[4];
+          $new->emailstop=0;
+          $new->phone1=$row[5];
+          $new->phone2=$row[6];
+          $new->department=$row[7];
+          $new->address=$row[8];
+          $new->country=$row[9];
+          $new->idparent=0;
+          $new->idcampuser=$row[11];
+          // $new->lastname=$row['2'];
+          
+          // var_dump($ko, "<br>");
+          $id=$DB->insert_record("user",$new);
+  
+          if($row[10])
+          {
+  
+              $DB->insert_record("role_assignments",array("roleid"=>$row[10],"userid"=>$id));
+          }
+      }
+      else
+      {
+        redirect($CFG->wwwroot . '/local/powerschool/importationre.php', 'Remplissez les données essentiels',\core\output\notification::NOTIFY_ERROR);
 
-            $DB->insert_record("role_assignments",array("roleid"=>$row[10],"userid"=>$id));
-        }
+      }
 
     // if($row[11]&&$row[12]&&$row[13]&&$row[14]&&$row[15]&&$row[16]&&$row[17]&&$row[18]&&$row[19]){
 
@@ -90,7 +99,7 @@ if($Extension=='xlxs' || $Extension='xls' || $Extension=='csv')
 
     }
     // die;
-    redirect($CFG->wwwroot . '/local/powerschool/importationre.php', 'Importation éffectués avec succès',\core\output\notification::NOTIFY_ERROR);
+    redirect($CFG->wwwroot . '/local/powerschool/importationre.php', 'Importation éffectués avec succès',\core\output\notification::NOTIFY_SUCCESS);
 }
    
 

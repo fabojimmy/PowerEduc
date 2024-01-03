@@ -71,7 +71,29 @@
             </select> }}
         <button type="submit" class="btn btn-primary " name="import">Import</button>
     </form>
-    <form action="{{cours}}" enctype="multipart/form-data" method="POST">
+   
+    <form action="{{pare}}" enctype="multipart/form-data" method="POST">
+        <label for="fichierpare" class="choisir-fichier col-3">Importation des parents</label>
+        <input type="file" class="" name="excel" required id="fichierpare">
+            {{! <select>
+                <option></option>
+                <option value="insc">Inscription</option>
+                <option value="user">User</option>
+            </select> }}
+        <button type="submit" class="btn btn-primary" name="import">Import</button>
+    </form>
+    <form action="{{prof}}" enctype="multipart/form-data" method="POST">
+        <label for="fichierprof" class="choisir-fichier col-3">Importation des professeurs</label>
+        <input type="file" class="" name="excel" required id="fichierprof">
+            {{! <select>
+                <option></option>
+                <option value="insc">Inscription</option>
+                <option value="user">User</option>
+            </select> }}
+        <button type="submit" class="btn btn-primary" name="import">Import</button>
+    </form>
+
+     <form action="{{cours}}" enctype="multipart/form-data" method="POST">
         
 
         <div class="flex">
@@ -105,26 +127,6 @@
         </div>
         <label for="fichiercour" class="choisir-fichier col-3">Importation des cours</label>
         <input type="file" class="" name="excel" required id="fichiercour">
-            {{! <select>
-                <option></option>
-                <option value="insc">Inscription</option>
-                <option value="user">User</option>
-            </select> }}
-        <button type="submit" class="btn btn-primary" name="import">Import</button>
-    </form>
-    <form action="{{pare}}" enctype="multipart/form-data" method="POST">
-        <label for="fichierpare" class="choisir-fichier col-3">Importation des parents</label>
-        <input type="file" class="" name="excel" required id="fichierpare">
-            {{! <select>
-                <option></option>
-                <option value="insc">Inscription</option>
-                <option value="user">User</option>
-            </select> }}
-        <button type="submit" class="btn btn-primary" name="import">Import</button>
-    </form>
-    <form action="{{prof}}" enctype="multipart/form-data" method="POST">
-        <label for="fichierprof" class="choisir-fichier col-3">Importation des professeurs</label>
-        <input type="file" class="" name="excel" required id="fichierprof">
             {{! <select>
                 <option></option>
                 <option value="insc">Inscription</option>

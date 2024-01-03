@@ -185,10 +185,10 @@ if (!empty($_POST["professeur"])&& !empty($_POST["specialite"])&& !empty($_POST[
                             //  groups_add_member($mo->id,$recordtoinsert->idprof);
                         if($_POST["salle"])
                         {
-                            $DB->execute("INSERT INTO mdl_affecterprof VALUES (0,'".$recordtoinsert->idcourssemestre."', '".$recordtoinsert->idprof."', '".$USER->id."','".time()."','".time()."','".$_POST["salle"]."',0,0)");
+                            $DB->execute("INSERT INTO mdl_affecterprof VALUES (0,'".$recordtoinsert->idcourssemestre."', '".$recordtoinsert->idprof."','".$_POST["heurecours"]."','".$_POST["prixheur"]."','".$USER->id."','".time()."','".time()."','".$_POST["salle"]."',0,0)");
                         }else
                         {
-                            $DB->execute("INSERT INTO mdl_affecterprof VALUES (0,'".$recordtoinsert->idcourssemestre."', '".$recordtoinsert->idprof."', '".$USER->id."','".time()."','".time()."',0,0,'".$_POST["group"]."')");
+                            $DB->execute("INSERT INTO mdl_affecterprof VALUES (0,'".$recordtoinsert->idcourssemestre."', '".$recordtoinsert->idprof."','".$_POST["heurecours"]."','".$_POST["prixheur"]."','".$USER->id."','".time()."','".time()."',0,'".$_POST["group"]."',0)");
                         }
              }
              else

@@ -3911,6 +3911,7 @@ function course_get_user_navigation_options($context, $course = null) {
         'participants' => false,
         'search' => false,
         'tags' => false,
+        'rapport' => false,
     ];
 
     $options->blogs = !empty($CFG->enableblogs) &&
@@ -3925,6 +3926,7 @@ function course_get_user_navigation_options($context, $course = null) {
         // We are on the front page, so make sure we use the proper capability (site:viewparticipants).
         $options->participants = course_can_view_participants($sitecontext);
         $options->badges = !empty($CFG->enablebadges) && has_capability('moodle/badges:viewbadges', $sitecontext);
+        $options->rapport = !empty($CFG->enablebadges) && has_capability('moodle/badges:viewbadges', $sitecontext);
         $options->tags = !empty($CFG->usetags) && $isloggedin;
         $options->search = !empty($CFG->enableglobalsearch) && has_capability('moodle/search:query', $sitecontext);
     } else {
@@ -3963,9 +3965,11 @@ function course_get_user_navigation_options($context, $course = null) {
         }
         // Add view grade report is permitted.
         $grades = false;
+        $rapport = false;
 
         if (has_capability('moodle/grade:viewall', $context)) {
             $grades = true;
+            $rapport = true;
         } else if (!empty($course->showgrades)) {
             $reports = core_component::get_plugin_list('gradereport');
             if (is_array($reports) && count($reports) > 0) {  // Get all installed reports.
@@ -3974,12 +3978,14 @@ function course_get_user_navigation_options($context, $course = null) {
                     if (has_capability('gradereport/'.$plugin.':view', $context)) {
                         // Stop when the first visible plugin is found.
                         $grades = true;
+                        $rapport = true;
                         break;
                     }
                 }
             }
         }
         $options->grades = $grades;
+        $options->rapport = $rapport;
     }
 
     if (\core_competency\api::is_enabled()) {

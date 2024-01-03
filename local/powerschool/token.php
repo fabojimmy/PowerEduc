@@ -3,7 +3,7 @@
  use Firebase\JWT\JWT;
  use Firebase\JWT\Key;
 
- $sec_key="6HSKOMSQL";
+ 
  $payload=array(
     "isd"=>'localhost',
     "aud"=>'localhost',
@@ -12,18 +12,30 @@
     "password"=>'jimmy'
  );
 
- $encode=JWT::encode($payload,$sec_key,'HS256');
+ function tokenencode($payload)
+ {
+   $sec_key="6HSKOMSQL";
+   $encode=JWT::encode($payload,$sec_key,'HS256');
+   return $encode;
+ }
 //  $decode=JWT::decode($encode,new Key($sec_key,'HS256'));
 
- $header=apache_request_headers();
-//  var_dump($header['Authorization']);
-$header['Authorization']=$encode;
-if($header['Authorization'])
+function tokendecode($token)
 {
-    $header=$header['Authorization'];
-    $decode=JWT::decode($header,new Key($sec_key,'HS256'));
+  $sec_key="6HSKOMSQL";
+  $header=apache_request_headers();
+ //  var_dump($header['Authorization']);
+ $header['Authorization']=$token;
+ if($header['Authorization'])
+ {
+     $header=$header['Authorization'];
+     $decode=JWT::decode($header,new Key($sec_key,'HS256'));
+     
+     return $decode;
+ }
+
+ 
+ //  print_r($encode);
 }
 
-echo $decode->usernames;
-  print_r($encode);
 ?>

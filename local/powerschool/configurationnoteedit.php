@@ -76,10 +76,11 @@ if ($id) {
 
 
 
+// register_shutdown_function('dol_shutdown');
+
 echo $OUTPUT->header();
 $mform->display();
 echo $OUTPUT->footer();
-
 
 
 // if ($fromform->id) {

@@ -174,9 +174,9 @@ $sql8 = "SELECT s.id,libellespecialite,libellefiliere,abreviationspecialite FROM
         // $mform->addRule('idsemestre', 'Choix du Semestre', 'required', null, 'client');
         $mform->addHelpButton('idsemestre', 'semestre');
 
-        $mform->addElement('advcheckbox', 'disable_idsemestre', 'Disable Event Type', 'Disable', array('group' => 1));
-        $mform->setType('disable_idsemestre', PARAM_INT); // Assurez-vous que le type est paramétré correctement 
-        $mform->disabledIf('idsemestre', 'disable_idsemestre');
+        
+        $mform->addElement('advcheckbox', 'tjr', 'Tout les jours', 'Disable', array('group' => 1));
+        $mform->setType('tjr', PARAM_INT); // Assurez-vous que le type est paramétré correctement 
 
         $mform->addElement('select', 'idspecialite', 'Specialite/Classes', $selectspecialite ); // Add elements to your form
         $mform->setType('idspecialite', PARAM_TEXT);                   //Set type of element
@@ -210,6 +210,12 @@ $sql8 = "SELECT s.id,libellespecialite,libellefiliere,abreviationspecialite FROM
           
         }
 
+        $selectpro["pro"]="Emploi de temps";
+        $selectpro["exa"]="Emploi de temps examen";
+        $mform->addElement('select', 'typepro', 'Type', $selectpro); // Add elements to your form
+        $mform->setType('typepro', PARAM_TEXT);                   //Set type of element
+        $mform->addHelpButton('typepro', 'Salle');
+
         $mform->addElement('select', 'idprof', 'Enseignants', $selectprofession ); // Add elements to your form
         $mform->setType('idprof', PARAM_TEXT);                   //Set type of element
         $mform->setDefault('idprof', '');        //Default value
@@ -225,6 +231,12 @@ $sql8 = "SELECT s.id,libellespecialite,libellefiliere,abreviationspecialite FROM
         $mform->setType('disable_datecours', PARAM_INT); // Assurez-vous que le type est paramétré correctement 
         $mform->disabledIf('datecours', 'disable_datecours');
 
+
+        // $mform->addElement('advcheckbox', 'tyexa', 'Type Examen', 'Disable', array('group' => 1));
+        // $mform->setType('tyexa', PARAM_INT); // Assurez-vous que le type est paramétré correctement 
+        // $mform->disabledIf('datecours', 'tyexa');
+
+        
         $mform->addElement('date_selector', 'datefincours', 'Date du Cours fin' ); // Add elements to your form
         // $mform->setType('datecours', PARAM_TEXT);                   //Set type of element
         // $mform->setDefault('datecours', '');        //Default value
@@ -249,6 +261,9 @@ $sql8 = "SELECT s.id,libellespecialite,libellefiliere,abreviationspecialite FROM
         $mform->addElement('text', 'nobresemaine', 'Nombre de Semaine' ); // Add elements to your form
         $mform->setDefault('nobresemaine', '');        //Default value
         $mform->addHelpButton('nobresemaine', 'heure');
+        $mform->addElement('advcheckbox', 'disable_nobresemaine', 'Disable Event Type', 'Disable', array('group' => 1));
+        $mform->setType('disable_nobresemaine', PARAM_INT); // Assurez-vous que le type est paramétré correctement 
+        $mform->disabledIf('nobresemaine', 'disable_nobresemaine');
 
 
         // $periode = ['une seance', 'sur un mois', 'sur deux mois', 'sur toute'];
@@ -388,11 +403,11 @@ $sql8 = "SELECT s.id,libellespecialite,libellefiliere,abreviationspecialite FROM
       }
 
     }
-    public function definir_semestref ($id){
+    public function definir_semestref ($date){
         global $DB;
 
 
-        $sqlsemestre = "SELECT * FROM {semestre} WHERE id='".$id."'";
+        $sqlsemestre = "SELECT * FROM {semestre} WHERE '".$date."' BETWEEN  datedebutsemestre AND datefinsemestre";
 
         // var_dump($sqlsemestre);
 
@@ -413,7 +428,7 @@ $sql8 = "SELECT s.id,libellespecialite,libellefiliere,abreviationspecialite FROM
         else
         {
           return null;
-          ;
+          
 
       }
 
