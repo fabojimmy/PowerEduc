@@ -111,6 +111,7 @@
                 <th scope="col">Specialite</th>
                 <th scope="col">Abréviation</th>
                 <th scope="col">Filiere</th>
+                <th scope="col">Nombre d'options</th>
                 <th scope="col">Actions</th>
               </tr>
             </thead>
@@ -122,6 +123,7 @@
                     <td>{{libellespecialite}} </td>
                     <td>{{abreviationspecialite}} </td>
                     <td>{{libellefiliere}} ({{abreviationfiliere}})  </td>
+                    <td>{{nombreoption}}</td>
                     <td>
                         <input type="button" class="btn btn-primary" value="modifier" onclick="location.href='{{specialiteedit}}?id={{id}}&idca={{idca}}&action=edit'">
                         <input type="button" class="btn btn-danger local_annee_delete_button" value="supprimer" onclick="location.href='{{specialitesupp}}?id={{id}}&idca={{idca}}&action=delete'">

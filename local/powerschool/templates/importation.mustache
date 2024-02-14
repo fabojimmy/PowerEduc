@@ -71,16 +71,7 @@
             </select> }}
         <button type="submit" class="btn btn-primary " name="import">Import</button>
     </form>
-    <form action="{{cours}}" enctype="multipart/form-data" method="POST">
-        <label for="fichiercour" class="choisir-fichier col-3">Importation des cours</label>
-        <input type="file" class="" name="excel" required id="fichiercour">
-            {{! <select>
-                <option></option>
-                <option value="insc">Inscription</option>
-                <option value="user">User</option>
-            </select> }}
-        <button type="submit" class="btn btn-primary" name="import">Import</button>
-    </form>
+   
     <form action="{{pare}}" enctype="multipart/form-data" method="POST">
         <label for="fichierpare" class="choisir-fichier col-3">Importation des parents</label>
         <input type="file" class="" name="excel" required id="fichierpare">
@@ -94,6 +85,48 @@
     <form action="{{prof}}" enctype="multipart/form-data" method="POST">
         <label for="fichierprof" class="choisir-fichier col-3">Importation des professeurs</label>
         <input type="file" class="" name="excel" required id="fichierprof">
+            {{! <select>
+                <option></option>
+                <option value="insc">Inscription</option>
+                <option value="user">User</option>
+            </select> }}
+        <button type="submit" class="btn btn-primary" name="import">Import</button>
+    </form>
+
+     <form action="{{cours}}" enctype="multipart/form-data" method="POST">
+        
+
+        <div class="flex">
+            <div>
+               <label class="labelsta">Specialite</label>
+               <select class="form-control col-3" name="idspecialite" >
+                    <option value=""></option>
+                    {{#specialitere}}
+                        <option value="{{id}}">{{libellespecialite}}</option>  
+                    {{/specialitere}}
+               </select>
+            </div>
+            <div>
+               <label class="labelsta">Cycle</label>
+               <select class="form-control col-3" name="idcycle" >
+                    <option value=""></option>
+                    {{#cyclere}}
+                        <option value="{{id}}">{{libellecycle}}</option>  
+                    {{/cyclere}}
+               </select>
+            </div>
+            <div>
+               <label class="labelsta">Semestre</label>
+               <select class="form-control col-3 my-3" name="idsemestre" >
+                    <option value=""></option>
+                    {{#semestrere}}
+                        <option value="{{id}}">{{libellesemestre}}</option>  
+                    {{/semestrere}}
+               </select>
+            </div>
+        </div>
+        <label for="fichiercour" class="choisir-fichier col-3">Importation des cours</label>
+        <input type="file" class="" name="excel" required id="fichiercour">
             {{! <select>
                 <option></option>
                 <option value="insc">Inscription</option>

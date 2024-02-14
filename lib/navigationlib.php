@@ -2925,6 +2925,8 @@ class global_navigation extends navigation_node {
         if ($navoptions->participants) {
             $participants = $coursenode->add(get_string('participants'), new moodle_url('/user/index.php?id='.$course->id),
                 self::TYPE_CONTAINER, get_string('participants'), 'participants', new pix_icon('i/users', ''));
+            // $participants = $coursenode->add(get_string('rapport'), new moodle_url('/user/index.php?id='.$course->id),
+            //     null, get_string('rapport'), 'dd', new pix_icon('i/users', ''));
 
             if ($navoptions->blogs) {
                 $blogsurls = new moodle_url('/blog/index.php');
@@ -2950,6 +2952,16 @@ class global_navigation extends navigation_node {
             $coursenode->add(get_string('coursebadges', 'badges'), $url,
                     navigation_node::TYPE_SETTING, null, 'badgesview',
                     new pix_icon('i/badge', get_string('coursebadges', 'badges')));
+        }
+        // rapport.
+
+        // var_dump($navoptions->rapport,$navoptions->badges);die;
+        if ($navoptions->rapport) {
+            $url = new moodle_url('/local/powerschool/rapportCours.php', array('id' => $course->id));
+
+            $coursenode->add(get_string('rapport', 'badges'), $url,
+                    navigation_node::TYPE_SETTING, null, 'badgesview',
+                    new pix_icon('i/raport', get_string('rapport', 'badges')));
         }
 
         // Check access to the course and competencies page.

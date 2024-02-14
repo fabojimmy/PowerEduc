@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{root}}/local/powerschool/css/styles.css">
+
 </head>
 <body>
 
@@ -22,7 +24,7 @@
         </ul>
     </nav>
 </div>-->
-         <label>Choisir l'etablissement</label>
+         <label class="labelsta"> L'etablissement</label>
         <div class="col-2">
             <select name="campus"onchange="if (this.value) location.href=this.value;" class="form-control">
             <option value=""></option>
@@ -35,7 +37,7 @@
     <input type="hidden" class="campus" name="campus" value="{{idca}}">
        <div class="d-flex justify-content-around mt-5">
                 <div class="col-1">
-                    <label> Année</label>
+                    <label class="labelsta"> Année</label>
                     <select class="form-control" name="anneee">
                         <option value=""></option>
                     {{#annee}}
@@ -44,7 +46,7 @@
                     </select>
                 </div>
                 <div class="col-2">
-                    <label>Choisir filiere</label>
+                    <label class="labelsta"> filiere</label>
                     <select class="form-control filiere" name="filiere">
                         <option value=""></option>
                     {{#filiere}}
@@ -53,7 +55,7 @@
                     </select>
                 </div>
                 <div class="col-2">
-                    <label>Choisir Specialite</label>
+                    <label class="labelsta"> Specialite</label>
                     <select class="form-control specialite" name="specialite">
                         <option value=""> </option>
                     
@@ -61,20 +63,20 @@
                 </div>
                         <!--<option value="{{id}}">{{libellespecialite}}</option>-->
                 <div class="col-2">
-                    <label>Choisir Cycle</label>
+                    <label class="labelsta"> Cycle</label>
                     <select class="form-control cycle" name="cycle">
                         <option value=""> </option>
                     </select>
                 </div>
 
                 <div class="col-2">
-                    <label>Choisir Salle</label>
+                    <label class="labelsta"> Salle</label>
                     <select class="form-control salle1" name="salle">
                         <option value="">select </option>
                     </select>
                 </div>
                 <div class="col-2">
-                    <label>Choisir cours</label>
+                    <label class="labelsta"> cours</label>
                     <select class="form-control cours" name="cours">
                         <option value="">select </option>
                         {{#cours}}
@@ -83,7 +85,7 @@
                     </select>
                 </div>
                 <div class="col-1">
-                    <label> Heure </label>
+                    <label class="labelsta"> Heure </label>
                     <select class="form-control heure" name="heure">
                         <option value="">select </option>
                     

@@ -172,7 +172,13 @@ echo $OUTPUT->header();
 
 if(has_capability("local/powerschool:listeabsenceetudiantmanager",context_system::instance(),$USER->id))
 {
-
+    if($CFG->theme=="boost")
+    {
+    }
+    elseif ($CFG->theme == 'adaptable') {
+        // Changer la couleur en bleu
+        echo"<p style='margin-top:-120px' class='dipp'><p>";
+    }
     // echo $OUTPUT->render_from_template('local_powerschool/navbarconfiguration', $menumini);
     echo '<div style="margin-top:20px";><wxcvbn</div>';
     echo "<div class='mx-6 px-2'>".$OUTPUT->render_from_template('local_powerschool/campustou', $campuss)."</div>";

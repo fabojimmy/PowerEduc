@@ -25,15 +25,16 @@
 }}
 <html>
   <head>
-        <link rel="stylesheet" href="{{root}}/local/powerschool/css/style.css">
+        <link rel="stylesheet" href="{{root}}/local/powerschool/css/styles.css">
+        
   </head>
   
     <body> 
        
-        <h1 class="mx-4">{{affec}}</h1>
-      <form location.href='{{courssemestre}}' class="mt-5" method="post">
-        <div class="d-flex justify-content-around">
-          <div class="col-2">
+        <h1 class="mx-4 affecg">{{affec}}</h1>
+      <form location.href='{{courssemestre}}' class="mt-5 frstatisque " method="post">
+        <div class="d-flex justify-content-around statiscontent ">
+          <div class="col-2 ">
               <label class="labelsta"> Professeur</label>
               <select class="form-control professeur" name="professeur">
               {{#professeur}}
@@ -41,7 +42,7 @@
               {{/professeur}}
               </select>
           </div>
-          <div class="col-2">
+          <div class="col-2 ">
               <label class="labelsta"> Specialite</label>
               <select class="form-control specialite" name="specialite">
               {{#specialite}}
@@ -50,18 +51,18 @@
               </select>
           </div>
          
-          <div class="col-2">
+          <div class="col-2 ">
               <label class="labelsta"> Cycle</label>
               <select class="form-control cycle" name="cycle">
               </select>
           </div>
-          <div class="col-2">
+          <div class="col-2 ">
               <label class="labelsta"> Année</label>
               <select class="form-control annee" name="annee">
               </select>
           </div>
            
-          <div class="col-2">
+          <div class="col-2 ">
               <label class="labelsta"> Cours</label>
               <select class="form-control cours" name="cours">
                 <option>
@@ -70,17 +71,28 @@
               </select>
           </div>
           
-          <div class="col-2">
+          <div class="col-2 ">
               <label class="labelsta"> Semestre</label>
               <select class="form-control semestre" name="semestre">
               </select>
           </div>
         </div>
-          {{{sallegro}}}
+        <div class="d-flex justify-content-around statiscontent my-5">
+            {{{sallegro}}}
+            <div class="col-2 ">
+                <label class="labelsta"> Heure Professionel</label>
+                <input type="number" class="form-control" name="heurecours">
+            </div>
+            <div class="col-2 ">
+                <label class="labelsta">Prix unitaire</label>
+                <input type="text" class="form-control" name="prixheur">
+            </div>
+          
+        </div>
      
         <input type="hidden" value="{{idca}}" name="idcampus">
-          <div class="ms-4">
-              <button class="btn btn-primary col-1 text-center mx-3 my-3" id="btn-recherche">Enregistrer</button>
+          <div class="ms-4 btn-re">
+              <button class="btn btn-primary col-1 text-center mx-3 my-3 " id="btn-recherche">Enregistrer</button>
           </div>
       </form>
        <!--<div class="d-flex flex-wrap align-items-center mt-5">
@@ -96,6 +108,8 @@
                         <th scope="col">Cours & Specialite</th>
                         <th scope="col">Salle</th>
                         <th scope="col">Groupe</th>
+                        <th scope="col">Heure Cours</th>
+                        <th scope="col">Prix par heure</th>
                         <th scope="col">Actions</th>
                       </tr>
                     </thead>
@@ -107,6 +121,8 @@
                             <td>{{fullname}}-{{libellecycle}}-{{libellespecialite}}-{{libellesemestre}} </td>
                             <td>{{numerosalle}} </td>
                             <td>{{libellegroup}} </td>
+                            <td>{{heurecours}} </td>
+                            <td>{{prixheur}} </td>
                             <td>
                                <!-- <input type="button" class="btn btn-primary" value="modifier" onclick="location.href='{{affecterprofedit}}?id={{idaffe}}&idca={{idca}}'">-->
                                 <input type="button" class="btn btn-danger local_annee_delete_button" value="supprimer" onclick="location.href='{{affecterprofsupp}}?id={{idaffe}}&idca={{idca}}&idcou={{idcouu}}&iduser={{iduser}}'">

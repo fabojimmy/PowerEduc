@@ -43,7 +43,9 @@
                 <th scope="col">Numero salle</th>
                 <th scope="col">capacite salle</th>
                 <th scope="col">campus</th>
-                <th scope="col">Actions</th>
+                <th scope="col">Batiment</th>
+                <th scope="col">Specialite</th>
+                <th scope="col">Action</th>
               </tr>
             </thead>
             {{#salle}}
@@ -55,6 +57,7 @@
                     <td>{{capacitesalle}} </td>
                     <td> {{villecampus}} - {{libellecampus}} </td>
                     <td> {{numerobatiment}}</td>
+                    <td> {{libellespecialite}}</td>
                     <td>
                         <input type="button" class="btn btn-primary" value="modifier" onclick="location.href='{{salleedit}}?id={{id}}'">
                         <input type="button" class="btn btn-danger local_annee_delete_button" value="supprimer" onclick="location.href='{{sallesupp}}?id={{id}}'">

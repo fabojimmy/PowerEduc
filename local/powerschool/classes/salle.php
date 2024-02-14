@@ -36,7 +36,7 @@ class salle extends moodleform {
 
     //Add elements to form
     public function definition() {
-        global $CFG,$iddetablisse;
+        global $CFG,$iddetablisse,$DB;
         // global ChangerSchoolUser($USER->id);
         global $USER;
         $campus = new campus();
@@ -48,7 +48,57 @@ class salle extends moodleform {
         {
             $tarbatiment[$key] = $value->numerobatiment;
         }
-        // var_dump(ChangerSchoolUser($USER->id));die;
+
+
+        //Specialite qui se trouve dans une categorie 
+
+
+        $tarspecialcat=array();
+            $camp=$DB->get_records("campus",array("id"=>ChangerSchoolUser($USER->id)));
+            foreach ($camp as $key => $value) {
+                # code...
+            }
+            $categ=$DB->get_records("course_categories",array("name"=>$value->libellecampus));
+            foreach ($categ as $key => $value1categ) {
+                # code...
+            }
+            // $filiere = $DB->get_records('filiere', array("idcampus"=>$_GET["idca"]));
+
+            $catfill=$DB->get_records_sql("SELECT * FROM {course_categories} WHERE depth=2");
+            $catspecia=$DB->get_records_sql("SELECT * FROM {course_categories} WHERE depth=3");
+            foreach($catfill as $key => $valfil)
+            {
+                $fff=explode("/",$valfil->path);
+                $idca=array_search($value1categ->id,$fff);
+            if($idca!==false)
+            {
+                foreach($catspecia as $key => $vallssp)
+                {
+                    $sss=explode("/",$vallssp->path);
+                    $idfill=array_search($valfil->id,$sss);
+                    if($idfill!==false)
+                    {
+
+                        // var_dump($vallssp->name);
+                        array_push($tarspecialcat,$vallssp->name);
+                    }
+                }
+                
+            }
+            }
+            $stringspecialitecat=implode("','",$tarspecialcat);
+            // die;
+
+            $sql = "SELECT s.id,libellespecialite,libellefiliere,abreviationspecialite,nombreoption FROM {filiere} f, {specialite} s WHERE s.idfiliere = f.id AND idcampus='".ChangerSchoolUser($USER->id)."' AND libellespecialite IN ('$stringspecialitecat')";
+
+            $specialites = $DB->get_records_sql($sql);
+
+
+            foreach ($specialites as $key => $value)
+        {
+            $tarspecialite[$key] = $value->libellespecialite;
+        }
+        // var_dump(ChangerSchoolUser($USER->id),$specialites);die;
         $mform = $this->_form; // Don't forget the underscore!
 
         $mform->addElement('header','Salle', 'Salle');
@@ -73,6 +123,12 @@ class salle extends moodleform {
         $mform->setDefault('idbatiment', '');        //Default value
         $mform->addRule('idbatiment', 'idbatiment', 'required', null, 'client');
         $mform->addHelpButton('idbatiment', 'batiment');
+     
+        $mform->addElement('select', 'idspecialite', 'Specialite',$tarspecialite); // Add elements to your form
+        $mform->setType('idspecialite', PARAM_TEXT);                   //Set type of element
+        $mform->setDefault('idspecialite', '');        //Default value
+        $mform->addRule('idspecialite', 'idspecialite', 'required', null, 'client');
+        $mform->addHelpButton('idspecialite', 'batiment');
        
        
         $mform->addElement('hidden', 'usermodified'); // Add elements to your form
@@ -123,7 +179,7 @@ class salle extends moodleform {
      * @param string $datedebut la date de debut de l'annee
      * @param string $datefin date de fin de l'annee 
      */
-    public function update_salle(int $id, string $numerosalle, string $capacitesalle, int $idcampus ): bool
+    public function update_salle(int $id, string $numerosalle, string $capacitesalle, int $idcampus,int $idspe ): bool
     {
         global $DB;
         global $USER;
@@ -131,6 +187,7 @@ class salle extends moodleform {
         $object->id = $id;
         $object->numerosalle = $numerosalle ;
         $object->capacitesalle = $capacitesalle ;
+        $object->idspecialite = $idspe ;
         $object->idcampus = $idcampus;
         $object->usermodified = $USER->id;
         $object->timemodified = time();

@@ -2,6 +2,7 @@
 require_once(__DIR__ . '/../../../config.php');
 
 // var_dump($_GET["notetest"]=="test",$_GET["idbu"],$_GET["id"]);die;
+// die;
 if($_GET["notetest"]=="test"&&$_GET["idbu"]&&$_GET["id"])
 {
     // var_dump($_GET["idsa"]);die;
