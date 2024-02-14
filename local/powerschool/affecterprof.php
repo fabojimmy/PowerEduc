@@ -217,6 +217,8 @@ if (!empty($_POST["professeur"])&& !empty($_POST["specialite"])&& !empty($_POST[
        }
 }
 
+
+
 if($_GET['id']) {
 
     // var_dump($_GET["idcou"]);die;
@@ -304,9 +306,10 @@ if($valueEt->libelletype=="universite")
 }
 else
 {
-    $affecter=$DB->get_recordset_sql("SELECT af.id as idaffe,libellecycle,libellespecialite,libellesemestre,fullname,firstname,lastname,numerosalle,cou.id as idcouu,us.id as iduser FROM {coursspecialite} as csp,{courssemestre} cse,{affecterprof} af,
+    $affecter=$DB->get_recordset_sql("SELECT af.id as idaffe,libellecycle,libellespecialite,libellesemestre,fullname,firstname,lastname,numerosalle,cou.id as idcouu,us.id as iduser,heurecours,prixheur FROM {coursspecialite} as csp,{courssemestre} cse,{affecterprof} af,
                                 {semestre} se,{specialite} sp,{cycle} cy,{course} cou,{user} as us,{filiere} f,{salle} sal WHERE sal.id=af.idsalle AND sp.idfiliere=f.id AND csp.id=cse.idcoursspecialite AND us.id=idprof
-                                AND idsemestre=se.id AND idcourses=cou.id AND idspecialite=sp.id AND idcycle=cy.id AND af.idcourssemestre=cse.id AND f.idcampus='".ChangerSchoolUser($USER->id)."' AND quit=0");
+                                AND idsemestre=se.id AND idcourses=cou.id AND csp.idspecialite=sp.id AND idcycle=cy.id AND af.idcourssemestre=cse.id AND f.idcampus='".ChangerSchoolUser($USER->id)."' AND quit=0");
+    // exit;
 
 }
 // var_dump($salle);die;

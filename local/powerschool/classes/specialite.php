@@ -36,8 +36,10 @@ class specialite extends moodleform {
         
         global $USER,$DB,$iddetablisse;
 
+        $vericam=$DB->get_records_sql("SELECT * FROM {campus} c,{typecampus} t
+                                WHERE t.id=c.idtypecampus AND c.id='".ChangerSchoolUser($USER->id)."'"); 
 
-        // var_dump(ChangerSchoolUser($USER->id));die;
+        
         $sqlspec="SELECT * FROM {specialite} WHERE id='".$_GET["id"]."'";
         $speccat=$DB->get_records_sql($sqlspec);
         foreach($speccat as $key =>$vaspelca)
@@ -119,6 +121,19 @@ class specialite extends moodleform {
         $mform->addRule('abreviationspecialite', 'abreviation specialite', 'required', null, 'client');
         $mform->addHelpButton('abreviationspecialite', 'abreviation');
               
+
+        // $uu="fff"||"lycee";
+        foreach($vericam as $key => $ver)
+            {
+                // var_dump($ver->libelletype);die;
+                if ($ver->libelletype=="lycee"||$ver->libelletype=="college") {
+                    $mform->addElement('text', 'nombreoption', 'Nombre d\'options'); // Add elements to your form
+                    $mform->setType('nombreoption', PARAM_TEXT);                   //Set type of element
+                    $mform->setDefault('nombreoption', '');        //Default value
+                    
+                }
+            }
+
         $mform->addElement('hidden', 'usermodified'); // Add elements to your form
         $mform->setType('usermodified', PARAM_INT);                   //Set type of element
         $mform->setDefault('usermodified', $USER->id);        //Default value
@@ -159,9 +174,9 @@ class specialite extends moodleform {
      * @param string $datedebut la date de debut de l'annee
      * @param string $datefin date de fin de l'annee 
      */
-    public function update_specialite(int $id, string $libellespecialite,string $abreviationspecialite,int $idfiliere,$idspecia): bool
+    public function update_specialite(int $id, string $libellespecialite,string $abreviationspecialite,int $idfiliere,$idspecia,$nom): bool
     {
-        // var_dump($idspecia);die;
+        // var_dump($nom);die;
         global $DB;
         global $USER;
         $object = new stdClass();
@@ -169,6 +184,7 @@ class specialite extends moodleform {
         $object->libellespecialite = $libellespecialite ;
         $object->abreviationspecialite = $abreviationspecialite ;
         $object->idfiliere = $idfiliere;
+        $object->nombreoption = $nom;
         $object->usermodified = $USER->id;
         $object->timemodified = time();
 

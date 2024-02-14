@@ -24,6 +24,8 @@ use core\progress\display;
 use local_powerschool\reglages;
 
 require_once(__DIR__ . '/../../config.php');
+require_once(__DIR__ . '/token.php');
+require_once(__DIR__ . '/idetablisse.php');
 require_once($CFG->dirroot.'/local/powerschool/classes/reglage.php');
 
 global $DB;
@@ -108,9 +110,16 @@ if(has_capability("local/powerschool:reglageetablissement",$modulecontext,$USER-
     <p class=''> Gérer les réglages de vos Etablissements</p>
     </div>";
     echo" <ul class='list-group list-group-flush'>";
+
+    echo "<li class='list-group-item '>".html_writer::link($CFG->wwwroot.'/local/powerschool/anneescolaire.php',get_string('annee', 'local_powerschool'),array("class"=>"fw-bold text-decoration-none fs-1 text-uppercase"))."</il>";echo "<br/>";
+
+
+    // var_dump(tokenvalidat(),ChangerSchoolUser($USER->id));die;
+    if(tokenvalidat())
+    {
+        
         if(has_capability("local/powerschool:anneecreated",$modulecontext,$USER->id))
         {
-            echo "<li class='list-group-item '>".html_writer::link($CFG->wwwroot.'/local/powerschool/anneescolaire.php',get_string('annee', 'local_powerschool'),array("class"=>"fw-bold text-decoration-none fs-1 text-uppercase"))."</il>";echo "<br/>";
         }
         if(has_capability("local/powerschool:ajoutercampus",$modulecontext,$USER->id))
         {
@@ -122,11 +131,7 @@ if(has_capability("local/powerschool:reglageetablissement",$modulecontext,$USER-
 
             echo "<li class='list-group-item '>".html_writer::link($CFG->wwwroot.'/local/powerschool/semestre.php',get_string('semestre', 'local_powerschool'),array("class"=>"fw-bold text-decoration-none fs-1 text-uppercase"))."</li>";echo "<br/>";
         }
-        if(has_capability("local/powerschool:sallecreated",$modulecontext,$USER->id))
-        {
-
-            echo "<li class='list-group-item '>".html_writer::link($CFG->wwwroot.'/local/powerschool/salle.php',get_string('salle', 'local_powerschool'),array("class"=>"fw-bold text-decoration-none fs-1 text-uppercase"))."</li>";echo "<br/>";
-        }
+       
         if(has_capability("local/powerschool:createfiliere",$modulecontext,$USER->id))
         {
     
@@ -141,6 +146,11 @@ if(has_capability("local/powerschool:reglageetablissement",$modulecontext,$USER-
         {
 
             echo "<li class='list-group-item '>".html_writer::link($CFG->wwwroot.'/local/powerschool/cycle.php',get_string('cycle', 'local_powerschool'),array("class"=>"fw-bold text-decoration-none fs-1 text-uppercase"))."</li>";echo "<br/>";
+        }
+        if(has_capability("local/powerschool:sallecreated",$modulecontext,$USER->id))
+        {
+
+            echo "<li class='list-group-item '>".html_writer::link($CFG->wwwroot.'/local/powerschool/salle.php',get_string('salle', 'local_powerschool'),array("class"=>"fw-bold text-decoration-none fs-1 text-uppercase"))."</li>";echo "<br/>";
         }
         if(has_capability("local/powerschool:ajoutermodepaiement",$modulecontext,$USER->id))
         {
@@ -167,6 +177,13 @@ if(has_capability("local/powerschool:reglageetablissement",$modulecontext,$USER-
 
             echo "<li class='list-group-item '>".html_writer::link($CFG->wwwroot.'/local/powerschool/transport.php',get_string('transport', 'local_powerschool'),array("class"=>"fw-bold text-decoration-none fs-1 text-uppercase"))."</li>";echo "<br/>";
         }
+    }
+    // if(has_capability("local/powerschool:transportcreated",$modulecontext,$USER->id))
+    // {
+
+        echo "<li class='list-group-item '>".html_writer::link($CFG->wwwroot.'/local/powerschool/payementCampus.php',get_string('Payment', 'local_powerschool'),array("class"=>"fw-bold text-decoration-none fs-1 text-uppercase"))."</li>";echo "<br/>";
+        // echo "<li class='list-group-item '>".html_writer::link($CFG->wwwroot.'/local/powerschool/.php',get_string('transport', 'local_powerschool'),array("class"=>"fw-bold text-decoration-none fs-1 text-uppercase"))."</li>";echo "<br/>";
+    // }
        
         
         // echo "<li class='list-group-item '>".html_writer::link($CFG->wwwroot.'/local/powerschool/logo.php'),"Logo",array("class"=>"fw-bold text-decoration-none fs-1 text-uppercase"))."</li>";echo "<br/>";

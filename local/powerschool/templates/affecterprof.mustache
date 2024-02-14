@@ -108,6 +108,8 @@
                         <th scope="col">Cours & Specialite</th>
                         <th scope="col">Salle</th>
                         <th scope="col">Groupe</th>
+                        <th scope="col">Heure Cours</th>
+                        <th scope="col">Prix par heure</th>
                         <th scope="col">Actions</th>
                       </tr>
                     </thead>
@@ -119,6 +121,8 @@
                             <td>{{fullname}}-{{libellecycle}}-{{libellespecialite}}-{{libellesemestre}} </td>
                             <td>{{numerosalle}} </td>
                             <td>{{libellegroup}} </td>
+                            <td>{{heurecours}} </td>
+                            <td>{{prixheur}} </td>
                             <td>
                                <!-- <input type="button" class="btn btn-primary" value="modifier" onclick="location.href='{{affecterprofedit}}?id={{idaffe}}&idca={{idca}}'">-->
                                 <input type="button" class="btn btn-danger local_annee_delete_button" value="supprimer" onclick="location.href='{{affecterprofsupp}}?id={{idaffe}}&idca={{idca}}&idcou={{idcouu}}&iduser={{iduser}}'">

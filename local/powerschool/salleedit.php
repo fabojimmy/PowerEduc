@@ -53,7 +53,7 @@ $recordtoinsert = new salle();
 
     if($fromform->id) {
 
-        $recordtoinsert->update_salle($fromform->id, $fromform->numerosalle,$fromform->capacitesalle,$fromform->idcampus);
+        $recordtoinsert->update_salle($fromform->id, $fromform->numerosalle,$fromform->capacitesalle,$fromform->idcampus,$fromform->idspecialite);
         redirect($CFG->wwwroot . '/local/powerschool/salle.php', 'Bien modifier');
         
     }

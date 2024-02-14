@@ -118,6 +118,11 @@ if (!$mform->veri_insc($_POST["idetudiant"])) {
     
     // $recordtoinsert->idcycle=$fromform->cycle;
     $recordtoinsert->nomsparent=$_POST["nomsparent"];
+
+
+    // $recordtoinsert->numeroinscription=$_POST["nomsparent"];
+
+
     $recordtoinsert->telparent=$_POST["telparent"];
     $recordtoinsert->emailparent=$_POST["emailparent"];
     $recordtoinsert->gender=$_POST["gender"];
@@ -126,6 +131,7 @@ if (!$mform->veri_insc($_POST["idetudiant"])) {
     $recordtoinsert->usermodified=$_POST["usermodified"];
     $recordtoinsert->timecreated=$_POST["timecreated"];
     $recordtoinsert->timemodified=$_POST["timemodified"];
+
 
     // var_dump($date_naissance);die;
     $DB->insert_record('inscription', $recordtoinsert);

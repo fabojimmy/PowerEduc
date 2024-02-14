@@ -1,7 +1,10 @@
 <?php
+require_once(__DIR__ . '/token.php');
+require_once(__DIR__ . '/../../config.php');
  require_once __DIR__.'/../../vendor/autoload.php';
  use Firebase\JWT\JWT;
  use Firebase\JWT\Key;
+
 
  
  $payload=array(
@@ -34,8 +37,52 @@ function tokendecode($token)
      return $decode;
  }
 
- 
- //  print_r($encode);
 }
+function datetokenexpi($token)
+{
+   $dateexp=tokendecode($token);
+
+  //  var_dump(date("Y-m-d",$dateexp->timefin));die;
+   return date("Y-m-d",$dateexp->timefin);
+}
+//  print_r($encode);
+
+
+    function datecomparation($token)
+    {
+        
+        $datenow=date("Y-m-d",time());
+        $dateexpi=datetokenexpi($token);
+
+        if($datenow==$dateexpi)
+        {
+          // var_dump($dateexpi,$datenow,$token);die;
+            return false;
+        }else{
+
+          return true;
+        }
+    
+    }
+
+    function tokenvalidat()
+    {
+      global $DB,$USER;
+
+      $seleToken=$DB->get_records_sql("SELECT * FROM {tokenpaie} WHERE idcampus='".ChangerSchoolUser($USER->id)."'");
+  
+  
+      foreach ($seleToken as $key => $valuepaie) {
+          # code...
+          // var_dump(datecomparation($valuepaie->token));die;
+          if(datecomparation($valuepaie->token))
+          {
+           return true;
+          }
+        }
+
+        return false;
+          
+    }
 
 ?>

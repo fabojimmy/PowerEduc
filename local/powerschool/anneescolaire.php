@@ -96,6 +96,8 @@ if($_GET['id']) {
     redirect($CFG->wwwroot . '/local/powerschool/anneescolaire.php', 'Information Bien supprimée');
         
 }
+
+//type de campus
 $vertype=$DB->get_records("typecampus");
 $typpe=["universite","college","lycee","primaire"];
 if(!$vertype){
@@ -107,6 +109,36 @@ if(!$vertype){
      $DB->insert_record("typecampus",$recod);
   }
 }
+
+
+//type d'enseignant secteur
+$vertype=$DB->get_records("frananglobin");
+$typpe=["Francophone","Anglophone","Bilingue"];
+// die;
+if(!$vertype){
+    $recod=new stdClass();
+    for($i=0;$i<count($typpe);$i++){
+        
+        $recod->libelle=$typpe[$i];
+        //   var_dump($typpe[$i]);
+        // die;
+        $DB->insert_record("frananglobin",$recod);
+    }
+}
+
+//type d'enseignement
+$vertype=$DB->get_records("enseignementtype");
+$typpe=["general","technique"];
+if(!$vertype){
+    $recod=new stdClass();
+  for($i=0;$i<count($typpe);$i++){
+
+      $recod->libelle=$typpe[$i];
+    //   var_dump($typpe[$i]);
+     $DB->insert_record("enseignementtype",$recod);
+  }
+}
+
 // die;
 $annee = $DB->get_records('anneescolaire', null, 'id');
 

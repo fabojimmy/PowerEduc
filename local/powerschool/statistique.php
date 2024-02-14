@@ -22,10 +22,13 @@
 
 use core\progress\display;
 use local_powerschool\statistique;
+// use local_powerschool\token;
 
 require_once(__DIR__ . '/../../config.php');
 require_once(__DIR__ . '/idetablisse.php');
+require_once(__DIR__ . '/token.php');
 require_once($CFG->dirroot.'/local/powerschool/classes/statistique.php');
+// require_once($CFG->dirroot.'/local/powerschool/token.php');
 
 global $DB;
 global $USER;
@@ -1532,6 +1535,28 @@ $semestre=$DB->get_records("semestre");
 // var_dump(ChangerSchoolUser($USER->id));
 // die;
 
+
+
+
+
+//Selectionner le token corespondant à l'etablissement
+
+   if(tokenvalidat())
+   {
+       $seance=$CFG->wwwroot.'/local/powerschool/seance.php';
+       $programme=$CFG->wwwroot.'/local/powerschool/programme.php';
+       $inscriptionlien=$CFG->wwwroot.'/local/powerschool/inscription.php';
+       $groupappr=new moodle_url('/local/powerschool/groupapprenant.php');
+       $bulletin=$CFG->wwwroot.'/local/powerschool/bulletin.php';
+       $configurationmi=$CFG->wwwroot.'/local/powerschool/configurationmini.php';
+    }
+    $reglage=$CFG->wwwroot.'/local/powerschool/reglages.php';
+     
+
+
+
+
+
 $templatecontext = (object)[
     'htmlcyetdet'=>$htmlcyetdet,
     'anneee'=>array_values($annee),
@@ -1644,20 +1669,20 @@ $templatecontext = (object)[
 
 $menu = (object)[
     'statistique' =>  $CFG->wwwroot.'/local/powerschool/statistique.php',
-    'reglage' =>  $CFG->wwwroot.'/local/powerschool/reglages.php',
+    'reglage' =>  $reglage,
     // 'matiere' => new moodle_url('/local/powerschool/matiere.php'),
-    'seance' =>  $CFG->wwwroot.'/local/powerschool/seance.php',
-    'programme' =>  $CFG->wwwroot.'/local/powerschool/programme.php',
+    'seance' =>  $seance,
+    'programme' =>  $programme,
 
-    'inscription' =>  $CFG->wwwroot.'/local/powerschool/inscription.php',
+    'inscription' =>  $inscriptionlien,
     // 'notes' => new moodle_url('/local/powerschool/note.php'),
-    'bulletin' =>  $CFG->wwwroot.'/local/powerschool/bulletin.php',
-    'configurermini' =>  $CFG->wwwroot.'/local/powerschool/configurationmini.php',
+    'bulletin' =>  $bulletin,
+    'configurermini' => $configurationmi ,
     'listeetudiant' =>  $CFG->wwwroot.'/local/powerschool/listeetudiant.php',
     'activer' => $CFG->wwwroot.'/local/powerschool/activat.php',
     'activat' => get_string('activat', 'local_powerschool'),
     // 'gerer' => new moodle_url('/local/powerschool/gerer.php'),
-    'groupapprenant' => new moodle_url('/local/powerschool/groupapprenant.php'),
+    'groupapprenant' => $groupappr,
 
     //navbar
     'statistiquenavr'=>get_string('statistique', 'local_powerschool'),

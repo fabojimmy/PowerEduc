@@ -161,7 +161,7 @@ $veriEta=$DB->get_records_sql('SELECT * FROM {campus} c,{typecampus} t WHERE c.i
         foreach($veriEta as $valueEt){}
      if($valueEt->libelletype=="universite")
         {
-            $sql_inscrip = "SELECT i.id as idbu,idspecialite,idcycle,i.idanneescolaire,i.idcampus,idsemestre,libellesemestre,datedebut,datefin,villecampus,libellecampus,libellespecialite,libellecycle,nombreannee,idgroupapprenant
+            $sql_inscrip = "SELECT i.id as idbu,i.idspecialite,idcycle,i.idanneescolaire,i.idcampus,idsemestre,libellesemestre,datedebut,datefin,villecampus,libellecampus,libellespecialite,libellecycle,nombreannee,idgroupapprenant
             FROM {bulletin} i, {anneescolaire} a,{semestre} sem, {user} u, {specialite} s, {campus} c, {cycle} cy
             WHERE i.idanneescolaire=a.id AND i.idspecialite=s.id AND i.idprofesseur=u.id 
             AND i.idcampus=c.id AND i.idcycle = cy.id AND i.idsemestre=sem.id AND i.idprofesseur='".$USER->id."' AND i.idcampus='".$_GET["idca"]."'" ;
@@ -169,7 +169,7 @@ $veriEta=$DB->get_records_sql('SELECT * FROM {campus} c,{typecampus} t WHERE c.i
         else 
         {
 
-            $sql_inscrip = "SELECT i.id as idbu,idspecialite,idcycle,i.idanneescolaire,i.idcampus,numerosalle,sa.id as idsa,idsemestre,libellesemestre,datedebut,datefin,villecampus,libellecampus,libellespecialite,libellecycle,nombreannee
+            $sql_inscrip = "SELECT i.id as idbu,i.idspecialite,idcycle,i.idanneescolaire,i.idcampus,numerosalle,sa.id as idsa,idsemestre,libellesemestre,datedebut,datefin,villecampus,libellecampus,libellespecialite,libellecycle,nombreannee
                             FROM {bulletin} i, {anneescolaire} a,{semestre} sem, {user} u, {specialite} s, {campus} c, {cycle} cy,{salle} sa
                             WHERE i.idsalle=sa.id AND i.idanneescolaire=a.id AND i.idspecialite=s.id AND i.idprofesseur=u.id 
                             AND i.idcampus=c.id AND i.idcycle = cy.id AND i.idsemestre=sem.id AND i.idprofesseur='".$USER->id."' AND i.idcampus='".$_GET["idca"]."'" ;

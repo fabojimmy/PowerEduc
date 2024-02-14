@@ -91,6 +91,28 @@ function  local_powerschool_extend_navigation (global_navigation $navigation  ){
         
         return $idca;
     }
+    function createetablissementtrue($campus) {
+        global $DB;
+        // $idca=$DB->insert_record('campus', $campus);
+
+        $idtrueca=$DB->get_records_sql("SELECT id,libellecampus FROM {campus} WHERE id =(SELECT Max(id) FROM {campus})");
+
+
+        // var_dump($idtrueca);
+        // die;
+
+        foreach ($idtrueca as $key => $value) {
+            # code...
+        }
+        $data=new StdClass();
+
+        $data->parent = 0;
+        $data->name = $value->libellecampus;
+        core_course_category::create($data, null);
+
+        
+        return $value->id;
+    }
 
     // Fonction pour afficher la barre de navigation de l'administration
     function local_powerschool_admin_navigation_bar() {

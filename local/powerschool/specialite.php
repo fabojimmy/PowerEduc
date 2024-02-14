@@ -67,8 +67,10 @@ $recordtoinsert->idfiliere=$_POST["idfiliere"];
     if($recordtoinsert->id&&$recordtoinsert->action=="edit") 
     {
 
+        // var_dump($_POST["nombreoption"]);die;
+
         // die;
-        $mform->update_specialite($recordtoinsert->id, $recordtoinsert->libellespecialite,$recordtoinsert->abreviationspecialite,$_POST["idfiliere"],$_POST["idcatspe"]);
+        $mform->update_specialite($recordtoinsert->id, $recordtoinsert->libellespecialite,$recordtoinsert->abreviationspecialite,$_POST["idfiliere"],$_POST["idcatspe"],$_POST["nombreoption"]);
         redirect($CFG->wwwroot . '/local/powerschool/specialite.php?idca='.$_POST["idcampus"].'', 'Bien modifier');
         
     }
@@ -163,7 +165,7 @@ foreach($catfill as $key => $valfil)
 $stringspecialitecat=implode("','",$tarspecialcat);
 // die;
 
-$sql = "SELECT s.id,libellespecialite,libellefiliere,abreviationspecialite FROM {filiere} f, {specialite} s WHERE s.idfiliere = f.id AND idcampus='".ChangerSchoolUser($USER->id)."' AND libellespecialite IN ('$stringspecialitecat')";
+$sql = "SELECT s.id,libellespecialite,libellefiliere,abreviationspecialite,nombreoption FROM {filiere} f, {specialite} s WHERE s.idfiliere = f.id AND idcampus='".ChangerSchoolUser($USER->id)."' AND libellespecialite IN ('$stringspecialitecat')";
 
 $specialites = $DB->get_records_sql($sql);
 
@@ -185,9 +187,25 @@ $sql_fil="SELECT * FROM {filiere} WHERE idcampus='".ChangerSchoolUser($USER->id)
 $filiere=$DB->get_records_sql($sql_fil);
 $vericam=$DB->get_records_sql("SELECT * FROM {campus} c,{typecampus} t
                                 WHERE t.id=c.idtypecampus AND c.id='".ChangerSchoolUser($USER->id)."'"); 
+
+//Selectionner le type d'enseignement et le type frananglobin
+$select=$DB->get_records_sql("SELECT idenseignementtype,idfrananglobin FROM {campus} c WHERE c.id='".ChangerSchoolUser($USER->id)."'");
+
+foreach ($select as $key => $valuese) {
+    # code...
+}
+// var_dump(json_decode($valuese->idenseignementtype),json_decode($valuese->idfrananglobin));die;
+
 $vertyp=array();   
             foreach($vericam as $key => $ver)
             {
+                for ($i=0; $i < count(json_decode($valuese->idenseignementtype)); $i++) { 
+                    $enseignementtype=$DB->get_records_sql("SELECT * FROM {enseignementtype} c WHERE c.id='".json_decode($valuese->idenseignementtype)[$i]."'");
+                }
+
+                 foreach ($enseignementtype as $key => $valueenseigpe) {
+                    # code...
+                 }
                 if ($ver->libelletype=="primaire") {
                     $vertyp= $DB->get_records("typecampus",array("id"=>ChangerSchoolUser($USER->id)));
                     $table1='
@@ -202,7 +220,7 @@ $vertyp=array();
                     <td><input type="checkbox" name="specia[]" class="checkboxItem" value="CM1">CM1</td>
                     <td><input type="checkbox" name="specia[]" class="checkboxItem" value="CM2">CM2</td>
                 </tr>';
-                } else if($ver->libelletype=="lycee" || $ver->libelletype=="college"){
+                } else if(($ver->libelletype=="lycee" || $ver->libelletype=="college")&&$valueenseigpe->libelle=="general" ){
                     $vertyp= $DB->get_records("typecampus",array("id"=>ChangerSchoolUser($USER->id)));
                   $table2='
                   <input type="checkbox" class="toutly">
@@ -237,7 +255,7 @@ $vertyp=array();
               foreach ($categ as $key => $value1spec) {
                   # code...
               }
-            // var_dump($value->libellefiliere);die;
+            // var_dump($value->libellefiliere,$_GET["idfi"]);die;
 $campuss=(object)[
     'campus'=>array_values($campus),
     'confpaie'=>$CFG->wwwroot.'/local/powerschool/specialite.php',
@@ -310,7 +328,7 @@ echo $OUTPUT->header();
 // echo $OUTPUT->render_from_template('local_powerschool/navbar', $menu);
 // echo $OUTPUT->render_from_template('local_powerschool/campustou', $campuss);
 $mform->display();
-
+// exit;
 
 echo $OUTPUT->render_from_template('local_powerschool/specialite', $templatecontext);
 
