@@ -1,7 +1,7 @@
 <?php
 
 //  Display the course home page.
-
+// die;
     require_once('../config.php');
     require_once('lib.php');
     require_once($CFG->libdir.'/completionlib.php');
@@ -90,6 +90,7 @@
             }
         }
     }
+
 
 
     require_once($CFG->dirroot.'/calendar/lib.php');    /// This is after login because it needs $USER
@@ -223,6 +224,26 @@
         $PAGE->set_button($buttons);
     }
 
+//    echo "<script>
+//    var valeur = prompt('Entrer lheure du début du cours');
+
+//    var params = new URLSearchParams();
+//    params.append('valeur', valeur);
+
+//     fetch('" . $CFG->wwwroot . "/course/view.php?id=" . $course->id . "', {
+//     method: 'POST',
+//     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+//     body: params
+//     })
+//      .then(response => response.text())
+//      .then(response => {
+//        console.log(response);
+//      });
+//  </script>";
+//    $truee=$DB->get_records("campus", array("id" =>$_POST["valeur"]));
+
+
+//    var_dump($truee);die;
     // If viewing a section, make the title more specific
     if ($section and $section > 0 and course_format_uses_sections($course->format)) {
         $sectionname = get_string('sectionname', "format_$course->format");
@@ -233,6 +254,72 @@
     }
 
     $PAGE->set_heading($course->fullname);
+
+
+    // var_dump($USER->id,date('Y-m-d',1674000000));die;
+    
+    //verifier si enseigner à cette date
+
+    $sqllll="SELECT * FROM {programme} WHERE idcourses=".$_GET['id']." AND idprof=".$USER->id." AND DATE(FROM_UNIXTIME(datecours))= '".date('Y-m-d',time())."'";
+    $verifiercoursdispo=$DB->get_records_sql($sqllll);
+
+    // var_dump($verifiercoursdispo);die;
+    
+    if(!$verifiercoursdispo && !is_siteadmin()){
+        \core\notification::add("Vous avez pas se cours aujourd'hui", \core\output\notification::NOTIFY_ERROR);
+        // redirect($CFG->wwwroot . '/my',"Vous avez pas se cours aujourd'hui",null,\core\output\notification::NOTIFY_ERROR);
+        
+    }else{
+        $tarsalle=[];
+        foreach ($verifiercoursdispo as $key => $value) {
+            // var_dump($verifiercoursdispo,$_GET['id'],$USER->id,$sqllll);die;
+            
+            $salle=$DB->get_record("salle",array("id"=>$value->idsalle));
+            # code...
+            array_push($tarsalle,$salle->numerosalle);
+        }
+        $listesalle=json_encode($tarsalle);
+        // var_dump($tarsalle,$value->idsalle);die;
+
+        $heure_actuelle=time();
+
+        $heure=date('H',$heure_actuelle);
+        $min=date('i',$heure_actuelle);
+        $sec=date('s',$heure_actuelle);
+
+        $seconde_ecoule=$heure*3600*1000+$min*60*1000+$sec*1000;
+
+        // var_dump($heure_actuelle,$seconde_ecoule,$heure,$min);die;
+        // var_dump($value->heuredebutcours*3600,$seconde_ecoule,$value->heurefincours*3600>=$seconde_ecoule);die;
+        if($value->heuredebutcours*3600*1000<=$seconde_ecoule && $value->heurefincours*3600*1000>=$seconde_ecoule){
+
+            // die;
+            // $dataobject=new stdClass();
+
+            // $dataobject->heuredebut=$seconde_ecoule;
+            // $dataobject->idpro=$USER->id;
+            // $dataobject->idcours=$_GET['id'];
+            // $dataobject->validerap=0;
+            // $dataobject->usermodified=$USER->id;
+            // $dataobject->timecreated=time();
+            // $dataobject->timemodified=time();
+            // $dataobject->timemodified=time();
+            // $DB->insert_record("rapportcours", $dataobject);
+            $hh=$value->heurefincours-$value->heuredebutcours;
+            $sqlinsert='INSERT INTO `mdl_rapportcours`
+            (`id`, `frequeappre`, `contenucouvert`, `activiteclasse`, `progresapprenant`,
+             `comportappre`, `questappren`, `duree`, `probletechlogis`, 
+            `feedback`, `idcours`, `validerap`, `idcampus`, `idpro`, 
+            `usermodified`, `timecreated`, `timemodified`, `heuredebut`, `heurefin`) 
+             VALUES (0,"","","","","","",'.$hh.',"","",'.$_GET["id"].',0,0,'.$USER->id.','.$USER->id.','.time().','.time().','.$seconde_ecoule.',0)';
+             
+             //var_dump($sqlinsert);die;
+             $DB->execute($sqlinsert);
+             \core\notification::add("Bienvenue vous avez ce cours aujourd'hui avec ces salles ".$listesalle, \core\output\notification::NOTIFY_SUCCESS);
+        }
+        
+    }
+
     echo $OUTPUT->header();
 
     if ($USER->editing == 1) {

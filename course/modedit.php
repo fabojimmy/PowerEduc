@@ -69,10 +69,14 @@ if (!empty($add)) {
         throw new \moodle_exception('maxsectionslimit', 'moodle', '', $maxsections);
     }
 
+    //preparer le module
+
     list($module, $context, $cw, $cm, $data) = prepare_new_moduleinfo_data($course, $add, $section);
+    // var_dump($course, $add, $section,$module);die;
     $data->return = 0;
     $data->sr = $sectionreturn;
     $data->add = $add;
+    
     if (!empty($type)) { //TODO: hopefully will be removed in 2.0
         $data->type = $type;
     }
@@ -85,10 +89,14 @@ if (!empty($add)) {
         $heading->what = $fullmodulename;
         $heading->to   = $sectionname;
         $pageheading = get_string('addinganewto', 'moodle', $heading);
+
+        // var_dump($pageheading);die;
     } else {
         $pageheading = get_string('addinganew', 'moodle', $fullmodulename);
     }
     $navbaraddition = $pageheading;
+
+    // var_dump($navbaraddition);die;
 
 } else if (!empty($update)) {
 
@@ -107,6 +115,7 @@ if (!empty($add)) {
     // require_login
     require_login($course, false, $cm); // needed to setup proper $COURSE
 
+    ///info sur le module qu'on veut créer
     list($cm, $context, $module, $data, $cw) = get_moduleinfo_data($cm, $course);
     $data->return = $return;
     $data->sr = $sectionreturn;
@@ -141,16 +150,23 @@ $PAGE->set_pagelayout('admin');
 $PAGE->add_body_class('limitedwidth');
 
 
+
+///On va utilise le chemin ci pour savoir ou se trouve le module qu'on veut utiliser 
 $modmoodleform = "$CFG->dirroot/mod/$module->name/mod_form.php";
+
 if (file_exists($modmoodleform)) {
     require_once($modmoodleform);
 } else {
     throw new \moodle_exception('noformdesc');
 }
 
+//'mod_'.$module->name.'_mod_form' ici $module->name peut etre lesson
+
 $mformclassname = 'mod_'.$module->name.'_mod_form';
 $mform = new $mformclassname($data, $cw->section, $cm, $course);
+// var_dump($data,$cw->section,$cm,$course);die;
 $mform->set_data($data);
+
 
 if ($mform->is_cancelled()) {
     if ($return && !empty($cm->id)) {
@@ -165,13 +181,17 @@ if ($mform->is_cancelled()) {
     }
 } else if ($fromform = $mform->get_data()) {
     if (!empty($fromform->update)) {
+        
+        
         list($cm, $fromform) = update_moduleinfo($cm, $fromform, $course, $mform);
     } else if (!empty($fromform->add)) {
+        // var_dump($data);die;
+        //module pour permetttre d'ajouter un module dans un cours
         $fromform = add_moduleinfo($fromform, $course, $mform);
     } else {
         throw new \moodle_exception('invaliddata');
     }
-
+    
     if (isset($fromform->submitbutton)) {
         $url = new moodle_url("/mod/$module->name/view.php", array('id' => $fromform->coursemodule, 'forceview' => 1));
         if (empty($fromform->showgradingmanagement)) {
@@ -183,35 +203,36 @@ if ($mform->is_cancelled()) {
         redirect(course_get_url($course, $cw->section, array('sr' => $sectionreturn)));
     }
     exit;
-
+    
 } else {
-
+    
     $streditinga = get_string('editinga', 'moodle', $fullmodulename);
     $strmodulenameplural = get_string('modulenameplural', $module->name);
-
+    
     if (!empty($cm->id)) {
         $context = context_module::instance($cm->id);
     } else {
         $context = context_course::instance($course->id);
     }
-
+    
     $PAGE->set_heading($course->fullname);
     $PAGE->set_title($streditinga);
     $PAGE->set_cacheable(false);
-
+    
     if (isset($navbaraddition)) {
         $PAGE->navbar->add($navbaraddition);
     }
     $PAGE->activityheader->disable();
-
+    
     echo $OUTPUT->header();
-
+    
     if (get_string_manager()->string_exists('modulename_help', $module->name)) {
         echo $OUTPUT->heading_with_help($pageheading, 'modulename', $module->name, 'monologo');
     } else {
         echo $OUTPUT->heading_with_help($pageheading, '', $module->name, 'monologo');
     }
-
+    
+    // var_dump($mform);die;
     $mform->display();
 
     echo $OUTPUT->footer();

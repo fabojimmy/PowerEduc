@@ -27,6 +27,7 @@ require_once(__DIR__ . '/../../config.php');
 require_once($CFG->dirroot.'/local/powerschool/classes/affecterprof.php');
 require_once(__DIR__ .'/../../group/lib.php');
 require_once(__DIR__ .'/idetablisse.php');
+require_once($CFG->dirroot.'/course/lib.php');
 global $DB;
 global $USER;
 
@@ -218,6 +219,7 @@ if (!empty($_POST["professeur"])&& !empty($_POST["specialite"])&& !empty($_POST[
 }
 
 
+// course_create_section_name(2, 1,null,"bnbhjuujjkhj");
 
 if($_GET['id']) {
 

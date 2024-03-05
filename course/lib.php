@@ -575,6 +575,43 @@ function course_create_section($courseorid, $position = 0, $skipcheck = false) {
     return $cw;
 }
 
+function course_create_section_name($courseorid, $position = 0, $skipcheck = false,$name="") {
+    global $DB;
+    $courseid = is_object($courseorid) ? $courseorid->id : $courseorid;
+
+    // Find the last sectionnum among existing sections.
+    if ($skipcheck) {
+        $lastsection = $position - 1;
+    } else {
+        $lastsection = (int)$DB->get_field_sql('SELECT max(section) from {course_sections} WHERE course = ?', [$courseid]);
+    }
+
+    // First add section to the end.
+    $cw = new stdClass();
+    $cw->course   = $courseid;
+    $cw->section  = $lastsection + 1;
+    $cw->summary  = '';
+    $cw->summaryformat = FORMAT_HTML;
+    $cw->sequence = '';
+    $cw->name = $name;
+    $cw->visible = 1;
+    $cw->availability = null;
+    $cw->timemodified = time();
+    $cw->id = $DB->insert_record("course_sections", $cw);
+
+    // Now move it to the specified position.
+    if ($position > 0 && $position <= $lastsection) {
+        $course = is_object($courseorid) ? $courseorid : get_course($courseorid);
+        move_section_to($course, $cw->section, $position, true);
+        $cw->section = $position;
+    }
+
+    core\event\course_section_created::create_from_section($cw)->trigger();
+
+    rebuild_course_cache($courseid, true);
+    return $cw;
+}
+
 /**
  * Creates missing course section(s) and rebuilds course cache
  *

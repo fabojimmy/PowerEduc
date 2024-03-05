@@ -367,6 +367,7 @@ $menumini = (object)[
     'materiell' => new moodle_url('/local/powerschool/materiels.php'),
     'groupe' => new moodle_url('/local/powerschool/groupsalle.php'),
     'ressource' => new moodle_url('/local/powerschool/ressource.php'),
+    'rapport' => new moodle_url('/local/powerschool/rapportprofadmin.php'),
 
 ];
 $campus=$DB->get_records('campus');
